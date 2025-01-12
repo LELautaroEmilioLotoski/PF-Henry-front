@@ -2,7 +2,7 @@
 import { useUser } from "@auth0/nextjs-auth0/client";
 
 export default function Home() {
-  const { user, isLoading } = useUser();
+  const { isLoading } = useUser();
 
   if (isLoading) return null;
   return (
@@ -10,7 +10,7 @@ export default function Home() {
       <h2 className="flex justify-center items-center">
         Inicia sesión para continuar
       </h2>
-      <a href="/api/auth/login">Login</a>
+      <a href="/api/auth/login" className="flex justify-center items-center p-52">Login</a>
     </div>
   );
 }
