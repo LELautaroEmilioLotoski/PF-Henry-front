@@ -3,8 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import Dashboard from "./Dashboard/page";
-import './globals.css';
-
+import "./globals.css";
 
 const Home = () => {
   const { user, isLoading } = useUser();
@@ -13,18 +12,14 @@ const Home = () => {
   return (
     <div>
       {user ? (
-       <Dashboard/>
+        <Dashboard />
       ) : (
-        <div>
-          <div className="bg-slate-400 flex justify-center items-center">
-            <h1>Este es un home</h1>
-          </div>
-            <Link href="/Login" className="flex justify-center items-center p-52 ">Ir al login</Link>
-        </div>
+        <Link href="/Login" className="flex justify-center items-center bg-red-300">
+          Ir al login
+        </Link>
       )}
     </div>
   );
 };
 
 export default Home;
-
