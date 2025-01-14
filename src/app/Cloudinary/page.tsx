@@ -5,7 +5,7 @@ const Cloudinary = () => {
   const [file, setFile] = useState<File | null>(null)
 
   return (
-    <div>
+    <div >
       <form
         onSubmit={async (e) => {
           e.preventDefault();
@@ -20,7 +20,7 @@ const Cloudinary = () => {
             body: formData,
           });
           const data = await response.json();
-          console.log(data);
+          console.log(data); 
         }}
       >
         <input type="file" onChange={(e) => {
