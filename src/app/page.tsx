@@ -1,9 +1,12 @@
 "use client";
-import Link from "next/link";
+
+
+// import Link from "next/link";
 import React from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import Dashboard from "./Dashboard/page";
 import "./globals.css";
+import HomeView from "@/views/HomeView/HomeView";
+import DashboardView from "@/views/DashboardView/DashboardView";
 
 const Home = () => {
   const { user, isLoading } = useUser();
@@ -12,11 +15,9 @@ const Home = () => {
   return (
     <div>
       {user ? (
-        <Dashboard />
+        <DashboardView/>
       ) : (
-        <Link href="/Login" className="flex justify-center items-center bg-red-300">
-          Ir al login
-        </Link>
+        <HomeView/>
       )}
     </div>
   );

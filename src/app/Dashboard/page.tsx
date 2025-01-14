@@ -1,5 +1,5 @@
+import UserDashboard from '@/components/specific/Dashboard/UserDashboard'
 import React from 'react'
-import UserDashboard from '@/Components/Dashboard/UserDashboard'
 
 const Dashboard = () => {
   return (
