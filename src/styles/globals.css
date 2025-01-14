@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* Configuración de fuentes */
+body {
+  font-family: var(--secondary-font);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--primary-font);
+  font-weight: bold;
+}
+
+/* Tamaños de letra */
+.text-title {
+  font-size: 2.5rem;
+}
+
+.text-subtitle {
+  font-size: 1.5rem;
+}
+
+.text-body {
+  font-size: 1rem;
+}
+
+/* Colores */
+.text-primary {
+  color: #374151;
+}
+
+.text-secondary {
+  color: #4b5563;
+}
+
+.text-link {
+  color: #3b82f6;
+}
+
+.text-link:hover {
+  color: #2563eb;
+}
+
+/* Otros*/
+.mt-spacing {
+  margin-top: 2rem;
+}
+
+.pt-spacing {
+  padding-top: 2rem;
+}
+
+/* Campos de entrada */
+.input-field {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+  }
+  
+  /* Botones */
+  .button-primary {
+    @apply w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+  }
+
+/* Layout principal*/
+html, body {
+  height: 100%;
+  /* background-image: url('/taberna.jpg'); */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}

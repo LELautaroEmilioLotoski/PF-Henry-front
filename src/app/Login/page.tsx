@@ -1,10 +1,10 @@
-import Login from "@/components/specific/Login/Login"
+import LoginView from "@/views/LoginView/LoginView"
 
 import React from 'react'
 
 const LoginPage = () => {
   return (
-    <Login/>
+    <LoginView/>
   )
 }
 
