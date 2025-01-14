@@ -1,4 +1,4 @@
-import Login from "@/Components/Login/Login";
+import Login from "@/components/specific/Login/Login"
 
 import React from 'react'
 
