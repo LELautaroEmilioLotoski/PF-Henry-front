@@ -1,14 +1,14 @@
 "use client"
 import React from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
-
+ 
 const UserDashboard = () => {
   const { user, isLoading, error } = useUser();
-
+ 
   const handleLogout = () => {
     window.location.href = "/api/auth/logout";
   };
-
+ 
   return (
     <div>
       {user && (
@@ -27,5 +27,5 @@ const UserDashboard = () => {
     </div>
   );
 };
-
+ 
 export default UserDashboard;
