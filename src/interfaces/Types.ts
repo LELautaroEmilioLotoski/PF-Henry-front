@@ -14,18 +14,22 @@ export interface ILoginErrors {
 // REGISTER
 
 export interface IRegisterProps {
-    name: string;
-    email: string;
-    password: string;
-    address: string;
-  }
-  
-  export interface IRegisterErrors {
-    name?: string;
-    email?: string;
-    password?: string;
-    address?: string;
-  }
+  name: string;
+  email: string;
+  password: string;
+  ConfirmPassword: string;
+  address: string;
+  image_url: string;
+}
+
+export interface IRegisterErrors {
+  name?: string;
+  email?: string;
+  password?: string;
+  ConfirmPassword?: string;
+  address?: string;
+  image_url?: string;
+}
 
 
 // USERS

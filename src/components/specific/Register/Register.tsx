@@ -8,11 +8,13 @@ import { IRegisterErrors, IRegisterProps } from "@/interfaces/Types";
 
 const Register = () => {
   const router = useRouter();
-  const initialState = {
+  const initialState: IRegisterProps = {
     name: "",
     email: "",
     password: "",
+    ConfirmPassword: "",
     address: "",
+    image_url: "",
   };
 
   const [dataUser, setDataUser] = useState<IRegisterProps>(initialState);
@@ -29,36 +31,32 @@ const Register = () => {
     event.preventDefault();
     setIsLoading(true);
     setErrors({});
-
+  
     const validationErrors = validateRegisterForm(dataUser);
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       setIsLoading(false);
       return;
     }
-
+  
+    console.log("Submitting registration data:", dataUser); // Log de los datos enviados
+  
     try {
       const res = await register(dataUser);
-      if (!res.message) {
+      console.log("Registration response:", res); // Log de la respuesta de la API
+  
+      if (res.message === "Registro exitoso") {
         router.push("/login");
       } else {
         setErrors({
-          email: "",
-          password: "",
-          address: "",
           name: res.message,
         });
       }
     } catch (error) {
-      console.error("Registration error:", error);
-      setErrors({
-        name: "",
-        email: "",
-        password: "",
-        address: "",
-      });
+      console.error("Registration error:", error); // Log del error de la solicitud
+      setErrors({});
     }
-
+  
     setIsLoading(false);
   };
 
@@ -96,9 +94,7 @@ const Register = () => {
           disabled={isLoading}
         />
         {errors.email && (
-          <span className="text-red-500 text-sm mt-1 block">
-            {errors.email}
-          </span>
+          <span className="text-red-500 text-sm mt-1 block">{errors.email}</span>
         )}
       </div>
 
@@ -116,8 +112,26 @@ const Register = () => {
           disabled={isLoading}
         />
         {errors.password && (
+          <span className="text-red-500 text-sm mt-1 block">{errors.password}</span>
+        )}
+      </div>
+
+      <div>
+        <label htmlFor="ConfirmPassword" className="text-body mb-1 block">
+          Confirm Password
+        </label>
+        <input
+          id="ConfirmPassword"
+          name="ConfirmPassword"
+          type="password"
+          value={dataUser.ConfirmPassword}
+          onChange={handleChange}
+          className="input-field"
+          disabled={isLoading}
+        />
+        {errors.ConfirmPassword && (
           <span className="text-red-500 text-sm mt-1 block">
-            {errors.password}
+            {errors.ConfirmPassword}
           </span>
         )}
       </div>
@@ -138,6 +152,26 @@ const Register = () => {
         {errors.address && (
           <span className="text-red-500 text-sm mt-1 block">
             {errors.address}
+          </span>
+        )}
+      </div>
+
+      <div>
+        <label htmlFor="image_url" className="text-body mb-1 block">
+          Image URL
+        </label>
+        <input
+          id="image_url"
+          name="image_url"
+          type="text"
+          value={dataUser.image_url}
+          onChange={handleChange}
+          className="input-field"
+          disabled={isLoading}
+        />
+        {errors.image_url && (
+          <span className="text-red-500 text-sm mt-1 block">
+            {errors.image_url}
           </span>
         )}
       </div>
