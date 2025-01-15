@@ -56,9 +56,10 @@ export const validateRegisterForm = (values: IRegisterProps): IRegisterErrors =>
         errors.password = "The password must be at least 6 characters long";
     } else if (values.password.length > 24) {
         errors.password = "The password must not exceed 24 characters";
-    } else if (!/(?=.*[A-Z])(?=.*\d)/.test(values.password)) {
-        errors.password = "The password must contain at least one uppercase letter and one number";
     }
+    // } else if (!/(?=.*[A-Z])(?=.*\d)/.test(values.password)) {
+    //     errors.password = "The password must contain at least one uppercase letter and one number";
+    // }
 
     // ADDRESS
 
