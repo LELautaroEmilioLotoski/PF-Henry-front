@@ -11,13 +11,6 @@ export interface ILoginErrors {
   password?: string;
 }
 
-export interface IUserContextProps {
-  user: IUser | null;
-  token: string | null;
-  setUser: (user: IUser | null, token: string | null) => void;
-  logoutUser: () => void;
-}
-
 // REGISTER
 
 export interface IRegisterProps {
@@ -61,3 +54,9 @@ export interface IUser {
 
 
 // PRODUCTS
+
+export interface IOrder {
+  id: number;
+  status: string;
+  date: string;
+}

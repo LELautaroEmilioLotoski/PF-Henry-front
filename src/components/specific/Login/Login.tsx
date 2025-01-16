@@ -1,92 +1,94 @@
 "use client";
-// import { useUser } from "@auth0/nextjs-auth0/client";
-
-// export default function LoginPage() {
-//   const { isLoading } = useUser();
-
-//   if (isLoading) return null;
-//   return (
-//     <div>
-//       <h2 className="flex justify-center items-center">
-//         Inicia sesión para continuar
-//       </h2>
-//       <a href="/api/auth/login" className="flex justify-center items-center p-52">Login</a>
-//     </div>
-//   );
-// }
 
 import { useState } from "react";
 import { useUserContext } from "@/contexts/UserContext";
 import { login } from "@/helpers/auth.helper";
-import { AuthResponse } from "@/interfaces/Types";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const { setUser } = useUserContext();
-  const router = useRouter()
+  const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const response = await login({ email, password });
-      console.log(response);
-      
 
       if (response) {
-        const authData: AuthResponse = {
-          data: {
-            token: response.data.token,
-            user: response.data.user,
-          },
-          loggin: response.loggin,
-        };
-        setUser(authData);
+        const token = response.data.token;
+        const user = response.data.user;
+
+        Cookies.set("token", token, { expires: 7, secure: true });
+        setUser(user);
         router.push("/");
-        
-        
       } else {
         setError("Credenciales incorrectas");
       }
     } catch (error) {
-      console.log("Login Error:", error);
+      console.error("Login Error:", error);
       setError("Error al iniciar sesión");
     }
   };
 
   return (
-    <>
-      <form onSubmit={handleLogin}>
+    <form onSubmit={handleLogin} className="p-6 space-y-6 max-w-sm mx-auto">
+      <div>
+        <label htmlFor="email" className="text-body mb-1 block">
+          Email
+        </label>
         <input
+          id="email"
+          name="email"
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          className="input-field"
           required
         />
+        {error && (
+          <span className="text-red-500 text-sm mt-1 block">{error}</span>
+        )}
+      </div>
+
+      <div>
+        <label htmlFor="password" className="text-body mb-1 block">
+          Contraseña
+        </label>
         <input
+          id="password"
+          name="password"
           type="password"
           placeholder="Contraseña"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          className="input-field"
           required
         />
-        <button type="submit">Iniciar sesión</button>
-        {error && <p>{error}</p>}
-      </form>
-      <div>
-        <a
-          href="/api/auth/login"
-          className="flex justify-center items-center p-52"
-        >
+      </div>
+
+      <button type="submit" className="button-primary">
+        Iniciar sesión
+      </button>
+
+      {/* <div>
+        <a href="/api/auth/login" className="flex justify-center items-center text-blue-500">
           auth0
         </a>
-      </div>
-    </>
+      </div> */}
+      <button
+        type="button"
+        onClick={() => (window.location.href = "/api/auth/login")}
+        className="button-primary"
+      >
+        Iniciar sesión con Auth0
+      </button>
+    </form>
   );
 };
 
 export default Login;
-
