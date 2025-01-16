@@ -11,6 +11,13 @@ export interface ILoginErrors {
   password?: string;
 }
 
+export interface IUserContextProps {
+  user: IUser | null;
+  token: string | null;
+  setUser: (user: IUser | null, token: string | null) => void;
+  logoutUser: () => void;
+}
+
 // REGISTER
 
 export interface IRegisterProps {
@@ -33,6 +40,14 @@ export interface IRegisterErrors {
 
 
 // USERS
+
+export interface AuthResponse {
+  data: {
+    token: string;
+    user: IUser;
+  };
+  loggin: boolean;
+}
 
 export interface IUser {
   id: string;
