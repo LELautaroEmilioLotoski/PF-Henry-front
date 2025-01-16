@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
+import Image from 'next/image';
 
 const FileUploadComponent = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -24,17 +25,15 @@ const FileUploadComponent = () => {
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await axios.post('http://localhost:3000/files/uploadImage/id', formData, { 
+      const response = await axios.post('http://localhost:3000/files/uploadImage/id', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
 
-      
       console.log(response);
       
-
-      setFileUrl(response.data.url); 
+      setFileUrl(response.data.img); // Aquí obtienes la URL de la imagen subida
       alert('Archivo subido correctamente.');
     } catch (error) {
       console.error('Error al subir el archivo:', error);
@@ -54,10 +53,11 @@ const FileUploadComponent = () => {
 
       {fileUrl && (
         <div>
-          <h2>URL de la imagen:</h2>
-          <a href={fileUrl} target="_blank" rel="noopener noreferrer">
-            Ver imagen
-          </a>
+          <h2>Imagen Subida:</h2>
+          <Image
+            src={fileUrl} // La URL obtenida de Cloudinary
+            alt="Imagen subida"
+          />
         </div>
       )}
     </div>
