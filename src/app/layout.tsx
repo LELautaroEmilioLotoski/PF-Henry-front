@@ -1,8 +1,8 @@
 import "../styles/globals.css";
 import { Poppins, Lora } from "next/font/google";
-import { UserProvider } from "@auth0/nextjs-auth0/client";
 import Footer from "@/components/layout/Footer/Footer";
 import Navbar from "@/components/layout/Navbar/Navbar";
+import Contexts from "./Contexts";
 
 const primaryFont = Poppins({
   subsets: ["latin"],
@@ -21,8 +21,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <UserProvider>
+    <Contexts>
+      <html lang="en">
         <body
           className={`${primaryFont.variable} ${secondaryFont.variable} antialiased flex flex-col min-h-screen`}
         >
@@ -30,7 +30,7 @@ export default function RootLayout({
           <main className="flex-1">{children}</main>
           <Footer />
         </body>
-      </UserProvider>
     </html>
+    </Contexts>
   );
 }
