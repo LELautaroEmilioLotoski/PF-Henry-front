@@ -1,37 +1,67 @@
 "use client"
-import { useState } from "react"
+import React, { useState, useRef } from 'react';
+import axios from 'axios';
+import Image from 'next/image';
 
-const Cloudinary = () => {
-  const [file, setFile] = useState<File | null>(null)
+const FileUploadComponent = () => {
+  const [file, setFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [fileUrl, setFileUrl] = useState('');
+  const fileInputRef = useRef(null);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFile(event.target.files?.[0] || null);
+  };
+
+  const handleFileUpload = async () => {
+    if (!file) {
+      alert('Por favor, selecciona un archivo.');
+      return;
+    }
+
+    try {
+      setUploading(true);
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await axios.post('http://localhost:3000/files/uploadImage/id', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      console.log(response);
+      
+      setFileUrl(response.data.img); // Aquí obtienes la URL de la imagen subida
+      alert('Archivo subido correctamente.');
+    } catch (error) {
+      console.error('Error al subir el archivo:', error);
+      alert('Error al subir el archivo. Por favor, inténtalo de nuevo.');
+    } finally {
+      setUploading(false);
+    }
+  };
 
   return (
-    <div >
-      <form
-        onSubmit={async (e) => {
-          e.preventDefault();
+    <div>
+      <h1>Subir Archivo</h1>
+      <input type="file" onChange={handleFileChange} ref={fileInputRef} />
+      <button onClick={handleFileUpload} disabled={uploading}>
+        {uploading ? 'Subiendo...' : 'Subir Archivo'}
+      </button>
 
-          const formData = new FormData();
-          if (file) {
-            formData.append("file", file);
-          }
-
-          const response = await fetch("/api/upload", {
-            method: "POST",
-            body: formData,
-          });
-          const data = await response.json();
-          console.log(data); 
-        }}
-      >
-        <input type="file" onChange={(e) => {
-          if (e.target.files?.[0]) {
-            setFile(e.target.files[0]);
-          }
-        }} />
-        <button>Enviar</button>
-      </form>
+      {fileUrl && (
+        <div>
+          <h2>Imagen Subida:</h2>
+          <Image
+            src={fileUrl} // La URL obtenida de Cloudinary
+            alt="Imagen subida"
+          />
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Cloudinary
+export default FileUploadComponent;
