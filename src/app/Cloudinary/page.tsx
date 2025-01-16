@@ -30,6 +30,10 @@ const FileUploadComponent = () => {
         },
       });
 
+      
+      console.log(response);
+      
+
       setFileUrl(response.data.url); 
       alert('Archivo subido correctamente.');
     } catch (error) {
