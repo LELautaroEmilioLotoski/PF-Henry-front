@@ -1,9 +1,9 @@
-import { ILoginProps, IRegisterProps, IUser } from "@/interfaces/Types";
+import { AuthResponse, ILoginProps, IRegisterProps } from "@/interfaces/Types";
 
 const APIURL = process.env.NEXT_PUBLIC_API_URL;
 
 export const register = async (userData: IRegisterProps) => {
-  const res = await fetch(`${APIURL}/auth/signup`, {
+  const res = await fetch(`${APIURL}auth/signup`, {
     method: "POST",
     headers: {
       "Content-type": "application/json",
@@ -14,14 +14,20 @@ export const register = async (userData: IRegisterProps) => {
   return data;
 };
 
-export const login = async (userData: ILoginProps): Promise<IUser> => {
-  const res = await fetch(`${APIURL}/users/login`, {
+export const login = async (userData: ILoginProps): Promise<AuthResponse> => {
+  const res = await fetch(`${APIURL}auth/signin`, {
     method: "POST",
     headers: {
       "Content-type": "application/json",
     },
     body: JSON.stringify(userData),
+    
   });
-  const data: IUser = await res.json();
+
+  if (!res.ok) {
+    throw new Error("Error al iniciar sesión");
+  }
+
+  const data: AuthResponse = await res.json(); // Ajustamos a la nueva estructura con el token y el user
   return data;
 };

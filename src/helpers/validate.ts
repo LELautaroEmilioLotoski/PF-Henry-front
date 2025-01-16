@@ -52,7 +52,7 @@ export const validateRegisterForm = (values: IRegisterProps): IRegisterErrors =>
 
     if (!values.password) {
         errors.password = "The password field is required";
-    } else if (values.password.length < 6) {
+    } else if (values.password.length < 8) {
         errors.password = "The password must be at least 6 characters long";
     } else if (values.password.length > 24) {
         errors.password = "The password must not exceed 24 characters";
