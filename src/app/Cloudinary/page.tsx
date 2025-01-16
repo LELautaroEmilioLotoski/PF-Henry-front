@@ -54,7 +54,7 @@ const FileUploadComponent = () => {
       {fileUrl && (
         <div>
           <h2>Imagen Subida:</h2>
-          <Image
+          <img
             src={fileUrl} // La URL obtenida de Cloudinary
             alt="Imagen subida"
           />
