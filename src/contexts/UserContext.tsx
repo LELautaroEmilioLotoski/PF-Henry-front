@@ -26,6 +26,8 @@ export const UserContextProvider = ({ children }: { children: React.ReactNode })
 
   useEffect(() => {
     const storedToken = Cookies.get("token");
+    console.log(storedToken);
+    
     if (storedToken) {
       fetch("/api/auth/validate", {
         method: "POST",
