@@ -1,52 +1,66 @@
 'use client'
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { IUser, AuthResponse } from "@/interfaces/Types";
+import Cookies from "js-cookie";
+import { IUser } from "@/interfaces/Types";
 
-export const UserContext = createContext({
-  user: null as IUser | null,
-  token: null as string | null,
-  setUser: (authData: AuthResponse) => {},
+interface IUserContextProps {
+  user: IUser | null;
+  setUser: (user: IUser | null) => void;
+  token: string | null;
+  setToken: (token: string | null) => void;
+  logoutUser: () => void;
+}
+
+export const UserContext = createContext<IUserContextProps>({
+  user: null,
+  setUser: () => {},
+  token: null,
+  setToken: () => {},
   logoutUser: () => {},
 });
-
-export const useUserContext = () => useContext(UserContext);  // Custom hook
 
 export const UserContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<IUser | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const localUser = localStorage.getItem("user");
-    const localToken = localStorage.getItem("token");
-    if (localUser && localToken) {
-      setUser(JSON.parse(localUser));
-      setToken(localToken);
+    const storedToken = Cookies.get("token");
+    console.log(storedToken);
+    
+    if (storedToken) {
+      fetch("/api/auth/validate", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${storedToken}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.user) {
+            setUser(data.user);  // Establecer el usuario
+            setToken(data.token);  // Establecer el token
+          }
+        })
+        .catch(() => {
+          setUser(null);
+          setToken(null);
+        });
     }
   }, []);
 
-  useEffect(() => {
-    if (user && token) {
-      localStorage.setItem("user", JSON.stringify(user));
-      localStorage.setItem("token", token);
-    }
-  }, [user, token]);
-
-  const setUserData = ({ data }: AuthResponse) => {
-    setUser(data.user);
-    setToken(data.token);
-  };
-
   const logoutUser = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
+    Cookies.remove("token");
     setUser(null);
     setToken(null);
   };
 
   return (
-    <UserContext.Provider value={{ user, token, setUser: setUserData, logoutUser }}>
+    <UserContext.Provider value={{ user, setUser, token, setToken, logoutUser }}>
       {children}
     </UserContext.Provider>
   );
 };
+
+// Hook personalizado para acceder al contexto
+export const useUserContext = () => useContext(UserContext);
