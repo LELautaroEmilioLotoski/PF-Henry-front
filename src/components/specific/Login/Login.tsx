@@ -75,11 +75,6 @@ const Login = () => {
         Iniciar sesión
       </button>
 
-      {/* <div>
-        <a href="/api/auth/login" className="flex justify-center items-center text-blue-500">
-          auth0
-        </a>
-      </div> */}
       <button
         type="button"
         onClick={() => (window.location.href = "/api/auth/login")}
