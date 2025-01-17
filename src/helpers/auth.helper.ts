@@ -25,7 +25,8 @@ export const login = async (userData: ILoginProps): Promise<AuthResponse> => {
   });
 
   if (!res.ok) {
-    throw new Error("Error al iniciar sesión");
+    console.log("error al iniciar sesion");
+    
   }
 
   const data: AuthResponse = await res.json(); // Ajustamos a la nueva estructura con el token y el user
