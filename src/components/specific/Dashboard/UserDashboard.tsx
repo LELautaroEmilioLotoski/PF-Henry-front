@@ -29,7 +29,7 @@ const UserDashboard = () => {
       )}
       {userNormal && (
         <div>
-          <h1>Datos del usuario:</h1>
+          <h1 className="p-4 m-4 text-2xl">Datos del usuario:</h1>
           <p>Nombre: {userNormal.name}</p>
           <p>Direccion: {userNormal.address}</p>
           <p>Email: {userNormal.email}</p>

@@ -1,4 +1,4 @@
-import { Home, Utensils, Users, FileText, Settings } from 'lucide-react'
+import { Home, Utensils, Users, FileText, Settings, User, UserPen } from 'lucide-react'
 import Link from 'next/link'
 
 export default function DashboardSidebar() {
@@ -21,10 +21,10 @@ export default function DashboardSidebar() {
           <FileText className="mr-2 h-4 w-4" />
           Pedidos
         </button>
-        <button className="flex align-middle items-center gap-8 p-2 w-full justify-start">
-          <Settings className="mr-2 h-4 w-4" />
-          Configuración
-        </button>
+        <Link href="/admin/employee" className="flex align-middle items-center gap-8 p-2 w-full justify-start">
+          <UserPen className="mr-2 h-4 w-4" />
+          Empleados
+        </Link>
       </nav>
     </aside>
   )

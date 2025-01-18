@@ -24,21 +24,18 @@ export const UserContextProvider = ({ children }: { children: React.ReactNode })
   const [userNormal, setUser] = useState<IUser | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
-  const storedToken = Cookies.get("token");
-  useEffect(() => {    
-    if (storedToken) {  
-      console.log("llegue a la linea 30");
-          
-      fetch("http://localhost:3000/auth/signin", {
+  useEffect(() => {
+    const storedToken = Cookies.get("token");
+    
+    if (storedToken) {
+      fetch("/api/auth/validate", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${storedToken}`,
         },
       })
         .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          
+        .then((data) => {          
           if (data.user) {
             setUser(data.user);  // Establecer el usuario
             setToken(data.token);  // Establecer el token            
@@ -47,8 +44,6 @@ export const UserContextProvider = ({ children }: { children: React.ReactNode })
         .catch(() => {
           setUser(null);
           setToken(null);
-          console.log("si estoy aca es porque me rompi xd");
-          
         });
 
         if(storedToken) console.log(userNormal);

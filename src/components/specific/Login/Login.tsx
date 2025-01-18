@@ -18,11 +18,8 @@ const Login = () => {
     try {
       const response = await login({ email, password });
 
-      if (response) {
-        console.log("estoy en el response de login");
-    console.log(response.data);
+      if (response) {        
 
-        
         const token = response.data.token;
         const user = response.data.user;
 
@@ -35,10 +32,7 @@ const Login = () => {
     } catch (error) {
       console.error("Login Error:", error);
       setError("Error al iniciar sesión");
-    }
-
-    console.log("paso todo bien");
-    
+    }  
     
   };
 
@@ -83,11 +77,6 @@ const Login = () => {
         Iniciar sesión
       </button>
 
-      {/* <div>
-        <a href="/api/auth/login" className="flex justify-center items-center text-blue-500">
-          auth0
-        </a>
-      </div> */}
       <button
         type="button"
         onClick={() => (window.location.href = "/api/auth/login")}

@@ -4,7 +4,7 @@ import DashboardHeader from '@/components/admin/adminHeader/AdminHeader'
 
 const page = () => {
   return (
-    <div className=''>
+    <div className='flex m-auto'>
         <DashboardHeader/>
         <AdminView/>
     </div>
