@@ -57,6 +57,23 @@ export interface IUser {
 
 // PRODUCTS
 
+export interface IProduct {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  category: string;
+  image: string;
+  stock: number;
+}
+
+export interface ICategory {
+  id: string;
+  name: string;
+  icon: string;
+}
+
+
 export interface IOrder {
   id: number;
   status: string;
@@ -67,3 +84,6 @@ export interface IOrder {
 
 
 export interface ICreateEmployee extends IRegisterProps {}
+export interface ICartItem extends IProduct {
+  quantity: number;
+}
