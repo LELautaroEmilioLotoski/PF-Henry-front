@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 import { IUser } from "@/interfaces/Types";
 
 interface IUserContextProps {
-  user: IUser | null;
+  userNormal: IUser | null;
   setUser: (user: IUser | null) => void;
   token: string | null;
   setToken: (token: string | null) => void;
@@ -13,7 +13,7 @@ interface IUserContextProps {
 }
 
 export const UserContext = createContext<IUserContextProps>({
-  user: null,
+  userNormal: null,
   setUser: () => {},
   token: null,
   setToken: () => {},
@@ -21,12 +21,11 @@ export const UserContext = createContext<IUserContextProps>({
 });
 
 export const UserContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<IUser | null>(null);
+  const [userNormal, setUser] = useState<IUser | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
     const storedToken = Cookies.get("token");
-    console.log(storedToken);
     
     if (storedToken) {
       fetch("/api/auth/validate", {
@@ -36,16 +35,19 @@ export const UserContextProvider = ({ children }: { children: React.ReactNode })
         },
       })
         .then((res) => res.json())
-        .then((data) => {
+        .then((data) => {          
           if (data.user) {
             setUser(data.user);  // Establecer el usuario
-            setToken(data.token);  // Establecer el token
+            setToken(data.token);  // Establecer el token            
           }
         })
         .catch(() => {
           setUser(null);
           setToken(null);
         });
+
+        if(storedToken) console.log(userNormal);
+        
     }
   }, []);
 
@@ -56,7 +58,7 @@ export const UserContextProvider = ({ children }: { children: React.ReactNode })
   };
 
   return (
-    <UserContext.Provider value={{ user, setUser, token, setToken, logoutUser }}>
+    <UserContext.Provider value={{ userNormal, setUser, token, setToken, logoutUser }}>
       {children}
     </UserContext.Provider>
   );

@@ -14,12 +14,14 @@ export interface ILoginErrors {
 // REGISTER
 
 export interface IRegisterProps {
+  id: string,
   name: string;
   email: string;
   password: string;
   ConfirmPassword: string;
   address: string;
   image_url: string;
+  role: string
 }
 
 export interface IRegisterErrors {
@@ -78,6 +80,10 @@ export interface IOrder {
   date: string;
 }
 
+//EMPLOYEE
+
+
+export interface ICreateEmployee extends IRegisterProps {}
 export interface ICartItem extends IProduct {
   quantity: number;
 }

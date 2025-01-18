@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 import { LogIn, UserPlus, LogOut } from "lucide-react";
-import { useUserContext } from "@/contexts/UserContext";
+import { useUserContext } from "@/context/UserContext";
 
 export default function AuthButtons() {
-  const { user, logoutUser } = useUserContext();
+  const { userNormal, logoutUser } = useUserContext();
 
   return (
     <>
-      {user ? (
+      {userNormal ? (
         <button
           onClick={logoutUser}
           className="flex items-center px-4 py-2 bg-red-600/80 backdrop-blur-sm text-white rounded-md hover:bg-red-700 transition-colors"
