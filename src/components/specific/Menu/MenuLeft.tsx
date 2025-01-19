@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useCart } from "@/contexts/CartContext";
+import { useCart } from "@/context/CartContext";
 import productsToPreLoad from "@/helpers/products";
 import categoryToPreLoad from "@/helpers/category";
 import Image from "next/image";

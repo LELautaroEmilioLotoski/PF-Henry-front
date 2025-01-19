@@ -1,4 +1,4 @@
-import { AuthResponse, ILoginProps, IRegisterProps, ICreateEmployee } from "@/interfaces/Types";
+import { AuthResponse, ILoginProps, IRegisterProps, ICreateEmployee, IReservation } from "@/interfaces/Types";
 
 const APIURL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -40,6 +40,18 @@ export const createNewEmployee = async (id: string, employeeData: ICreateEmploye
       "Content-type": "application/json",
     },
     body: JSON.stringify(employeeData),
+  });
+  const data = await res.json();
+  return data;
+};
+
+export const reservation = async (id: string, userData: IReservation) => {
+  const res = await fetch(`${APIURL}reservations/create/${id}`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(userData),
   });
   const data = await res.json();
   return data;

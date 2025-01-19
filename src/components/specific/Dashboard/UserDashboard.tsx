@@ -1,43 +1,88 @@
-"use client"
+"use client";
 import React from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { useUserContext } from "@/context/UserContext"
- 
+import { useUserContext } from "@/context/UserContext";
+import DashboardSidebar from "@/components/header/Header";
+
 const UserDashboard = () => {
-  const { user, isLoading, error } = useUser();
-  const { userNormal, token } = useUserContext();
-  
+  const { user } = useUser();
+  const { userNormal } = useUserContext();
+
   const handleLogout = () => {
     window.location.href = "/api/auth/logout";
   };
 
- 
   return (
-    <div>
-      {user && (
-        <div>
-            <h1 className="text-2xl">Datos del usuario</h1>
-          <div className="flex bg-red-400">
-            <div className="bg-red-400">
-              <h2 className="text-2xl">Username: {user.name}</h2>
-              <p>Email: {user.email}</p>
-              <h3>NickName: {user.nickname}</h3>
-              <button onClick={handleLogout}>Cerrar sesion</button>
+    <div className="flex justify-center bg-gray-100 py-10">
+      <div className="min-h-screen bg-gray-100 flex flex-col items-center">
+        {user && (
+          <div className="flex">
+            <div>
+              <DashboardSidebar />
+            </div>
+            <div className="bg-white shadow-lg rounded-lg w-full max-w-4xl p-6 mb-10">
+              <div className="flex flex-col gap-4">
+                <h2 className="text-lg font-medium text-gray-600">
+                  Username: <span className="text-gray-800">{user.name}</span>
+                </h2>
+                <p className="text-lg font-medium text-gray-600">
+                  Email: <span className="text-gray-800">{user.email}</span>
+                </p>
+                <h3 className="text-lg font-medium text-gray-600">
+                  Nickname:{" "}
+                  <span className="text-gray-800">{user.nickname}</span>
+                </h3>
+                <button
+                  onClick={handleLogout}
+                  className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300"
+                >
+                  Cerrar sesión
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-      {userNormal && (
-        <div>
-          <h1 className="p-4 m-4 text-2xl">Datos del usuario:</h1>
-          <p>Nombre: {userNormal.name}</p>
-          <p>Direccion: {userNormal.address}</p>
-          <p>Email: {userNormal.email}</p>
-          <p>imagen: {userNormal.image_url}</p>
-        </div>
-      )}
+        )}
+        {userNormal && (
+          <div className="flex">
+            <div>
+              <DashboardSidebar />
+            </div>
+
+            <div className="bg-white shadow-lg rounded-lg w-full max-w-6xl p-6">
+              <h1 className="text-3xl font-semibold text-gray-800 mb-6">
+                Bienvenido, {userNormal.name}
+              </h1>
+              <div className="flex flex-col justify-between lg:flex-row gap-10">
+                <div className="bg-gray-50 rounded-lg p-6 shadow">
+                  <h2 className="text-xl font-semibold text-gray-800 mb-4">
+                    Tus datos personales
+                  </h2>
+                  <p className="text-lg font-medium text-gray-600">
+                    Nombre:{" "}
+                    <span className="text-gray-800">{userNormal.name}</span>
+                  </p>
+                  <p className="text-lg font-medium text-gray-600">
+                    Dirección:{" "}
+                    <span className="text-gray-800">{userNormal.address}</span>
+                  </p>
+                  <p className="text-lg font-medium text-gray-600">
+                    Email:{" "}
+                    <span className="text-gray-800">{userNormal.email}</span>
+                  </p>
+                  <p className="text-lg font-medium text-gray-600">
+                    Imagen:{" "}
+                    <span className="text-gray-800">
+                      {userNormal.image_url}
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
- 
+
 export default UserDashboard;
