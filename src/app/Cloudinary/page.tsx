@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
-import Image from 'next/image';
+
 
 const FileUploadComponent = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -32,7 +32,6 @@ const FileUploadComponent = () => {
       });
 
       console.log(response);
-      
       setFileUrl(response.data.img); // Aquí obtienes la URL de la imagen subida
       alert('Archivo subido correctamente.');
     } catch (error) {
