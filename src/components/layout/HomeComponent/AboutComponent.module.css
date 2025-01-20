@@ -1,0 +1,52 @@
+.about {
+  height: 100vh;
+  position: relative;
+  overflow: hidden; /* Agrega overflow: hidden para evitar que el contenido se desborde */
+}
+
+.Image2 {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  filter: brightness(0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: fade 2s ease-in-out; /* Agrega animación de fundido */
+}
+
+.text {
+  position: absolute;
+  text-align: justify;
+  font-size: 30px;
+  top: 50%;
+  left: 35%;
+  transform: translate(-50%, -50%);
+  color: white;
+  z-index: 1;
+  padding: 20px;
+  width: 60%;
+  opacity: 0; /* Inicialmente oculto */
+  animation: fadeIn 1.5s ease-in-out forwards; /* Animación de entrada */
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
