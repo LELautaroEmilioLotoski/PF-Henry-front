@@ -9,29 +9,29 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { format } from "date-fns"
 import { reservation } from '@/helpers/auth.helper'
 import { useUserContext } from '@/context/UserContext'
-
+ 
 export default function CreateReservation() {
   const {userNormal, setUser} = useUserContext()
   const [date, setDate] = useState<Date>()
   const [time, setTime] = useState("")
   const [guests, setGuests] = useState(1)
-
+ 
   const userId = userNormal?.id
-
+ 
   if(!userId) return null;
-
+ 
   const handleSubmit = async(e: React.FormEvent) => {
     if(!date || !time || guests < 1){
       alert("completa todos los datos por favor")
       return;
     }
-
+ 
     const userData = {
       date: date.toISOString().split("T")[0], // Formatear fecha a YYYY-MM-DD
       time,
       guest: guests,
     };
-
+ 
     e.preventDefault()
     try {
       const res = await reservation(userId, userData);
@@ -41,11 +41,11 @@ export default function CreateReservation() {
       setGuests(1)
     } catch (error) {
       console.log("error" + error);
-      
+ 
     }
-
+ 
   }
-
+ 
   return (
     <form onSubmit={handleSubmit} className="m-auto space-y-4 max-w-4xl border">
       <div>
@@ -90,4 +90,3 @@ export default function CreateReservation() {
     </form>
   )
 }
-

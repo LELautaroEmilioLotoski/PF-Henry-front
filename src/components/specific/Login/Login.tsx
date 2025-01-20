@@ -25,7 +25,8 @@ const Login = () => {
 
         Cookies.set("token", token, { expires: 7, secure: true });
         setUser(user);
-        router.push("/");
+        localStorage.setItem("user", JSON.stringify(user));
+        router.push("/profile");
       } else {
         setError("Credenciales incorrectas");
       }

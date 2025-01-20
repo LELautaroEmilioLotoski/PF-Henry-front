@@ -1,4 +1,4 @@
-import Menu from '@/components/specific/Menu/Menu'
+import Menu from '@/components/specific/TakeAway/TakeAway'
 
 function MenuView() {
   return (

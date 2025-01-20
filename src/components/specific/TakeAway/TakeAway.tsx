@@ -1,14 +1,13 @@
-// components/Menu.tsx
 import React from 'react';
-import MenuLeft from './MenuLeft';
+import TakeAwayLeft from './TakeAwayLeft';
 import Cart from './Cart';
 
-const Menu: React.FC = () => {
+const TakeAway: React.FC = () => {
   return (
       <div className="flex h-screen">
         <div className="w-1/2 p-4">
-        <h1>Menu</h1>
-          <MenuLeft />
+        <h1>Take-away</h1>
+          <TakeAwayLeft />
         </div>
         <div className="w-1/2 p-4">
           <Cart />
@@ -17,4 +16,4 @@ const Menu: React.FC = () => {
   );
 };
 
-export default Menu;
+export default TakeAway;
