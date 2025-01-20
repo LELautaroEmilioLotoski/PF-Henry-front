@@ -84,7 +84,8 @@ export interface IOrder {
 //EMPLOYEE
 
 
-export interface ICreateEmployee extends IRegisterProps {}
+// export interface ICreateEmployee extends IRegisterProps {}
+
 export interface ICartItem extends IProduct {
   quantity: number;
 }

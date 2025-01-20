@@ -8,7 +8,7 @@ import Image from "next/image";
 import { Search } from "lucide-react";
 import * as Icons from "lucide-react";
 
-const MenuLeft: React.FC = () => {
+const TakeAwayLeft: React.FC = () => {
   const { addToCart } = useCart();
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -124,4 +124,4 @@ const MenuLeft: React.FC = () => {
   );
 };
 
-export default MenuLeft;
+export default TakeAwayLeft;
