@@ -88,3 +88,11 @@ export interface ICreateEmployee extends IRegisterProps {}
 export interface ICartItem extends IProduct {
   quantity: number;
 }
+
+//RESERVATIONS
+
+export interface IReservation {
+  date: string,
+  time: string,
+  guest: number
+}
