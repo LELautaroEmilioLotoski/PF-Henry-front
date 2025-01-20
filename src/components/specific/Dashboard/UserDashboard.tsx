@@ -1,14 +1,60 @@
-"use client";
-import React from "react";
-import { useUser } from "@auth0/nextjs-auth0/client";
+"use client"
+import React, { useEffect } from "react";
 import { useUserContext } from "@/context/UserContext";
 import DashboardSidebar from "@/components/header/Header";
+import Auth0 from "@/pages/api/auth/[...auth0]";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 const UserDashboard = () => {
-  const { user } = useUser();
-  const { userNormal } = useUserContext();
+  const { userNormal, token, setUser, setToken, logoutUser } = useUserContext();
+  const {user} = useUser()
+
+  useEffect(() => {
+    if (token && !userNormal) {
+      fetch("http://localhost:3000/auth/validate-token", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        credentials: "include",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.isValid && data.payload) {
+            fetch(`http://localhost:3000/users/${data.payload.id}`, {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+              credentials: "include",
+            })
+              .then((res) => res.json())
+              .then((userData) => {
+                if (userData && userData.data) {
+                  setUser(userData.data);
+                }
+              })
+              .catch(() => {
+                setUser(null);
+                setToken(null);
+                logoutUser();
+              });
+          } else {
+            setUser(null);
+            setToken(null);
+            logoutUser();
+          }
+        })
+        .catch(() => {
+          setUser(null);
+          setToken(null);
+          logoutUser();
+        });
+    }
+  }, [token, userNormal, setUser, setToken, logoutUser]);
 
   const handleLogout = () => {
+    logoutUser();
     window.location.href = "/api/auth/logout";
   };
 

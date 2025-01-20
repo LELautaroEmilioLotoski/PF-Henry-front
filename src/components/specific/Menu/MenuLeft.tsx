@@ -6,6 +6,7 @@ import productsToPreLoad from "@/helpers/products";
 import categoryToPreLoad from "@/helpers/category";
 import Image from "next/image";
 import { Search } from "lucide-react";
+import * as Icons from "lucide-react";
 
 const MenuLeft: React.FC = () => {
   const { addToCart } = useCart();
@@ -31,9 +32,7 @@ const MenuLeft: React.FC = () => {
 
   return (
     <div className="relative">
-      {/* Sticky header with search and categories */}
       <div className="sticky top-0 bg-white z-10 space-y-6 pb-6 pt-4 px-4">
-        {/* Search Bar */}
         <div className="relative">
           <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
           <input
@@ -45,27 +44,29 @@ const MenuLeft: React.FC = () => {
           />
         </div>
 
-        {/* Categories */}
         <div className="grid grid-cols-5 gap-2">
-          {categoryToPreLoad.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => setSelectedCategory(category.id)}
-              className={`flex flex-col items-center aspect-square w-20 justify-center rounded-full transition-all
+          {categoryToPreLoad.map((category) => {
+            const IconComponent =
+              Icons[category.icon as keyof typeof Icons] || Icons["AlertCircle"];
+            return (
+              <button
+                key={category.id}
+                onClick={() => setSelectedCategory(category.id)}
+                className={`flex flex-col items-center aspect-square w-20 justify-center rounded-full transition-all
         ${
           selectedCategory === category.id
             ? "bg-[#FFF8E7] text-gray-800 scale-105"
             : "bg-[#FFF8E7] hover:scale-105 text-gray-600"
         }`}
-            >
-              <span className="text-2xl mb-1">{category.icon}</span>
-              <span className="text-xs font-medium">{category.name}</span>
-            </button>
-          ))}
+              >
+                <IconComponent className="text-2xl mb-1" />
+                <span className="text-xs font-medium">{category.name}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      {/* Scrollable products section */}
       <div className="px-4 space-y-6">
         {Object.entries(groupedProducts).map(([category, categoryProducts]) => (
           <div key={category} className="space-y-4">
@@ -79,7 +80,6 @@ const MenuLeft: React.FC = () => {
                   key={product.id}
                   className="bg-white rounded-lg shadow-sm p-4 flex gap-4"
                 >
-                  {/* Left side: Product info */}
                   <div className="flex-1 flex flex-col justify-between">
                     <div>
                       <h3 className="text-lg font-semibold text-gray-800 mb-2">
@@ -106,8 +106,6 @@ const MenuLeft: React.FC = () => {
                       </button>
                     </div>
                   </div>
-
-                  {/* Right side: Product image */}
                   <div className="relative w-32 h-32 flex-shrink-0">
                     <Image
                       src={product.image || "/placeholder.svg"}

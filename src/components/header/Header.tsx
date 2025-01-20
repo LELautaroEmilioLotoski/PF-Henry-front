@@ -9,9 +9,9 @@ export default function DashboardSidebar() {
           <Home className="mr-2 h-4 w-4" />
           Crear pedido
         </Link>
-        <Link href="/Booking" className="flex align-middle items-center gap-8 p-2 w-full justify-start">
+        <Link href="/getBooking" className="flex align-middle items-center gap-8 p-2 w-full justify-start">
           <Utensils className="mr-2 h-4 w-4" />
-          Crear reserva
+          Mis reservas
         </Link>
         <button className="flex align-middle items-center gap-8 p-2 w-full justify-start">
           <Users className="mr-2 h-4 w-4" />

@@ -46,12 +46,13 @@ export interface AuthResponse {
 
 export interface IUser {
   id: string;
-  name: string;
   email: string;
-  address: string;
-  role: string;
-  image_url: string;
-  created_at: string;
+  roles: string[];
+  name?: string;
+  address?: string;
+  role?: string;
+  image_url?: string;
+  created_atts?: string;
 }
 
 
