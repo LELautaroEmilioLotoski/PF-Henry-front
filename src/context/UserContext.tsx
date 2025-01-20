@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
 import { createContext, useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { IUser } from "@/interfaces/Types";
 
 interface IUserContextProps {
-  user: IUser | null;
+  userNormal: IUser | null;
   setUser: (user: IUser | null) => void;
   token: string | null;
   setToken: (token: string | null) => void;
@@ -13,54 +13,60 @@ interface IUserContextProps {
 }
 
 export const UserContext = createContext<IUserContextProps>({
-  user: null,
+  userNormal: null,
   setUser: () => {},
   token: null,
   setToken: () => {},
-  logoutUser: () => {},
+  logoutUser: () => {}
 });
 
 export const UserContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<IUser | null>(null);
+  const [userNormal, setUser] = useState<IUser | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
+    const storedUser = localStorage.getItem("user");
     const storedToken = Cookies.get("token");
-    console.log(storedToken);
-    
+  
     if (storedToken) {
-      fetch("/api/auth/validate", {
+      setToken(storedToken);
+  
+      fetch("http://localhost:3000/auth/validate-token", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${storedToken}`,
         },
+        credentials: "include",
       })
         .then((res) => res.json())
         .then((data) => {
-          if (data.user) {
-            setUser(data.user);  // Establecer el usuario
-            setToken(data.token);  // Establecer el token
+          if (data.isValid && data.payload) {
+            setUser(storedUser ? JSON.parse(storedUser) : null);
+          } else {
+            logoutUser();
           }
         })
         .catch(() => {
-          setUser(null);
-          setToken(null);
+          logoutUser();
         });
+    } else {
+      logoutUser();
     }
   }, []);
+  
 
   const logoutUser = () => {
     Cookies.remove("token");
+    localStorage.removeItem("user");
     setUser(null);
     setToken(null);
   };
 
   return (
-    <UserContext.Provider value={{ user, setUser, token, setToken, logoutUser }}>
+    <UserContext.Provider value={{ userNormal, setUser, token, setToken, logoutUser }}>
       {children}
     </UserContext.Provider>
   );
 };
 
-// Hook personalizado para acceder al contexto
 export const useUserContext = () => useContext(UserContext);

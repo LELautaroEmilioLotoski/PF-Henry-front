@@ -5,7 +5,7 @@ import MobileMenu from "@/components/layout/Navbar/MobileMenu";
 
 export default function Navbar() {
   return (
-    <nav className="fixed w-full bg-white/50 backdrop-blur-sm border-b border-gray-200/20">
+    <nav className="fixed top-0 w-full bg-white/50 backdrop-blur-sm border-b border-gray-200/20 shadow-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="flex items-center">
           <Link href="/" className="flex items-center space-x-2">

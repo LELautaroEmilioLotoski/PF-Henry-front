@@ -2,13 +2,15 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { register } from "@/helpers/auth.helper";
+import { register, createNewEmployee } from "@/helpers/auth.helper";
 import { validateRegisterForm } from "@/helpers/validate";
 import { IRegisterErrors, IRegisterProps } from "@/interfaces/Types";
 
 const Register = () => {
   const router = useRouter();
   const initialState: IRegisterProps = {
+    id: "",
+    role: "",
     name: "",
     email: "",
     password: "",
@@ -43,6 +45,8 @@ const Register = () => {
   
     try {
       const res = await register(dataUser);
+      console.log(dataUser);
+      
       console.log("Registration response:", res); // Log de la respuesta de la API
   
       if (res.message === "Registro exitoso") {

@@ -1,4 +1,10 @@
-import { AuthResponse, ILoginProps, IRegisterProps } from "@/interfaces/Types";
+import {
+  AuthResponse,
+  ILoginProps,
+  IRegisterProps,
+  ICreateEmployee,
+  IReservation,
+} from "@/interfaces/Types";
 
 const APIURL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -21,13 +27,64 @@ export const login = async (userData: ILoginProps): Promise<AuthResponse> => {
       "Content-type": "application/json",
     },
     body: JSON.stringify(userData),
-    
   });
 
   if (!res.ok) {
-    throw new Error("Error al iniciar sesión");
+    console.log("error al iniciar sesion");
   }
 
   const data: AuthResponse = await res.json(); // Ajustamos a la nueva estructura con el token y el user
+  return data;
+};
+
+export const createNewEmployee = async (
+  id: string,
+  employeeData: ICreateEmployee
+) => {
+  const res = await fetch(`${APIURL}users/UpdateRole/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(employeeData),
+  });
+  const data = await res.json();
+  return data;
+};
+
+export const reservation = async (id: string, userData: IReservation) => {
+  const res = await fetch(`${APIURL}reservations/create/${id}`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(userData),
+  });
+  const data = await res.json();
+  return data;
+};
+
+export const getReservations = async () => {
+  const url = `${APIURL}reservations`;
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+
+export const deleteReservation = async (id: any) => {
+  const res = await fetch(`${APIURL}reservations/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-type": "application/json",
+    },
+  });
+  const data = await res.json();
   return data;
 };

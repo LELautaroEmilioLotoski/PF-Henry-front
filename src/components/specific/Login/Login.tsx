@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useUserContext } from "@/contexts/UserContext";
+import { useUserContext } from "@/context/UserContext";
 import { login } from "@/helpers/auth.helper";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
@@ -18,20 +18,23 @@ const Login = () => {
     try {
       const response = await login({ email, password });
 
-      if (response) {
+      if (response) {        
+
         const token = response.data.token;
         const user = response.data.user;
 
         Cookies.set("token", token, { expires: 7, secure: true });
         setUser(user);
-        router.push("/");
+        localStorage.setItem("user", JSON.stringify(user));
+        router.push("/profile");
       } else {
         setError("Credenciales incorrectas");
       }
     } catch (error) {
       console.error("Login Error:", error);
       setError("Error al iniciar sesión");
-    }
+    }  
+    
   };
 
   return (
@@ -71,7 +74,7 @@ const Login = () => {
         />
       </div>
 
-      <button type="submit" className="button-primary">
+      <button type="submit" className="button-primary" onClick={handleLogin}>
         Iniciar sesión
       </button>
 
