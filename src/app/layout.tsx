@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-import { Poppins, Lora } from "next/font/google";
+import { Poppins, MedievalSharp } from "next/font/google";
 import Footer from "@/components/layout/Footer/Footer";
 import Navbar from "@/components/layout/Navbar/Navbar";
 import Contexts from "./Contexts";
@@ -9,10 +9,10 @@ const primaryFont = Poppins({
   variable: "--primary-font",
   weight: ["400", "700"],
 });
-const secondaryFont = Lora({
+const secondaryFont = MedievalSharp({
   subsets: ["latin"],
   variable: "--secondary-font",
-  weight: ["400", "700"],
+  weight: ["400", "400"],
 });
 
 export default function RootLayout({
@@ -27,7 +27,7 @@ export default function RootLayout({
           className={`${primaryFont.variable} ${secondaryFont.variable} antialiased flex flex-col min-h-screen`}
         >
           <Navbar />
-          <main className="flex-1 mt-16">{children}</main>
+          <main className="flex-1">{children}</main>
           <Footer />
         </body>
     </html>
