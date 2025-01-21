@@ -27,7 +27,7 @@ export default function CreateReservation() {
     }
  
     const userData = {
-      date: date.toISOString().split("T")[0], // Formatear fecha a YYYY-MM-DD
+      date: date.toISOString().split("T")[0],
       time,
       guest: guests,
     };
