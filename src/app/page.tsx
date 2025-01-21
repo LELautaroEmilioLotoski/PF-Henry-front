@@ -6,16 +6,9 @@ import HomeView from "@/views/HomeView/HomeView";
 import DashboardView from "@/views/DashboardView/DashboardView";
  
 const Home = () => {
-  const { user, isLoading } = useUser();
- 
-  if (isLoading) return null;
   return (
-    <div>
-      {user ? (
-        <DashboardView/>
-      ) : (
-        <HomeView/>
-      )}
+    <div> 
+      <HomeView/>
     </div>
   );
 };
