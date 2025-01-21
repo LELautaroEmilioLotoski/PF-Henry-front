@@ -37,20 +37,20 @@ const BookingHistorial = () => {
   //   if (!userId) {
   //     return <h3>No hay reservas disponibles</h3>;
   //   }
-  const deleteReservations = async (id: any) => {
-    const { data } = await getReservations();
-    const userReservations = data.filter(
-      (reservation: any) => reservation.id
-    );
+  // const deleteReservations = async (id: any) => {
+  //   const { data } = await getReservations();
+  //   const userReservations = data.filter(
+  //     (reservation: any) => reservation.id
+  //   );
 
-    try {
-      const res = deleteReservation(userReservations);
-      alert("reserva eliminada con exito!")
-    } catch (error) {
-        alert("no se ha podido eliminar correctamente");
+  //   try {
+  //     const res = deleteReservation(userReservations);
+  //     alert("reserva eliminada con exito!")
+  //   } catch (error) {
+  //       alert("no se ha podido eliminar correctamente");
         
-    }
-  };
+  //   }
+  // };
 
   return (
     <div>

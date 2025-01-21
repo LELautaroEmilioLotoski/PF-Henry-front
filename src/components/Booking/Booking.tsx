@@ -1,5 +1,5 @@
 'use client'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -11,7 +11,7 @@ import { reservation } from '@/helpers/auth.helper'
 import { useUserContext } from '@/context/UserContext'
  
 export default function CreateReservation() {
-  const {userNormal, setUser} = useUserContext()
+  const {userNormal} = useUserContext()
   const [date, setDate] = useState<Date>()
   const [time, setTime] = useState("")
   const [guests, setGuests] = useState(1)
