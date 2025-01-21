@@ -79,7 +79,7 @@ export const getReservations = async () => {
 };
 
 export const deleteReservation = async (id: any) => {
-  const res = await fetch(`${APIURL}reservations/${id}`, {
+  const res = await fetch(`${APIURL}reservations/create/${id}`, {
     method: "DELETE",
     headers: {
       "Content-type": "application/json",
