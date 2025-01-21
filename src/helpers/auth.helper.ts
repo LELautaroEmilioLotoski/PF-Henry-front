@@ -2,7 +2,6 @@ import {
   AuthResponse,
   ILoginProps,
   IRegisterProps,
-  ICreateEmployee,
   IReservation,
 } from "@/interfaces/Types";
 
@@ -39,7 +38,7 @@ export const login = async (userData: ILoginProps): Promise<AuthResponse> => {
 
 export const createNewEmployee = async (
   id: string,
-  employeeData: ICreateEmployee
+  employeeData: IRegisterProps
 ) => {
   const res = await fetch(`${APIURL}users/UpdateRole/${id}`, {
     method: "PUT",
@@ -78,12 +77,13 @@ export const getReservations = async () => {
   return data;
 };
 
-export const deleteReservation = async (id: any) => {
-  const res = await fetch(`${APIURL}reservations/create/${id}`, {
-    method: "DELETE",
+export const cancelledReservation = async (id: string) => {
+  const res = await fetch(`${APIURL}reservations/cancelled/${id}`, {
+    method: "PUT",
     headers: {
       "Content-type": "application/json",
     },
+    
   });
   const data = await res.json();
   return data;

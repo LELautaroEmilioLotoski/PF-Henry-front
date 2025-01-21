@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { deleteReservation, getReservations } from "@/helpers/auth.helper";
+import { cancelledReservation, getReservations } from "@/helpers/auth.helper";
 import { IReservation } from "@/interfaces/Types";
 import Link from "next/link";
 
@@ -44,7 +44,7 @@ const BookingHistorial = () => {
     );
 
     try {
-      const res = deleteReservation(userReservations);
+      const res = cancelledReservation(userReservations);
       alert("reserva eliminada con exito!")
     } catch (error) {
         alert("no se ha podido eliminar correctamente");
@@ -67,7 +67,7 @@ const BookingHistorial = () => {
               <p>Fecha de la reservación: {reservation.date}</p>
               <p>Cantidad de personas: {reservation.guest}</p>
               <p>Horario: {reservation.time}</p>
-              <button onClick={deleteReservation}>Eliminar reserva</button>
+              <button>Eliminar reserva</button>
             </div>
           ))}
         </div>
