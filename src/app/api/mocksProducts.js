@@ -1,26 +1,26 @@
 export const combos = [
     {
-      nombre: "Combo Clásico",
-      precio: 12.99,
-      descripcion: "Nuestra hamburguesa clásica con queso, papas fritas y una bebida refrescante.",
-      imagen: "https://example.com/combo-clasico.jpg"
+      nombre: "The Butterbeer Beast",
+      precio: 12.40,
+      descripcion: "Butterbeer-infused bun, Double Smoked Patty, Cheddar, Bacon, Special Sauce",
+      imagen: "https://static.vecteezy.com/system/resources/thumbnails/036/333/937/small/ai-generated-yummy-street-food-burger-isolated-png.png"
     },
     {
-      nombre: "Combo Veggie",
-      precio: 10.99,
-      descripcion: "Hamburguesa vegetariana con lechuga, tomate y aguacate, acompañada de papas fritas y una bebida.",
-      imagen: "https://example.com/combo-veggie.jpg"
+      nombre: "Hagrid’s Classic Burger",
+      precio: 8.90,
+      descripcion: "Classic bun, Smoked Patty, Lettuce, Tomato, Cheddar, Mayonnaise.",
+      imagen: "https://static.vecteezy.com/system/resources/thumbnails/036/333/937/small/ai-generated-yummy-street-food-burger-isolated-png.png"
     },
     {
-      nombre: "Combo Familiar",
-      precio: 29.99,
-      descripcion: "Perfecto para compartir en familia. Incluye dos hamburguesas, una orden grande de papas fritas, aros de cebolla y dos bebidas.",
-      imagen: "https://example.com/combo-familiar.jpg"
+      nombre: "The Sirius Black BBQ",
+      precio: 13.20,
+      descripcion: "Brioche bun, Double Patty, Crispy Bacon, Caramelized Onions, BBQ Sauce.",
+      imagen: "https://static.vecteezy.com/system/resources/thumbnails/036/333/937/small/ai-generated-yummy-street-food-burger-isolated-png.png"
     },
     {
-      nombre: "Combo Niños",
-      precio: 7.99,
-      descripcion: "Hamburguesa pequeña con queso, papas fritas y un jugo de fruta. Ideal para los más pequeños.",
-      imagen: "https://example.com/combo-ninos.jpg"
+      nombre: "The Golden Snitch Cheese",
+      precio: 11.00,
+      descripcion: "Potato bun, Smoked Patty, Triple Cheddar, Golden Sauce.",
+      imagen: "https://static.vecteezy.com/system/resources/thumbnails/036/333/937/small/ai-generated-yummy-street-food-burger-isolated-png.png"
     }
   ];

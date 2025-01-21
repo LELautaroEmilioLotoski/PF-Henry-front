@@ -17,6 +17,9 @@ const BotonsComponent = () => {
             <a href="#Characters">
               <button className={styles.button}>Gallery</button>
             </a>
+            <a href="#Products">
+              <button className={styles.button}>Products</button>
+            </a>
           </div>
         </div>
       </>

@@ -12,7 +12,6 @@
   position: absolute;
   top: 0;
   left: 0;
-  animation: fade 2s ease-in-out; /* Agrega animación de fundido */
 }
 
 .text {
@@ -26,8 +25,33 @@
   z-index: 1;
   padding: 20px;
   width: 60%;
-  opacity: 0; /* Inicialmente oculto */
-  animation: fadeIn 1.5s ease-in-out forwards; /* Animación de entrada */
+  opacity: 0; 
+  animation: fadeIn 1.5s ease-in-out forwards; 
+}
+
+.Image6 {
+  position: absolute; 
+  bottom: 160px; 
+  right: 50px; 
+  z-index: 2; 
+  width: 400px; 
+  opacity: 0;
+  animation: fadeInImage 3.5s ease-in-out infinite; /* Cambiamos forwards a infinite */
+}
+
+@keyframes fadeInImage {
+  0% {
+    opacity: 0;
+    transform: translateY(50px); 
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0); 
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(50px); 
+  }
 }
 
 @keyframes fade {
@@ -49,4 +73,3 @@
     transform: translate(-50%, -50%) scale(1);
   }
 }
-

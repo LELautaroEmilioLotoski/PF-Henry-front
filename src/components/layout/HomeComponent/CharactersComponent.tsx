@@ -8,7 +8,7 @@ const CharactersComponent = () => {
     <>
     <div className={styles.characters} id="Characters">
     <Image src={Image4} alt="Fondo" className={styles.Image4}></Image>
-    <h2>Aca iran los personajes</h2>
+    <h2 className={styles.text}>Aca ira la galeria de personajes</h2>
     <BotonsComponent/>
     </div>
     </>
