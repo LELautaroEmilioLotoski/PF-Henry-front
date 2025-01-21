@@ -4,7 +4,11 @@ import type React from "react"
 import { useCart } from "@/context/CartContext"
 import { Minus, Plus, Trash2 } from "lucide-react"
 
-const Cart: React.FC = () => {
+interface CartProps {
+  onCreateOrder: () => void
+}
+
+const Cart: React.FC<CartProps> = ({ onCreateOrder }) => {
   const { cartItems, removeFromCart, updateQuantity, total } = useCart()
 
   return (
@@ -52,11 +56,19 @@ const Cart: React.FC = () => {
         </div>
       </div>
 
-      <div className="p-4 border-t mt-auto">
+      <div className="p-4 border-t mt-auto space-y-4">
         <div className="w-full flex items-center justify-between">
           <span className="text-lg font-semibold">Total:</span>
           <span className="text-lg font-bold text-amber-500">${total}</span>
         </div>
+        {total > 0 && (
+          <button
+            className="w-full bg-amber-500 text-white py-3 px-4 rounded-lg font-medium hover:bg-amber-600 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+            onClick={onCreateOrder}
+          >
+            Create Order
+          </button>
+        )}
       </div>
     </div>
   )
