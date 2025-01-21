@@ -13,8 +13,8 @@ const UbicationComponent = () => {
           <h1 className={styles.title1}>We are waiting for you!!!</h1>
           <h1>Ubication</h1>
           <h2>Calle 123 Falsa</h2>
-          <h3>Numero Telefonico</h3>
-          <h4>Correo Electronico</h4>
+          <h3>Tel: 3203810987</h3>
+          <h4>threebroomsticks@mail.com</h4>
           <h5>Horario de Atencion:</h5>
         </div>
         <iframe className={styles.iframeContainer}
