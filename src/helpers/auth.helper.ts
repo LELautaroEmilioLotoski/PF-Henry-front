@@ -63,8 +63,8 @@ export const reservation = async (id: string, userData: IReservation) => {
   return data;
 };
 
-export const getReservations = async () => {
-  const url = `${APIURL}reservations`;
+export const getReservations = async (id: string) => {
+  const url = `${APIURL}users/${id}/reservations`;
 
   const res = await fetch(url, {
     method: "GET",

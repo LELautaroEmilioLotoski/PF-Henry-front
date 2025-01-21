@@ -97,3 +97,9 @@ export interface IReservation {
   time: string,
   guest: number
 }
+
+export interface IReservations extends IReservation {
+  id: string,
+  status: string,
+  create_at: string
+}

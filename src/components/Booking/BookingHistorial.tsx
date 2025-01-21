@@ -2,21 +2,19 @@
 
 import React, { useEffect, useState } from "react";
 import { cancelledReservation, getReservations } from "@/helpers/auth.helper";
-import { IReservation } from "@/interfaces/Types";
+import { IReservations } from "@/interfaces/Types";
 import Link from "next/link";
 
 const BookingHistorial = () => {
   const [userId, setUserId] = useState<string | null>(null);
-  const [reservations, setReservations] = useState<IReservation[]>([]);
+  const [reservations, setReservations] = useState<IReservations[]>([]);
+
   useEffect(() => {
     const fetchReservations = async () => {
       try {
         if (userId) {
-          const { data } = await getReservations();
-          const userReservations = data.filter(
-            (reservation: any) => reservation.userId.id === userId
-          );
-          setReservations(userReservations);
+          const { data } = await getReservations(userId);
+          setReservations(data);
         }
       } catch (error) {
         console.error("Error al obtener las reservas:", error);
@@ -34,21 +32,21 @@ const BookingHistorial = () => {
     }
   }, []);
 
-  //   if (!userId) {
-  //     return <h3>No hay reservas disponibles</h3>;
-  //   }
-  const deleteReservations = async (id: any) => {
-    const { data } = await getReservations();
-    const userReservations = data.filter(
-      (reservation: any) => reservation.id
-    );
+  if (!userId) {
+    return null;
+  }
 
+  const cancelReservations = async (id: string) => {
     try {
-      const res = cancelledReservation(userReservations);
-      alert("reserva eliminada con exito!")
+      const response = await cancelledReservation(id);
+      setReservations((prevReservations) =>
+        prevReservations.filter((reservation) => reservation.id !== id)
+      );
+
+      alert("Reserva cancelada con éxito");
     } catch (error) {
-        alert("no se ha podido eliminar correctamente");
-        
+      console.error("Error al cancelar la reserva:", error);
+      alert("No se pudo cancelar la reserva");
     }
   };
 
@@ -61,13 +59,33 @@ const BookingHistorial = () => {
         <div className="flex flex-wrap gap-4 justify-center items-center">
           {reservations.map((reservation) => (
             <div
-              key={reservation.date}
+              key={reservation.id}
               className="bg-slate-200 w-80 h-60 p-4 rounded shadow-md flex flex-col justify-between"
             >
               <p>Fecha de la reservación: {reservation.date}</p>
               <p>Cantidad de personas: {reservation.guest}</p>
               <p>Horario: {reservation.time}</p>
-              <button>Eliminar reserva</button>
+              <p>
+                Estado de la reserva:{" "}
+                <span
+                  className={`${
+                    reservation.status === "confirmed"
+                      ? "text-green-500"
+                      : "text-red-500"
+                  }`}
+                >
+                  {reservation.status}
+                </span>
+              </p>
+
+              {reservation.status === "confirmed" && (
+                <button
+                  onClick={() => cancelReservations(reservation.id)}
+                  className="bg-red-500 text-white px-4 py-2 rounded"
+                >
+                  Cancelar Reserva
+                </button>
+              )}
             </div>
           ))}
         </div>
