@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import { cancelledReservation, getReservations } from "@/helpers/auth.helper";
 import { IReservations } from "@/interfaces/Types";
@@ -53,7 +52,7 @@ const BookingHistorial = () => {
   return (
     <div>
       <h1 className="flex justify-center items-center p-5 m-5">
-        Historial de Reservas
+        Reservation history
       </h1>
       {reservations.length > 0 ? (
         <div className="flex flex-wrap gap-4 justify-center items-center">
@@ -62,11 +61,11 @@ const BookingHistorial = () => {
               key={reservation.id}
               className="bg-slate-200 w-80 h-60 p-4 rounded shadow-md flex flex-col justify-between"
             >
-              <p>Fecha de la reservación: {reservation.date}</p>
-              <p>Cantidad de personas: {reservation.guest}</p>
-              <p>Horario: {reservation.time}</p>
+              <p>Reservation date: {reservation.date}</p>
+              <p>Number of people: {reservation.guest}</p>
+              <p>Schedule: {reservation.time}</p>
               <p>
-                Estado de la reserva:{" "}
+                Reservation status:{" "}
                 <span
                   className={`${
                     reservation.status === "confirmed"
@@ -83,21 +82,21 @@ const BookingHistorial = () => {
                   onClick={() => cancelReservations(reservation.id)}
                   className="bg-red-500 text-white px-4 py-2 rounded"
                 >
-                  Cancelar Reserva
+                  cancel reservation
                 </button>
               )}
             </div>
           ))}
         </div>
       ) : (
-        <p>No hay reservas disponibles</p>
+        <p>No reservations available</p>
       )}
       <div className="flex justify-center p-5 m-4">
         <Link
           href="/createBooking"
           className="flex justify-center items-center border max-w-25 p-4 rounded"
         >
-          Crear reserva
+          Create reservation
         </Link>
       </div>
     </div>
