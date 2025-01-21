@@ -5,7 +5,7 @@ import HomeView from "@/views/HomeView/HomeView";
  
 const Home = () => {
   return (
-    <div>
+    <div> 
       <HomeView/>
     </div>
   );
