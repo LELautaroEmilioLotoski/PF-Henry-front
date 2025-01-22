@@ -23,8 +23,11 @@ const FileUploadComponent = () => {
       setUploading(true);
 
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append('file', file)
 
+       console.log(formData.get("file"));
+       
+      
       const response = await axios.post('http://localhost:3000/files/uploadImage/id', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -32,7 +35,7 @@ const FileUploadComponent = () => {
       });
 
       console.log(response);
-      setFileUrl(response.data.img); // Aquí obtienes la URL de la imagen subida
+      setFileUrl(response.data.img); 
       alert('Archivo subido correctamente.');
     } catch (error) {
       console.error('Error al subir el archivo:', error);
@@ -54,7 +57,7 @@ const FileUploadComponent = () => {
         <div>
           <h2>Imagen Subida:</h2>
           <img
-            src={fileUrl} // La URL obtenida de Cloudinary
+            src={fileUrl}
             alt="Imagen subida"
           />
         </div>
