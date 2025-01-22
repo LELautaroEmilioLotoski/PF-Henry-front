@@ -5,7 +5,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 export default async function callback(req: NextApiRequest, res: NextApiResponse) {
   try {
     await handleCallback(req, res, {
-      redirectTo: '/dashboard', // Asegúrate de que este campo exista en la versión de @auth0/nextjs-auth0
+      redirectTo: '/profile', 
     });
   } catch (error) {
     console.error(error);
