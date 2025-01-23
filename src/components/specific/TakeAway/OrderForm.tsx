@@ -2,6 +2,7 @@
 
 import type React from "react"
 import { useState, useEffect } from "react"
+import { useCart } from "@/context/CartContext"
 
 interface User {
   id: string
@@ -23,6 +24,7 @@ interface FormData {
 }
 
 const OrderForm: React.FC = () => {
+  const { clearCart } = useCart()
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -32,7 +34,6 @@ const OrderForm: React.FC = () => {
   })
 
   useEffect(() => {
-    // Obtener datos del usuario del localStorage
     const userString = localStorage.getItem("user")
     if (userString) {
       const user: User = JSON.parse(userString)
@@ -48,7 +49,8 @@ const OrderForm: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     console.log("Form submitted:", formData)
-    // Aquí iría la lógica para procesar la orden
+    // clearCart()
+    alert("Order created successfully!")
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -169,3 +171,4 @@ const OrderForm: React.FC = () => {
 }
 
 export default OrderForm
+
