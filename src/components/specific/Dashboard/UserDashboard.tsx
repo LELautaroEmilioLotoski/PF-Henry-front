@@ -9,7 +9,6 @@ const UserDashboard = () => {
   const { userNormal, logoutUser } = useUserContext();
   const { user } = useUser();
 
- 
   const handleLogout = () => {
     logoutUser();
     window.location.href = "/api/auth/logout";
