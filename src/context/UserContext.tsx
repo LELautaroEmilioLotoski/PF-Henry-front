@@ -56,6 +56,7 @@ export const UserContextProvider = ({ children }: { children: React.ReactNode })
   
 
   const logoutUser = () => {
+    Cookies.remove("appSession")
     Cookies.remove("token");
     localStorage.removeItem("user");
     setUser(null);

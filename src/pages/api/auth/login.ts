@@ -6,7 +6,11 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
     console.log("estoy en el login de auth0");
     
     await handleLogin(req, res, {
+<<<<<<< HEAD
+      returnTo: '/profile',
+=======
       returnTo: '/profile', // Página a la que redirigir después del login
+>>>>>>> 3858565680e99ddd85c989879195305d37470f29
     });
   } catch (error) {
     console.error(error);
