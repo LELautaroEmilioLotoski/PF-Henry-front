@@ -2,9 +2,9 @@
 
 import type React from "react"
 import { useState } from "react"
-import TakeAwayLeft from "./TakeAwayLeft"
+import TakeAwayLeft from "./TakeAwayLeft/TakeAwayLeft"
 import Cart from "./Cart"
-import OrderForm from "@/components/specific/TakeAway/OrderForm"
+import OrderForm from "@/components/specific/TakeAway/OrderForm/OrderForm"
 
 const TakeAway: React.FC = () => {
   const [showOrderForm, setShowOrderForm] = useState(false)
