@@ -88,3 +88,18 @@ export const cancelledReservation = async (id: string) => {
   const data = await res.json();
   return data;
 };
+
+
+// export const getUsers = async () => {
+//   const url = `${APIURL}users`;
+
+//   const res = await fetch(url, {
+//     method: "GET",
+//     headers: {
+//       "Content-type": "application/json",
+//     },
+//   });
+
+//   const data = await res.json();
+//   return data;
+// };

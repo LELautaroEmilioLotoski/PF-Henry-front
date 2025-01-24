@@ -1,30 +1,27 @@
-"use client";
+"use client"
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { CalendarIcon } from "lucide-react";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { format } from "date-fns";
-import { reservation } from "@/helpers/auth.helper";
 import { useUserContext } from "@/context/UserContext";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import { reservation } from "@/helpers/auth.helper";
+import DateInput from "./DateInput";
+import TimeInput from "./TimeInput";
+import GuestsInput from "./GuestInput";
 
 export default function CreateReservation() {
   const { userNormal } = useUserContext();
+  const { user } = useUser();
   const [date, setDate] = useState<Date>();
   const [time, setTime] = useState("");
   const [guests, setGuests] = useState(1);
 
-  const userId = userNormal?.id;
+  const userId = userNormal?.id || user?.sub;
 
   if (!userId) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
     if (!date || !time || guests < 1) {
       alert("Completa todos los datos por favor.");
       return;
@@ -36,15 +33,19 @@ export default function CreateReservation() {
       guest: guests,
     };
 
-    e.preventDefault();
     try {
-      const res = await reservation(userId, userData);
-      alert("Reserva creada correctamente.");
-      setDate(undefined);
-      setTime("");
-      setGuests(1);
+      if (userId) {
+        await reservation(userId, userData);
+        alert("Reserva creada correctamente.");
+        setDate(undefined);
+        setTime("");
+        setGuests(1);
+      } else {
+        alert("No se pudo identificar al usuario.");
+      }
     } catch (error) {
-      console.log("Error: " + error);
+      console.error("Error al crear la reserva:", error);
+      alert("Error al crear la reserva.");
     }
   };
 
@@ -53,55 +54,9 @@ export default function CreateReservation() {
       onSubmit={handleSubmit}
       className="max-w-lg mx-auto p-6 space-y-6 bg-white border rounded-lg shadow-md"
     >
-      <div>
-        <Label className="mb-2 block text-sm font-medium text-gray-700">
-          Date
-        </Label>
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              className="w-full justify-start text-left font-normal border-gray-300 hover:border-gray-400"
-            >
-              <CalendarIcon className="mr-2 h-4 w-4 text-gray-500" />
-              {date ? format(date, "PPP") : <span>Select a date</span>}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto rounded-lg shadow-lg">
-            <Calendar
-              mode="single"
-              selected={date}
-              onSelect={setDate}
-              initialFocus
-            />
-          </PopoverContent>
-        </Popover>
-      </div>
-      <div>
-        <Label htmlFor="time" className="mb-2 block text-sm font-medium text-gray-700">
-          Hour
-        </Label>
-        <Input
-          type="time"
-          id="time"
-          value={time}
-          onChange={(e) => setTime(e.target.value)}
-          className="w-full px-3 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500"
-        />
-      </div>
-      <div>
-        <Label htmlFor="guests" className="mb-2 block text-sm font-medium text-gray-700">
-          Number of Guests
-        </Label>
-        <Input
-          type="number"
-          id="guests"
-          min={1}
-          value={guests}
-          onChange={(e) => setGuests(parseInt(e.target.value))}
-          className="w-full px-3 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500"
-        />
-      </div>
+      <DateInput date={date} setDate={setDate} />
+      <TimeInput time={time} setTime={setTime} />
+      <GuestsInput guests={guests} setGuests={setGuests} />
       <Button
         type="submit"
         className="w-full px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500"
