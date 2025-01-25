@@ -63,6 +63,7 @@ export interface Product {
     idUser: string;
     paymentMethod: "Efectivo" | "Transferencia";
     MenuItems: { idMenuItem: string; quantity: number }[];
+    comment: string;
   }
 
   export interface UserDataFormProps {

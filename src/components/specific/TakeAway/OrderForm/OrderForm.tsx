@@ -51,6 +51,8 @@ const OrderForm: React.FC = () => {
         idMenuItem: item.id,
         quantity: item.quantity,
       })),
+      comment: formData.comments
+
     };
 
     if (!orderData.idUser) {
