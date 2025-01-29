@@ -1,6 +1,6 @@
 "use client"
 
-import type React from "react"
+import React from "react"
 import { useCart } from "@/context/CartContext"
 import { Minus, Plus, Trash2 } from "lucide-react"
 
@@ -9,7 +9,25 @@ interface CartProps {
 }
 
 const Cart: React.FC<CartProps> = ({ onCreateOrder }) => {
-  const { cartItems, removeFromCart, updateQuantity, total } = useCart()
+  const { cartItems, removeFromCart, updateQuantity, total, setCartItems } = useCart()
+  const [isOrderCreated, setIsOrderCreated] = React.useState(false)
+
+  const handleCreateOrder = () => {
+    const isConfirmed = window.confirm("Are you sure you want to create the order?")
+    if (isConfirmed) {
+      setIsOrderCreated(true)
+      onCreateOrder()
+      localStorage.setItem("cart", JSON.stringify(cartItems))
+    }
+  }
+
+  React.useEffect(() => {
+    // Recuperar carrito desde localStorage
+    const savedCart = localStorage.getItem("cart")
+    if (savedCart) {
+      setCartItems(JSON.parse(savedCart))
+    }
+  }, [setCartItems])
 
   return (
     <div className="bg-white rounded-lg shadow-sm h-full border">
@@ -31,7 +49,7 @@ const Cart: React.FC<CartProps> = ({ onCreateOrder }) => {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                  disabled={item.quantity <= 1}
+                  disabled={item.quantity <= 1 || isOrderCreated}
                   className="p-1.5 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-amber-500"
                 >
                   <Minus className="h-4 w-4" />
@@ -39,12 +57,14 @@ const Cart: React.FC<CartProps> = ({ onCreateOrder }) => {
                 <span className="w-8 text-center font-medium">{item.quantity}</span>
                 <button
                   onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                  disabled={isOrderCreated}
                   className="p-1.5 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500"
                 >
                   <Plus className="h-4 w-4" />
                 </button>
                 <button
                   onClick={() => removeFromCart(item.id)}
+                  disabled={isOrderCreated}
                   className="p-1.5 rounded-lg bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                 >
                   <Trash2 className="h-4 w-4" />
@@ -61,13 +81,16 @@ const Cart: React.FC<CartProps> = ({ onCreateOrder }) => {
           <span className="text-lg font-semibold">Total:</span>
           <span className="text-lg font-bold text-amber-500">${total}</span>
         </div>
-        {total > 0 && (
+        {total > 0 && !isOrderCreated && (
           <button
             className="w-full bg-amber-500 text-white py-3 px-4 rounded-lg font-medium hover:bg-amber-600 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
-            onClick={onCreateOrder}
+            onClick={handleCreateOrder}
           >
             Create Order
           </button>
+        )}
+        {isOrderCreated && (
+          <div className="text-center text-green-500 font-semibold">Order has been created!</div>
         )}
       </div>
     </div>
