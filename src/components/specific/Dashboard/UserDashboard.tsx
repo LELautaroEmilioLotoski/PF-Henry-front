@@ -4,6 +4,8 @@ import React from "react";
 import { useUserContext } from "@/context/UserContext";
 import DashboardSidebar from "@/components/header/Header";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import FileUploadComponent from "@/app/Cloudinary/page";
+
 
 const UserDashboard = () => {
   const { userNormal, logoutUser } = useUserContext();
@@ -13,6 +15,7 @@ const UserDashboard = () => {
     logoutUser();
     window.location.href = "/api/auth/logout";
   };
+
 
   return (
     <div className="flex justify-center bg-gray-100 py-10">
@@ -37,6 +40,7 @@ const UserDashboard = () => {
                 Cerrar sesión
               </button>
             </div>
+            <FileUploadComponent userprops = {user}/>
           </div>
         ) : userNormal ? (
           <div className="flex">
@@ -68,7 +72,8 @@ const UserDashboard = () => {
                 Cerrar sesión
               </button>
             </div>
-          </div>
+            <FileUploadComponent userprops = {userNormal}/>
+          </div> 
         ) : (
           <div className="text-center mt-20">
             <h1 className="text-2xl font-semibold text-gray-800">

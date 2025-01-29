@@ -4,11 +4,11 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function callback(req: NextApiRequest, res: NextApiResponse) {
   try {
-    console.log("estoy en callback");
     await handleCallback(req, res, {
-      redirectTo: '/profile', // Asegúrate de que este campo exista en la versión de @auth0/nextjs-auth0
+      redirectTo: '/profile', 
     });
   } catch (error) {
-    console.error(error);
+    console.error('Error during Auth0 callback:', error);
+    res.redirect('/profile'); 
   }
 }
