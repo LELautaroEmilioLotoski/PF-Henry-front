@@ -1,5 +1,3 @@
-"use client"
-
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import styles from '@/app/Cloudinary/Cloudinary.module.css';
@@ -7,10 +5,11 @@ import { CircleUserRoundIcon } from 'lucide-react';
 import ImageModal from './ImageModal';
 
 
+
 const FileUploadComponent = ({ userprops }) => {
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
-  const [fileUrl, setFileUrl] = useState(userprops?.image_url || ''); // Initialize with empty string or user's image URL
+  const [fileUrl, setFileUrl] = useState(userprops?.image_url || 'https://e7.pngegg.com/pngimages/178/595/png-clipart-user-profile-computer-icons-login-user-avatars-monochrome-black-thumbnail.png'); 
   const [showModal, setShowModal] = useState(false);
   const fileInputRef = useRef(null);
 
@@ -81,11 +80,14 @@ const FileUploadComponent = ({ userprops }) => {
           ref={fileInputRef}
           className={styles.fileInput}
         />
-        {fileUrl ? (
-          <img src={fileUrl} alt="Imagen subida" className={styles.profilePic} />
-        ) : (
-          <CircleUserRoundIcon className={styles.icon} />
-        )}
+        <div className={styles.iconContainer}>
+          {/* Conditionally render icon or image based on fileUrl */}
+          {fileUrl ? (
+            <img src={fileUrl} alt="Imagen subida" className={styles.profilePic} />
+          ) : (
+            <CircleUserRoundIcon className={styles.icon} />
+          )}
+        </div>
       </div>
       <button onClick={handleFileUpload} disabled={uploading}>
         {uploading ? 'Subiendo...' : 'Actualizar Imagen'}
@@ -93,7 +95,7 @@ const FileUploadComponent = ({ userprops }) => {
 
       {showModal && (
         <ImageModal
-          fileUrl={fileUrl}
+          fileUrl={fileUrl} 
           onClose={handleCloseModal}
         />
       )}
