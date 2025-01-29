@@ -1,63 +1,64 @@
 .card {
-    position: relative;
-    height: 100vh;
-    overflow: hidden;
-  }
-  
-  .background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-  
-  .Image1 {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    filter: brightness(0.5);
-    animation: fadeIn 1s ease-in-out;
-  }
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
 
-  .title {
-    position: absolute;
-    font-size: 45px;
-    top: 20%;
-    left: 35%;
-    transform: translate(-50%, -50%);
-    color: white;
-    text-align: center;
-    z-index: 1;
-    animation: fadeInOut 6s infinite; 
-    animation-delay: 0s; /* Sin retraso */
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.Image1 {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  filter: brightness(0.5);
+  animation: fadeIn 1s ease-in-out;
+}
+
+.title {
+  position: absolute;
+  font-size: 45px;
+  top: 20%;
+  left: 35%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  z-index: 1;
+  animation: fadeInOut 6s infinite; 
+  animation-delay: 0s; 
 }
 
 .title2 {
-    position: absolute;
-    font-size: 40px;
-    top: 20%;
-    left: 35%;
-    transform: translate(-50%, -50%);
-    color: white;
-    text-align: center;
-    z-index: 1;
-    animation: fadeInOut 6s infinite; 
-    animation-delay: 3s; 
+  position: absolute;
+  font-size: 45px;
+  top: 20%;
+  left: 35%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  z-index: 1;
+  animation: fadeInOut 6s infinite; 
+  animation-delay: 3s;
 }
 
 @keyframes fadeInOut {
-    0% {
-        opacity: 0;
-        transform: translateY(50px); 
-    }
-    50% {
-        opacity: 1;
-        transform: translateY(0); 
-    }
-    100% {
-        opacity: 0;
-        transform: translateY(50px); 
-    }
+  0% {
+      opacity: 0;
+      transform: translateY(50px); 
+  }
+  50% {
+      opacity: 1;
+      transform: translateY(0); 
+  }
+  100% {
+      opacity: 0;
+      transform: translateY(50px); 
+  }
 }
+
 

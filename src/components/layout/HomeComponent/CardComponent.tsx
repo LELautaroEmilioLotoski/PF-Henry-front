@@ -11,7 +11,6 @@ interface ComboCardProps {
 
 function ComboCard({ nombre, precio, descripcion, imagen }: ComboCardProps) {
     return (
-        <a href="/login">
         <div className={styles.container}>
         <div className={styles.card__container}> 
           <article className={styles.card__article}>
@@ -28,7 +27,6 @@ function ComboCard({ nombre, precio, descripcion, imagen }: ComboCardProps) {
           </article>
         </div>
       </div>
-      </a>
     );
 }
 

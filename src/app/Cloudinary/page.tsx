@@ -1,16 +1,36 @@
 "use client"
-import React, { useState, useRef } from 'react';
+
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
+import styles from '@/app/Cloudinary/Cloudinary.module.css';
+import { CircleUserRoundIcon } from 'lucide-react';
+import ImageModal from './ImageModal';
 
 
-const FileUploadComponent = () => {
+const FileUploadComponent = ({ userprops }) => {
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
-  const [fileUrl, setFileUrl] = useState('');
+  const [fileUrl, setFileUrl] = useState(userprops?.image_url || ''); // Initialize with empty string or user's image URL
+  const [showModal, setShowModal] = useState(false);
   const fileInputRef = useRef(null);
 
+  useEffect(() => {
+    const storedImageUrl = localStorage.getItem(`profileImageUrl_${userprops?.email}`);
+    if (storedImageUrl) {
+      setFileUrl(storedImageUrl);
+    }
+  }, [userprops?.email]);
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFile(event.target.files?.[0] || null);
+    const selectedFile = event.target.files?.[0] || null;
+    setFile(selectedFile);
+    if (selectedFile) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setFileUrl(e.target?.result as string);
+      };
+      reader.readAsDataURL(selectedFile);
+    }
   };
 
   const handleFileUpload = async () => {
@@ -25,15 +45,16 @@ const FileUploadComponent = () => {
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await axios.post('http://localhost:3000/files/uploadImage/id', formData, {
+      const response = await axios.post(`http://localhost:3000/users/${userprops?.email}/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
 
-      console.log(response);
-      setFileUrl(response.data.img); // Aquí obtienes la URL de la imagen subida
       alert('Archivo subido correctamente.');
+
+      localStorage.setItem(`profileImageUrl_${userprops?.email}`, response.data.img);
+      setFileUrl(response.data.img);
     } catch (error) {
       console.error('Error al subir el archivo:', error);
       alert('Error al subir el archivo. Por favor, inténtalo de nuevo.');
@@ -42,25 +63,49 @@ const FileUploadComponent = () => {
     }
   };
 
+  const handleImageClick = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   return (
-    <div>
-      <h1>Subir Archivo</h1>
-      <input type="file" onChange={handleFileChange} ref={fileInputRef} />
+    <div className={styles.ImageProfile}>
+      <h1>Imagen de Perfil</h1>
+      <div className={styles.profilePicContainer} onClick={handleImageClick}>
+        <input
+          type="file"
+          onChange={handleFileChange}
+          ref={fileInputRef}
+          className={styles.fileInput}
+        />
+        {fileUrl ? (
+          <img src={fileUrl} alt="Imagen subida" className={styles.profilePic} />
+        ) : (
+          <CircleUserRoundIcon className={styles.icon} />
+        )}
+      </div>
       <button onClick={handleFileUpload} disabled={uploading}>
-        {uploading ? 'Subiendo...' : 'Subir Archivo'}
+        {uploading ? 'Subiendo...' : 'Actualizar Imagen'}
       </button>
 
-      {fileUrl && (
-        <div>
-          <h2>Imagen Subida:</h2>
-          <img
-            src={fileUrl} // La URL obtenida de Cloudinary
-            alt="Imagen subida"
-          />
-        </div>
+      {showModal && (
+        <ImageModal
+          fileUrl={fileUrl}
+          onClose={handleCloseModal}
+        />
       )}
     </div>
   );
 };
 
 export default FileUploadComponent;
+
+
+
+
+
+
+
