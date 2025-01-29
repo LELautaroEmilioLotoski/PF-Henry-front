@@ -10,12 +10,17 @@ import GuestsInput from "./GuestInput";
 
 export default function CreateReservation() {
   const { userNormal } = useUserContext();
-  const { user } = useUser();
+  // const { user } = useUser();
   const [date, setDate] = useState<Date>();
   const [time, setTime] = useState("");
   const [guests, setGuests] = useState(1);
+  const token = localStorage.getItem("user");
+  if (!token) return;
 
-  const userId = userNormal?.id || user?.sub;
+  const usuario = JSON.parse(token);
+  console.log(usuario.id);
+
+  const userId = userNormal?.id || usuario.id
 
   if (!userId) return null;
 

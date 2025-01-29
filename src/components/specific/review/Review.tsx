@@ -28,8 +28,8 @@ interface User {
 
 export default function RestaurantReview() {
   const { token } = useUserContext();
-  const [rating, setRating] = useState(0); // Almacena la calificación
-  const [userData, setUserData] = useState<User | null>(null); // Datos del usuario
+  const [rating, setRating] = useState(0);
+  const [userData, setUserData] = useState<User | null>(null);
   const [dataReview, setDataReview] = useState<IReview>({
     rate: 0,
     description: "",
@@ -47,7 +47,6 @@ export default function RestaurantReview() {
     }
   }, []);
 
-  // Manejar envío del formulario
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
