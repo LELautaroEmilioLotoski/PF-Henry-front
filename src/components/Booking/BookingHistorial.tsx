@@ -3,16 +3,34 @@ import React, { useEffect, useState } from "react";
 import { cancelledReservation, getReservations } from "@/helpers/auth.helper";
 import { IReservations } from "@/interfaces/Types";
 import Link from "next/link";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import { useUserContext } from "@/context/UserContext";
 
 const BookingHistorial = () => {
+  const {userNormal} = useUserContext()
   const [userId, setUserId] = useState<string | null>(null);
   const [reservations, setReservations] = useState<IReservations[]>([]);
+  const { user } = useUser();
+
+  // console.log(userNormal?.id);
+
+  // console.log(usuario.email)
+  // const email = token?.email
+  
+  // console.log(userNormal)
 
   useEffect(() => {
     const fetchReservations = async () => {
+      const token = localStorage.getItem("user")
+      const usuario = JSON.parse(token!)
+      
       try {
-        if (userId) {
-          const { data } = await getReservations(userId);
+        if (token) {
+          console.log(usuario.email);
+          
+          const { data } = await getReservations(usuario.email);
+          console.log(data);
+          
           setReservations(data);
         }
       } catch (error) {
@@ -21,15 +39,7 @@ const BookingHistorial = () => {
     };
 
     fetchReservations();
-  }, [userId]);
-
-  useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (user) {
-      const parsedUser = JSON.parse(user);
-      setUserId(parsedUser.id);
-    }
-  }, []);
+  }, [userNormal]);
 
   if (!userId) {
     return null;
@@ -54,7 +64,7 @@ const BookingHistorial = () => {
       <h1 className="flex justify-center items-center p-5 m-5">
         Reservation history
       </h1>
-      {reservations.length > 0 ? (
+      {Array.isArray(reservations) && reservations.length > 0 ? (
         <div className="flex flex-wrap gap-4 justify-center items-center">
           {reservations.map((reservation) => (
             <div
@@ -91,6 +101,7 @@ const BookingHistorial = () => {
       ) : (
         <p>No reservations available</p>
       )}
+
       <div className="flex justify-center p-5 m-4">
         <Link
           href="/createBooking"

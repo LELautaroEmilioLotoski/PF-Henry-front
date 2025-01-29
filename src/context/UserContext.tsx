@@ -43,24 +43,31 @@ export const UserContextProvider = ({ children }: { children: React.ReactNode })
           if (data.isValid && data.payload) {
             setUser(storedUser ? JSON.parse(storedUser) : null);
           } else {
-            logoutUser();
+            handleLogout();
           }
         })
         .catch(() => {
-          logoutUser();
+          handleLogout();
         });
     } else {
-      logoutUser();
+      setUser(null);
+      setToken(null);
     }
   }, []);
-  
 
-  const logoutUser = () => {
+  const handleLogout = () => {
+    Cookies.remove("appSession");
     Cookies.remove("token");
     localStorage.removeItem("user");
     setUser(null);
     setToken(null);
+    window.location.href = "/api/auth/logout";
   };
+  
+  const logoutUser = () => {
+    handleLogout();
+  };
+  
 
   return (
     <UserContext.Provider value={{ userNormal, setUser, token, setToken, logoutUser }}>

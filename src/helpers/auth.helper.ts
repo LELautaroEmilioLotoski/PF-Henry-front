@@ -3,7 +3,10 @@ import {
   ILoginProps,
   IRegisterProps,
   IReservation,
+  IReview,
+  IUser,
 } from "@/interfaces/Types";
+import { useUserContext } from "@/context/UserContext";
 
 const APIURL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -38,6 +41,23 @@ export const login = async (userData: ILoginProps): Promise<AuthResponse> => {
   return data;
 };
 
+
+export const updateAccount = async (
+  id: string,
+  userData: IUser
+) => {
+  const res = await fetch(`${APIURL}users/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(userData),
+  });
+  const data = await res.json();
+  return data;
+};
+
+
 export const createNewEmployee = async (
   id: string,
   employeeData: IRegisterProps
@@ -62,11 +82,13 @@ export const reservation = async (id: string, userData: IReservation) => {
     body: JSON.stringify(userData),
   });
   const data = await res.json();
+  console.log(data);
+  
   return data;
 };
 
-export const getReservations = async (id: string) => {
-  const url = `${APIURL}users/${id}/reservations`;
+export const getReservations = async (email: string) => {
+  const url = `${APIURL}users/reservations/${email}`;
 
   const res = await fetch(url, {
     method: "GET",
@@ -85,8 +107,26 @@ export const cancelledReservation = async (id: string) => {
     headers: {
       "Content-type": "application/json",
     },
-    
   });
   const data = await res.json();
   return data;
 };
+
+//  REVIEWS
+
+export const createReview = async (reviewContent: IReview, token: string | null) => {
+  if (!token) {
+    throw new Error("No token provided");
+  }
+  const res = await fetch(`${APIURL}review`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${token}`, // Agrega el token al encabezado
+    },
+    body: JSON.stringify(reviewContent),
+  });
+  const data = await res.json();
+  return data;
+};
+;

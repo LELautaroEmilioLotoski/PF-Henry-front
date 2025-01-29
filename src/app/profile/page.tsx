@@ -3,7 +3,9 @@ import UserDashboard from '@/components/specific/Dashboard/UserDashboard'
 
 const page = () => {
   return (
-    <UserDashboard/>
+    <div>
+      <UserDashboard/>
+    </div>
   )
 }
 
