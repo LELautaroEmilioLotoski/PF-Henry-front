@@ -15,8 +15,7 @@ function HomeComponent() {
       <div className={styles.card} id="Home">
         <div className={styles.backgound}>
           <Image src={Image1} alt="Imagen de Fondo" className={styles.Image1}></Image>
-          <h1 className={styles.title}>WELCOME MAGICIAN!!</h1>
-          <h2 className={styles.title2}>WINGARDIUM LEVIOSA!!</h2>
+          <h2 className={styles.title}>WINGARDIUM LEVIOSA!!</h2>
         </div>
       </div>
 

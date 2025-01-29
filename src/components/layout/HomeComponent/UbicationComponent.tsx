@@ -12,13 +12,13 @@ const UbicationComponent = () => {
         <div className={styles.subtitle}>
           <h1 className={styles.title1}>We are waiting for you!!!</h1>
           <h1>Ubication</h1>
-          <h2>Calle 123 Falsa</h2>
+          <h2>Titan Plaza Avenida Boyacá 80 - 94</h2>
           <h3>Tel: 3203810987</h3>
           <h4>threebroomsticks@mail.com</h4>
           <h5>Horario de Atencion:</h5>
         </div>
         <iframe className={styles.iframeContainer}
-          src="https://maps.google.com/maps?width=520&height=400&hl=en&q=Direccion%20falsa%20123+(The%20Three%20Broomsticks)&t=&z=14&ie=UTF8&iwloc=B&output=embed"
+          src="https://maps.google.com/maps?width=600&height=500&hl=en&q=%20Titan%20Plaza%20Avenida%20Boyac%C3%A1%2080%20-%2094+(Ubication)&t=&z=16&ie=UTF8&iwloc=B&output=embed"
         />
         
       <BotonsComponent />

@@ -16,7 +16,7 @@ const Register = () => {
     password: "",
     ConfirmPassword: "",
     address: "",
-    image_url: "",
+    image_url: "example.com",
   };
 
   const [dataUser, setDataUser] = useState<IRegisterProps>(initialState);
@@ -159,27 +159,7 @@ const Register = () => {
           </span>
         )}
       </div>
-
-      <div>
-        <label htmlFor="image_url" className="text-body mb-1 block">
-          Image URL
-        </label>
-        <input
-          id="image_url"
-          name="image_url"
-          type="text"
-          value={dataUser.image_url}
-          onChange={handleChange}
-          className="input-field"
-          disabled={isLoading}
-        />
-        {errors.image_url && (
-          <span className="text-red-500 text-sm mt-1 block">
-            {errors.image_url}
-          </span>
-        )}
-      </div>
-
+      
       <button type="submit" className="button-primary" disabled={isLoading}>
         {isLoading ? "Registering..." : "Register"}
       </button>

@@ -19,6 +19,8 @@ export const register = async (userData: IRegisterProps) => {
     body: JSON.stringify(userData),
   });
   const data = await res.json();
+  console.log(data);
+  
   return data;
 };
 
