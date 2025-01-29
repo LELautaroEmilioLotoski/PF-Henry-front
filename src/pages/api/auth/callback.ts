@@ -1,13 +1,25 @@
-// src/pages/api/auth/callback.ts
+// // src/pages/api/auth/callback.ts
+// import { handleCallback } from '@auth0/nextjs-auth0';
+// import { NextApiRequest, NextApiResponse } from 'next';
+
+// export default async function callback(req: NextApiRequest, res: NextApiResponse) {
+//   try {
+//     await handleCallback(req, res, {
+//       redirectTo: '/profile',
+//     });
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }
+
 import { handleCallback } from '@auth0/nextjs-auth0';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function callback(req: NextApiRequest, res: NextApiResponse) {
   try {
-    await handleCallback(req, res, {
-      redirectTo: '/profile',
-    });
+    await handleCallback(req, res); // Sin 'redirectTo'
   } catch (error) {
-    console.error(error);
+    console.error('Callback error:', error);
+    res.status(500).json({ error: 'Authentication callback failed' });
   }
 }

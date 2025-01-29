@@ -23,10 +23,10 @@ export default function DashboardSidebar() {
           <Users className="mr-2 h-4 w-4" />
           Editar perfil
         </button>
-        <button className="flex align-middle items-center gap-8 p-2 w-full justify-start">
+        <Link href="/review" className="flex align-middle items-center gap-8 p-2 w-full justify-start">
           <FileText className="mr-2 h-4 w-4" />
           Crear reseña
-        </button>
+        </Link>
         <Link
           href="/orders"
           className="flex align-middle items-center gap-8 p-2 w-full justify-start"

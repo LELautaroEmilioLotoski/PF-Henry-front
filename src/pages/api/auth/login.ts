@@ -1,3 +1,4 @@
+import { getAuth0TokenAndSendToBackend } from '@/helpers/getAuth0SendToBackend';
 import { handleLogin } from '@auth0/nextjs-auth0';
 import { NextApiRequest, NextApiResponse } from 'next';
 
