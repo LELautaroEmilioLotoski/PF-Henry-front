@@ -14,14 +14,14 @@ export interface ILoginErrors {
 // REGISTER
 
 export interface IRegisterProps {
-  id: string,
+  id: string;
   name: string;
   email: string;
   password: string;
   ConfirmPassword: string;
   address: string;
   image_url: string;
-  role: string
+  role: string;
 }
 
 export interface IRegisterErrors {
@@ -32,7 +32,6 @@ export interface IRegisterErrors {
   address?: string;
   image_url?: string;
 }
-
 
 // USERS
 
@@ -54,20 +53,58 @@ export interface IUser {
   image_url?: string;
   created_atts?: string;
 }
+
+// PRODUCTS
+
+export interface IProduct {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  category: string;
+  image: string;
+  stock: number;
+}
+
+export interface ICategory {
+  id: string;
+  name: string;
+  icon: string;
+}
+
+export interface IOrder {
+  id: number;
+  status: string;
+  date: string;
+}
+
 //EMPLOYEE
 
+// export interface ICreateEmployee extends IRegisterProps {}
 
+export interface ICartItem extends IProduct {
+  quantity: number;
+}
 
 //RESERVATIONS
 
 export interface IReservation {
-  date: string,
-  time: string,
-  guest: number
+  date: string;
+  time: string;
+  guest: number;
 }
 
 export interface IReservations extends IReservation {
-  id: string,
-  status: string,
-  create_at: string
+  id: string;
+  status: string;
+  create_at: string;
 }
+
+
+//REVIEW
+
+export interface IReview {
+  rate: number,
+  description: string
+}
+

@@ -4,17 +4,31 @@ import { cancelledReservation, getReservations } from "@/helpers/auth.helper";
 import { IReservations } from "@/interfaces/Types";
 import Link from "next/link";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import { useUserContext } from "@/context/UserContext";
 
 const BookingHistorial = () => {
+  const {userNormal} = useUserContext()
   const [userId, setUserId] = useState<string | null>(null);
   const [reservations, setReservations] = useState<IReservations[]>([]);
   const { user } = useUser();
+
+  // console.log(userNormal?.id);
+
+  // console.log(usuario.email)
+  // const email = token?.email
   
+  // console.log(userNormal)
+
   useEffect(() => {
     const fetchReservations = async () => {
+      const token = localStorage.getItem("user")
+      const usuario = JSON.parse(token!)
+      
       try {
-        if (userId) {
-          const { data } = await getReservations(userId);
+        if (token) {
+          console.log(usuario.email);
+          
+          const { data } = await getReservations(usuario.email);
           console.log(data);
           
           setReservations(data);
@@ -25,17 +39,7 @@ const BookingHistorial = () => {
     };
 
     fetchReservations();
-  }, [userId]);
-
-  useEffect(() => {
-    const userLocal = localStorage.getItem("user");
-    if (userLocal) {
-      const parsedUser = JSON.parse(userLocal);
-      setUserId(parsedUser.id);
-    } else if (user?.sub) {
-      setUserId(user.sub);
-    }
-  }, [user]);
+  }, [userNormal]);
 
   if (!userId) {
     return null;

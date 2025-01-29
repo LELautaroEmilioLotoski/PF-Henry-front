@@ -11,7 +11,6 @@ const UserDashboard = () => {
   const { user } = useUser();
 
   const handleLogout = () => {
-    logoutUser();
     window.location.href = "/api/auth/logout";
   };
 
@@ -19,9 +18,7 @@ const UserDashboard = () => {
     <div className="flex justify-center bg-gray-100 py-10">
       <div className="min-h-screen bg-gray-100 flex flex-col items-center">
         {user ? (
-  
           <MyComponent/>
-
         ) : userNormal ? (
           <div className="flex">
             <DashboardSidebar />

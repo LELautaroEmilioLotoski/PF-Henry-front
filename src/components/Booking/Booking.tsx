@@ -35,7 +35,9 @@ export default function CreateReservation() {
 
     try {
       if (userId) {
-        await reservation(userId, userData);
+        const bookingData = await reservation(userId, userData);
+        console.log(bookingData);
+        
         alert("Reserva creada correctamente.");
         setDate(undefined);
         setTime("");

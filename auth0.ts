@@ -7,7 +7,6 @@ export default initAuth0({
   clientSecret: process.env.AUTH0_CLIENT_SECRET,
   secret: process.env.AUTH0_SECRET,              
   routes: {
-    callback: '/api/auth/callback',               
-    postLoginRedirect: '/dashboard',             
+    callback: '/api/auth/callback',                      
   },
 });
