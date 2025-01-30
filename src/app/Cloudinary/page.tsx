@@ -1,17 +1,22 @@
+"use client"
+
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import styles from '@/app/Cloudinary/Cloudinary.module.css';
 import { CircleUserRoundIcon } from 'lucide-react';
 import ImageModal from './ImageModal';
 
+interface UserProps {
+  email: string;
+  image_url?: string;
+}
 
-
-const FileUploadComponent = ({ userprops }) => {
+const FileUploadComponent: React.FC<{ userprops: UserProps }> = ({ userprops }) => {
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
-  const [fileUrl, setFileUrl] = useState(userprops?.image_url || 'https://e7.pngegg.com/pngimages/178/595/png-clipart-user-profile-computer-icons-login-user-avatars-monochrome-black-thumbnail.png'); 
+  const [fileUrl, setFileUrl] = useState(userprops?.image_url || 'https://e7.pngegg.com/pngimages/178/595/png-clipart-user-profile-computer-icons-login-user-avatars-monochrome-black-thumbnail.png');
   const [showModal, setShowModal] = useState(false);
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const storedImageUrl = localStorage.getItem(`profileImageUrl_${userprops?.email}`);
@@ -62,7 +67,8 @@ const FileUploadComponent = ({ userprops }) => {
     }
   };
 
-  const handleImageClick = () => {
+  const handleImageClick = (event: React.MouseEvent) => {
+    event.stopPropagation(); 
     setShowModal(true);
   };
 
@@ -70,9 +76,15 @@ const FileUploadComponent = ({ userprops }) => {
     setShowModal(false);
   };
 
+  const handleOpenFileInput = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
   return (
     <div className={styles.ImageProfile}>
-      <h1>Imagen de Perfil</h1>
+      <h1 className={styles.title}>Imagen de Perfil</h1>
       <div className={styles.profilePicContainer} onClick={handleImageClick}>
         <input
           type="file"
@@ -81,22 +93,26 @@ const FileUploadComponent = ({ userprops }) => {
           className={styles.fileInput}
         />
         <div className={styles.iconContainer}>
-          {/* Conditionally render icon or image based on fileUrl */}
           {fileUrl ? (
-            <img src={fileUrl} alt="Imagen subida" className={styles.profilePic} />
+            <img
+              src={fileUrl}
+              alt="Imagen subida"
+              className={styles.profilePic}
+              onClick={(event) => handleImageClick(event)} 
+            />
           ) : (
             <CircleUserRoundIcon className={styles.icon} />
           )}
         </div>
       </div>
-      <button onClick={handleFileUpload} disabled={uploading}>
-        {uploading ? 'Subiendo...' : 'Actualizar Imagen'}
-      </button>
 
       {showModal && (
         <ImageModal
-          fileUrl={fileUrl} 
+          fileUrl={fileUrl}
           onClose={handleCloseModal}
+          onOpenFileInput={handleOpenFileInput}
+          onFileUpload={handleFileUpload}
+          uploading={uploading}
         />
       )}
     </div>
@@ -104,6 +120,11 @@ const FileUploadComponent = ({ userprops }) => {
 };
 
 export default FileUploadComponent;
+
+
+
+
+
 
 
 
