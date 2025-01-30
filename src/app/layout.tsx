@@ -1,18 +1,18 @@
 import "../styles/globals.css";
-import { Poppins, MedievalSharp } from "next/font/google";
+import { Poppins } from "next/font/google";
 import Footer from "@/components/layout/Footer/Footer";
 import Navbar from "@/components/layout/Navbar/Navbar";
 import Contexts from "./Contexts";
+import LucidaBlackletterRegular from "next/font/local"
 
 const primaryFont = Poppins({
   subsets: ["latin"],
   variable: "--primary-font",
   weight: ["400", "700"],
 });
-const secondaryFont = MedievalSharp({
-  subsets: ["latin"],
+const secondaryFont = LucidaBlackletterRegular({
+  src: "../../public/fonts/LucidaBlackletterRegular.ttf", // Ruta a tu archivo .ttf
   variable: "--secondary-font",
-  weight: ["400", "400"],
 });
 
 export default function RootLayout({
