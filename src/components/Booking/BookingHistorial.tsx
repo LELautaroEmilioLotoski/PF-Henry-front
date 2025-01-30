@@ -7,45 +7,42 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { useUserContext } from "@/context/UserContext";
 
 const BookingHistorial = () => {
-  const {userNormal} = useUserContext()
-  const [userId, setUserId] = useState<string | null>(null);
+  const { userNormal } = useUserContext();
   const [reservations, setReservations] = useState<IReservations[]>([]);
   const { user } = useUser();
 
-  // console.log(userNormal?.id);
-
-  // console.log(usuario.email)
-  // const email = token?.email
-  
-  // console.log(userNormal)
-
   useEffect(() => {
     const fetchReservations = async () => {
-      const token = localStorage.getItem("user")
-      const usuario = JSON.parse(token!)
+      const token = localStorage.getItem("user");
+      console.log(token);
       
+      if (!token) return;
+
+      const usuario = JSON.parse(token);
+      // console.log(usuario);
+
       try {
-        if (token) {
-          console.log(usuario.email);
-          
-          const { data } = await getReservations(usuario.email);
-          console.log(data);
-          
-          setReservations(data);
+        // console.log(usuario.email);
+        const response = await getReservations(usuario.email);
+        const arrayReservation = response.data;
+        console.log(arrayReservation);
+        
+
+        if (Array.isArray(arrayReservation)) {
+          setReservations(arrayReservation);          
+        } else {
+          setReservations([]); // Si la API responde con un error, aseguramos que el estado se actualiza correctamente
         }
       } catch (error) {
         console.error("Error al obtener las reservas:", error);
+        setReservations([]); // En caso de error, se muestra que no hay reservas
       }
     };
 
     fetchReservations();
   }, [userNormal]);
 
-  if (!userId) {
-    return null;
-  }
-
-  const cancelReservations = async (id: string) => {
+    const cancelReservations = async (id: string) => {
     try {
       const response = await cancelledReservation(id);
       setReservations((prevReservations) =>
@@ -58,13 +55,14 @@ const BookingHistorial = () => {
       alert("No se pudo cancelar la reserva");
     }
   };
+  
 
   return (
     <div>
       <h1 className="flex justify-center items-center p-5 m-5">
         Reservation history
       </h1>
-      {Array.isArray(reservations) && reservations.length > 0 ? (
+      {reservations.length > 0 ? (
         <div className="flex flex-wrap gap-4 justify-center items-center">
           {reservations.map((reservation) => (
             <div
@@ -99,7 +97,7 @@ const BookingHistorial = () => {
           ))}
         </div>
       ) : (
-        <p>No reservations available</p>
+        <p className="text-center text-gray-600">No reservations available</p>
       )}
 
       <div className="flex justify-center p-5 m-4">

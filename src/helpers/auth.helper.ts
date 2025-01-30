@@ -90,6 +90,8 @@ export const reservation = async (id: string, userData: IReservation) => {
 export const getReservations = async (email: string) => {
   const url = `${APIURL}users/reservations/${email}`;
 
+  console.log(email);
+  
   const res = await fetch(url, {
     method: "GET",
     headers: {
@@ -122,7 +124,7 @@ export const createReview = async (reviewContent: IReview, token: string | null)
     method: "POST",
     headers: {
       "Content-type": "application/json",
-      Authorization: `Bearer ${token}`, // Agrega el token al encabezado
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(reviewContent),
   });
