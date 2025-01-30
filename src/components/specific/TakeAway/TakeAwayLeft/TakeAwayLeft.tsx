@@ -37,6 +37,7 @@ const TakeAwayLeft: React.FC = () => {
         <CategorySelector
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
+          products={products}
         />
       </div>
       <ProductList

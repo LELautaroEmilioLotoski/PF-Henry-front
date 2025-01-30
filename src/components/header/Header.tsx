@@ -32,7 +32,7 @@ export default function DashboardSidebar() {
           className="flex align-middle items-center gap-8 p-2 w-full justify-start"
         >
           <Book />
-          Crear orden
+          Mis ordenes
         </Link>
       </nav>
     </aside>

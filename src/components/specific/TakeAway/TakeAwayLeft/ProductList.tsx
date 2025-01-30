@@ -12,24 +12,24 @@ const ProductList: React.FC<ProductListProps> = ({
   loading,
   error,
 }) => {
-
   const filteredProducts = products.filter((product) => {
     const matchesSearch = product.name
       .toLowerCase()
       .includes(search.toLowerCase());
+
     const matchesCategory =
       selectedCategory === "all" ||
-      (product.category?.toLowerCase() ?? "sin categoría") ===
-        selectedCategory.toLowerCase();
+      product.category?.id.toLowerCase() === selectedCategory.toLowerCase();
+
     return matchesSearch && matchesCategory;
   });
 
   const groupedProducts = filteredProducts.reduce((acc, product) => {
-    const category = product.category ?? "Sin categoría";
-    if (!acc[category]) {
-      acc[category] = [];
+    const categoryName = product.category?.name || "Sin categoría";
+    if (!acc[categoryName]) {
+      acc[categoryName] = [];
     }
-    acc[category].push(product);
+    acc[categoryName].push(product);
     return acc;
   }, {} as Record<string, typeof products>);
 
