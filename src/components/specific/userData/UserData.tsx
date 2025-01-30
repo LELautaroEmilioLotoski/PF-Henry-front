@@ -1,3 +1,4 @@
+import FileUploadComponent from "@/app/Cloudinary/page";
 import DashboardSidebar from "@/components/header/Header";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/navigation";
@@ -70,15 +71,19 @@ const ProfilePage = () => {
           }
         );
 
+        // console.log(backendResponse);
+        
         const backendData = await backendResponse.json();
+        const backendToken = await backendData.token
+        
         const userLoggedWithAuth0 = backendData.user;
         if (backendData) {
           localStorage.setItem("user", JSON.stringify(userLoggedWithAuth0));
+          localStorage.setItem("backendToken", JSON.stringify(backendToken));
         }
-        console.log(userLoggedWithAuth0);
+        // console.log(userLoggedWithAuth0);
 
         // console.log(userLoggedWithAuth0.isComplete);
-
         // console.log("Response from Backend:", backendData);
       } catch (error) {
         console.error("Error al enviar los datos al backend:", error);
@@ -123,6 +128,7 @@ const ProfilePage = () => {
           Cerrar sesión
         </button>
       </div>
+      <FileUploadComponent userprops = {user}/>
     </div>
   );
 };

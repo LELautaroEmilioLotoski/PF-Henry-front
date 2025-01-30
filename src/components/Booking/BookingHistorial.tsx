@@ -14,6 +14,8 @@ const BookingHistorial = () => {
   useEffect(() => {
     const fetchReservations = async () => {
       const token = localStorage.getItem("user");
+      console.log(token);
+      
       if (!token) return;
 
       const usuario = JSON.parse(token);
@@ -23,6 +25,8 @@ const BookingHistorial = () => {
         // console.log(usuario.email);
         const response = await getReservations(usuario.email);
         const arrayReservation = response.data;
+        console.log(arrayReservation);
+        
 
         if (Array.isArray(arrayReservation)) {
           setReservations(arrayReservation);          

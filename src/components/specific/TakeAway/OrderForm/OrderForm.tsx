@@ -27,8 +27,15 @@ const OrderForm: React.FC = () => {
   });
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
-    if (user && user.name && user.email && user.address && user.id) {
+    // const user = JSON.parse(localStorage.getItem("user") || "{}");
+    // console.log(user);
+
+    const userData = localStorage.getItem(("user"));
+    const user = JSON.parse(userData!)
+    console.log(user);
+    
+    
+    if (user) {     
       setFormData((prevFormData) => ({
         ...prevFormData,
         name: user.name,
@@ -52,7 +59,6 @@ const OrderForm: React.FC = () => {
         quantity: item.quantity,
       })),
       comment: formData.comments
-
     };
 
     if (!orderData.idUser) {

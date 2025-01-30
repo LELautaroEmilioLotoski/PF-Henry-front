@@ -19,12 +19,7 @@ export default async function callback(req: NextApiRequest, res: NextApiResponse
   try {
     await handleCallback(req, res); // Sin 'redirectTo'
   } catch (error) {
-<<<<<<< HEAD
     console.error('Error during Auth0 callback:', error);
-    res.redirect('/profile'); 
-=======
-    console.error('Callback error:', error);
-    res.status(500).json({ error: 'Authentication callback failed' });
->>>>>>> aca5f75b9170ca47f9107102563c6a7ebeb9f669
+    // res.redirect('/profile'); 
   }
 }

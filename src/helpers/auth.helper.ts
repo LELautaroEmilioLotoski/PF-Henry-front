@@ -92,7 +92,6 @@ export const getReservations = async (email: string) => {
 
   console.log(email);
   
-
   const res = await fetch(url, {
     method: "GET",
     headers: {
