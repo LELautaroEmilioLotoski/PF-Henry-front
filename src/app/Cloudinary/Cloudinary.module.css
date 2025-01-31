@@ -2,14 +2,25 @@
   margin-left: 60px;
 }
 
+.title {
+  font-size: 20px;
+  margin-left: 5px;
+  margin-bottom: 5px; 
+}
+
 .profilePicContainer {
   position: relative;
-  width: 150px;
-  height: 150px;
+  width: 180px;
+  height: 180px; 
   border-radius: 50%;
   overflow: hidden;
   border: 2px solid #ccc;
   cursor: pointer;
+  transition: transform 0.3s ease; 
+}
+
+.profilePicContainer:hover {
+  transform: scale(1.1); 
 }
 
 .fileInput {
@@ -57,9 +68,8 @@
 
 .modalContent {
   padding: 20px;
-  border: 1px solid #888;
-  width: 60%; /* Cambiado de 80% a 60% */
-  max-width: 400px; /* Cambiado de 500px a 400px */
+  width: 60%; 
+  max-width: 400px; 
   text-align: center;
 }
 
@@ -79,8 +89,48 @@
 
 .largeImage {
   width: 100%;
-  height: auto;
+  height: 100%; 
+  max-height: 100vh; 
+  object-fit: cover; 
 }
+
+.changeButton {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px; 
+}
+
+.changeButton:hover {
+  background-color: #218838;
+}
+
+.uploadButton {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.uploadButton:hover {
+  background-color: #0056b3;
+}
+
+
+
+
+
+
+
+
+
 
 
 
