@@ -77,7 +77,7 @@ const ProfilePage = () => {
         const backendData = await backendResponse.json();        
         const backendToken = await backendData.token;
         const userLoggedWithAuth0 = backendData.user;
-        
+
         if (backendData) {
           localStorage.setItem("user", JSON.stringify(userLoggedWithAuth0));
           localStorage.setItem("backendToken", JSON.stringify(backendToken));
@@ -119,12 +119,6 @@ const ProfilePage = () => {
         <p className="text-lg font-medium text-gray-600">
           Email: <span className="text-gray-800">{user?.email}</span>
         </p>
-        <button
-          onClick={handleLogout}
-          className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300"
-        >
-          Cerrar sesión
-        </button>
       </div>
       <FileUploadComponent userprops = {user}/>
     </div>
