@@ -7,37 +7,40 @@ import { useEffect } from "react";
 const ProfilePage = () => {
   const { user, isLoading, error } = useUser();
   const router = useRouter();
+  const backendToken = localStorage.getItem("backendToken")
 
   useEffect(() => {
     const registerUserIfNeeded = async () => {
       try {
-        if (!user) return;
+        if (!user) return null;
 
-        const userData = {
-          auth0Id: user.sub,
-          name: user.name,
-          email: user.email,
-          isComplete: false,
-        };
-
-        const response = await fetch(
-          "http://localhost:3000/auth/signupWithAuth0",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(userData),
+        if(!backendToken){
+          const userData = {
+            auth0Id: user.sub,
+            name: user.name,
+            email: user.email,
+            isComplete: false,
+          };
+  
+          const response = await fetch(
+            "http://localhost:3000/auth/signupWithAuth0",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(userData),
+            }
+          );
+  
+          if (response.status === 400) {
+            console.log("El usuario ya está registrado en el backend.");
+          } else if (response.ok) {
+            const data = await response.json();
+            console.log("Usuario registrado con éxito:", data);
+          } else {
+            throw new Error("Error desconocido al registrar al usuario.");
           }
-        );
-
-        if (response.status === 400) {
-          console.log("El usuario ya está registrado en el backend.");
-        } else if (response.ok) {
-          const data = await response.json();
-          console.log("Usuario registrado con éxito:", data);
-        } else {
-          throw new Error("Error desconocido al registrar al usuario.");
         }
       } catch (err) {
         console.error("Error al registrar usuario:", err);
@@ -71,20 +74,15 @@ const ProfilePage = () => {
           }
         );
 
-        // console.log(backendResponse);
-        
-        const backendData = await backendResponse.json();
-        const backendToken = await backendData.token
-        
+        const backendData = await backendResponse.json();        
+        const backendToken = await backendData.token;
         const userLoggedWithAuth0 = backendData.user;
+        
         if (backendData) {
           localStorage.setItem("user", JSON.stringify(userLoggedWithAuth0));
           localStorage.setItem("backendToken", JSON.stringify(backendToken));
         }
-        // console.log(userLoggedWithAuth0);
 
-        // console.log(userLoggedWithAuth0.isComplete);
-        // console.log("Response from Backend:", backendData);
       } catch (error) {
         console.error("Error al enviar los datos al backend:", error);
       }

@@ -132,3 +132,14 @@ export const createReview = async (reviewContent: IReview, token: string | null)
   return data;
 };
 ;
+
+export const getReview = async (id: string) => {
+  const res = await fetch(`${APIURL}review/user/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+    },
+  });
+  const data = await res.json();
+  return data;
+};
