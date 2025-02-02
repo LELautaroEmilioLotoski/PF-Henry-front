@@ -2,9 +2,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ["i.postimg.cc"], // Asegúrate de incluir el dominio aquí
+    domains: ["i.postimg.cc"],
+    unoptimized: true,
   },
 };
 
-
 export default nextConfig;
+
