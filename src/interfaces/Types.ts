@@ -54,6 +54,11 @@ export interface IUser {
   created_atts?: string;
 }
 
+export interface IUserDataUpdate {
+name: string,
+address: string
+}
+
 // PRODUCTS
 
 export interface IProduct {

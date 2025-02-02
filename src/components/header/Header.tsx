@@ -26,10 +26,10 @@ export default function DashboardSidebar() {
           <Utensils className="mr-2 h-4 w-4" />
           Mis reservas
         </Link>
-        <button className="flex align-middle items-center gap-8 p-2 w-full justify-start">
+        <Link href="/editProfile" className="flex align-middle items-center gap-8 p-2 w-full justify-start">
           <Users className="mr-2 h-4 w-4" />
           Editar perfil
-        </button>
+        </Link>
         <Link
           href="/review"
           className="flex align-middle items-center gap-8 p-2 w-full justify-start"

@@ -4,9 +4,8 @@ import {
   IRegisterProps,
   IReservation,
   IReview,
-  IUser,
+  IUserDataUpdate,
 } from "@/interfaces/Types";
-import { useUserContext } from "@/context/UserContext";
 
 const APIURL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -44,7 +43,7 @@ export const login = async (userData: ILoginProps): Promise<AuthResponse> => {
 
 export const updateAccount = async (
   id: string,
-  userData: IUser
+  userData: IUserDataUpdate
 ) => {
   const res = await fetch(`${APIURL}users/${id}`, {
     method: "PUT",
