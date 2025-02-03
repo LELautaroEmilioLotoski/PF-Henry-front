@@ -67,7 +67,6 @@ export interface IOrder {
 export interface UserDataFormProps {
   name: string;
   email: string;
-  address: string;
 }
 
 export interface CommentsFormProps {
@@ -89,5 +88,4 @@ export interface IUserHook {
   id: string;
   name: string;
   email: string;
-  address: string;
 }
