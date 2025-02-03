@@ -40,6 +40,7 @@ const TakeAwayLeft: React.FC = () => {
           products={products}
         />
       </div>
+      {error && <p className="text-center text-red-500 mt-4">{error}</p>} {/* Muestra el error aquí */}
       <ProductList
         products={products}
         search={search}
