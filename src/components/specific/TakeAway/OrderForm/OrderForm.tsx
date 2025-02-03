@@ -32,14 +32,12 @@ const OrderForm: React.FC = () => {
   useEffect(() => {
     const userData = localStorage.getItem("user");
     if (userData) {
-      const user = JSON.parse(userData);
-      
-      if (user.name && user.email && user.address && user.id) {
+      const user = JSON.parse(userData);      
+      if (user.name && user.email && user.id) {        
         setFormData((prevFormData) => ({
           ...prevFormData,
           name: user.name,
           email: user.email,
-          address: user.address,
           id: user.id,
         }));
       }
@@ -76,12 +74,18 @@ const OrderForm: React.FC = () => {
       ...combos
     ];
 
+    console.log(formData);
+    
+
     const orderData: IOrder = {
       idUser: formData.id,
       paymentMethod: formData.paymentMethod,
       comment: formData.comments,
       MenuItems: allItems.length > 0 ? allItems : [],
     };
+
+    console.log(orderData);
+    
 
     console.log("Order data being sent:", JSON.stringify(orderData, null, 2));
 
@@ -103,7 +107,7 @@ const OrderForm: React.FC = () => {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target;    
     setFormData({ ...formData, [name]: value });
   };
 

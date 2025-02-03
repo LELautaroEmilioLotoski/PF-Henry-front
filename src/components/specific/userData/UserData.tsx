@@ -76,7 +76,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push("/profile"); // ✅ Redirige solo cuando el usuario esté autenticado
+      router.push("/profile");
     }
   }, [isAuthenticated, router]);
 

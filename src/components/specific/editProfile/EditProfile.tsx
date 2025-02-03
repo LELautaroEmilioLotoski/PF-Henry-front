@@ -15,8 +15,8 @@ import { updateAccount } from "@/helpers/auth.helper";
 
 export default function EditProfileForm() {
   const [user, setUser] = useState({
-    name: "",
     address: "",
+    password:""
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -35,6 +35,8 @@ export default function EditProfileForm() {
     try {
       if (getUserToken) {
         const getUserData = JSON.parse(getUserToken);
+        console.log(getUserData);
+        
         const { id } = getUserData;
         const response = await updateAccount(id, user);
         console.log(response);
@@ -59,13 +61,13 @@ export default function EditProfileForm() {
       <form onSubmit={handleSubmit}>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="name">Name</Label>
+            <Label htmlFor="name">Password</Label>
             <input
-              id="name"
-              name="name"
-              value={user?.name}
+              id="password"
+              name="password"
+              value={user?.password}
               onChange={handleChange}
-              placeholder="Your name"
+              placeholder="Your password"
             />
           </div>
           <div className="space-y-2">

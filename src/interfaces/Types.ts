@@ -55,8 +55,8 @@ export interface IUser {
 }
 
 export interface IUserDataUpdate {
-name: string,
-address: string
+  address: string;
+  password: string;
 }
 
 // PRODUCTS
@@ -105,21 +105,20 @@ export interface IReservations extends IReservation {
   create_at: string;
 }
 
-
 //REVIEW
 
 export interface IReview {
-  rate: number,
-  description: string
+  rate: number;
+  description: string;
 }
-
-
 
 export interface UserProps {
   email: string;
   image_url?: string;
 }
-
 export interface FileUploadProps {
-  userprops: UserProps;
+  userprops: {
+    email: string;
+    image_url?: string;
+  };
 }
