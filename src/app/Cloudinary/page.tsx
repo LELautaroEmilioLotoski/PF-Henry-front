@@ -1,19 +1,10 @@
-"use client"
-
+"use client";
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import styles from '@/app/Cloudinary/Cloudinary.module.css';
 import { CircleUserRoundIcon } from 'lucide-react';
 import ImageModal from './ImageModal';
-
-interface UserProps {
-  email: string;
-  image_url?: string;
-}
-
-interface FileUploadProps {
-  userprops: UserProps;
-}
+import { FileUploadProps } from "@/interfaces/Types"
 
 const FileUploadComponent: React.FC<FileUploadProps> = ({ userprops }) => {
   const [file, setFile] = useState<File | null>(null);
@@ -124,3 +115,5 @@ const FileUploadComponent: React.FC<FileUploadProps> = ({ userprops }) => {
 };
 
 export default FileUploadComponent;
+
+
