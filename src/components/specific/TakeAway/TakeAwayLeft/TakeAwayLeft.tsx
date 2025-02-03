@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
 import SearchBar from "./SearchBar";
@@ -39,8 +40,6 @@ const TakeAwayLeft: React.FC = () => {
           products={products}
         />
       </div>
-      {error && <div className="text-red-500 p-4">{error}</div>}{" "}
-      {/* Mostrar el error aquí */}
       <ProductList
         products={products}
         search={search}

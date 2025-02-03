@@ -26,7 +26,7 @@ export interface ProductListProps {
   selectedCategory: string;
   addToCart: (product: Product) => void;
   loading: boolean;
-  error: string | null;
+  error?: string | null;
 }
 
 export interface ProductCardProps {
