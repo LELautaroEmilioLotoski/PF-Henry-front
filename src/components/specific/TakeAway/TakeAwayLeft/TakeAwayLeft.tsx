@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
 import SearchBar from "./SearchBar";
@@ -11,7 +10,7 @@ const TakeAwayLeft: React.FC = () => {
   const { addToCart } = useCart();
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [products, setProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 

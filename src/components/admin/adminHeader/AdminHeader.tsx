@@ -1,4 +1,4 @@
-import { Home, Utensils, Users, FileText, Settings, User, UserPen } from 'lucide-react'
+import { Home, Utensils, Users, FileText, UserPen } from 'lucide-react'
 import Link from 'next/link'
 
 export default function DashboardSidebar() {
