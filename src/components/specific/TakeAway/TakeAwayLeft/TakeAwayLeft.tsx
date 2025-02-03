@@ -13,7 +13,7 @@ const TakeAwayLeft: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  // const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const getMenuItems = async () => {
@@ -22,7 +22,7 @@ const TakeAwayLeft: React.FC = () => {
         setProducts(menuItems);
         setLoading(false);
       } catch (error) {
-        setError("Error fetching products");
+        console.log(error);
         setLoading(false);
       }
     };
@@ -46,7 +46,6 @@ const TakeAwayLeft: React.FC = () => {
         selectedCategory={selectedCategory}
         addToCart={addToCart}
         loading={loading}
-        error={error}
       />
     </div>
   );
