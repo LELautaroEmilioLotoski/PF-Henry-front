@@ -7,6 +7,7 @@ export interface Product {
   stock: number;
   isActive: boolean;
   category: ICategory | null;
+  type: "menuItem" | "combo";
 }
 
 export interface SearchBarProps {
@@ -24,14 +25,15 @@ export interface ProductListProps {
   products: Product[];
   search: string;
   selectedCategory: string;
-  addToCart: (product: Product) => void;
+  addToCart: (product: Product, type: "menuItem" | "combo") => void;
   loading: boolean;
-  error: string | null;
+  error?: string | null;
 }
 
 export interface ProductCardProps {
   product: Product;
-  addToCart: (product: Product) => void;
+  addToCart: (product: Product, type: "menuItem" | "combo") => void;
+  type: "menuItem" | "combo";
 }
 
 export interface ICartItem {
@@ -39,6 +41,7 @@ export interface ICartItem {
   name: string;
   price: number;
   quantity: number;
+  type: "menuItem" | "combo";
 }
 
 export type IProduct = Product;
@@ -49,11 +52,15 @@ export interface ICategory {
   icon: string;
 }
 
-/////ORDERS//////
+///// ORDERS /////
+
 export interface IOrder {
   idUser: string;
-  paymentMethod: "Efectivo" | "Transferencia";
-  MenuItems: { idMenuItem: string; quantity: number }[];
+  paymentMethod: "Cash" | "PayPal";
+  MenuItems: (
+    | { idMenuItem: string; quantity: number }
+    | { idCombo: string; quantity: number }
+  )[];
   comment: string;
 }
 
@@ -63,11 +70,24 @@ export interface UserDataFormProps {
   address: string;
 }
 
+export interface CommentsFormProps {
+  comments: string;
+  handleChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+}
+
 export interface PaymentMethodFormProps {
-  paymentMethod: "Efectivo" | "Transferencia";
+  paymentMethod: "Cash" | "PayPal";
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface OrderSummaryProps {
   total: number;
+}
+
+/// HOOKS ////
+export interface IUserHook {
+  id: string;
+  name: string;
+  email: string;
+  address: string;
 }

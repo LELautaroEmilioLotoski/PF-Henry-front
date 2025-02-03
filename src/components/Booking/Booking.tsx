@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useUserContext } from "@/context/UserContext";
-import { useUser } from "@auth0/nextjs-auth0/client";
 import { reservation } from "@/helpers/auth.helper";
 import DateInput from "./DateInput";
 import TimeInput from "./TimeInput";
@@ -10,7 +9,6 @@ import GuestsInput from "./GuestInput";
 
 export default function CreateReservation() {
   const { userNormal } = useUserContext();
-  // const { user } = useUser();
   const [date, setDate] = useState<Date>();
   const [time, setTime] = useState("");
   const [guests, setGuests] = useState(1);

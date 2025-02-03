@@ -21,6 +21,8 @@ const Login = () => {
       if (response) {        
 
         const token = response.data.token;
+        console.log(token);
+        
         const user = response.data.user;
 
         Cookies.set("token", token, { expires: 7 });

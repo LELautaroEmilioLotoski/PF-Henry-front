@@ -90,6 +90,7 @@ export const UserContextProvider = ({ children }: { children: React.ReactNode })
     Cookies.remove("appSession");
     Cookies.remove("token");
     localStorage.removeItem("user");
+    localStorage.removeItem(("backendToken"))
     setUser(null);
     setToken(null);
     setLoading(false);

@@ -4,7 +4,9 @@ import React from "react";
 import Image from "next/image";
 import { ProductCardProps } from "@/interfaces/Menu-item.interfaces";
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart, type }) => {
+  const itemType = type || "menuItem";
+
   return (
     <div className="bg-white rounded-lg border p-4 flex gap-4 hover:shadow-md transition-shadow">
       <div className="flex-1 flex flex-col justify-between min-w-0">
@@ -26,7 +28,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
             </span>
           </div>
           <button
-            onClick={() => addToCart(product)}
+            onClick={() => addToCart(product, itemType)}
             className="w-full bg-amber-500 text-white py-2 px-4 rounded-lg font-medium hover:bg-amber-600 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
           >
             Add to Cart
