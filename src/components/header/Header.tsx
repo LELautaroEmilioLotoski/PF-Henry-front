@@ -1,4 +1,11 @@
-import { Home, Utensils, Users, FileText, Book } from "lucide-react";
+import {
+  Home,
+  Utensils,
+  Users,
+  FileText,
+  Book,
+  BookOpenText,
+} from "lucide-react";
 import Link from "next/link";
 
 export default function DashboardSidebar() {
@@ -19,13 +26,23 @@ export default function DashboardSidebar() {
           <Utensils className="mr-2 h-4 w-4" />
           Mis reservas
         </Link>
-        <button className="flex align-middle items-center gap-8 p-2 w-full justify-start">
+        <Link href="/editProfile" className="flex align-middle items-center gap-8 p-2 w-full justify-start">
           <Users className="mr-2 h-4 w-4" />
           Editar perfil
-        </button>
-        <Link href="/review" className="flex align-middle items-center gap-8 p-2 w-full justify-start">
+        </Link>
+        <Link
+          href="/review"
+          className="flex align-middle items-center gap-8 p-2 w-full justify-start"
+        >
           <FileText className="mr-2 h-4 w-4" />
           Crear reseña
+        </Link>
+        <Link
+          href="/myReviews"
+          className="flex align-middle items-center gap-8 p-2 w-full justify-start"
+        >
+          <BookOpenText />
+          Mis reseñas
         </Link>
         <Link
           href="/orders"

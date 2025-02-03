@@ -3,19 +3,17 @@ import React, { useEffect, useState } from "react";
 import { cancelledReservation, getReservations } from "@/helpers/auth.helper";
 import { IReservations } from "@/interfaces/Types";
 import Link from "next/link";
-import { useUser } from "@auth0/nextjs-auth0/client";
 import { useUserContext } from "@/context/UserContext";
 
 const BookingHistorial = () => {
   const { userNormal } = useUserContext();
   const [reservations, setReservations] = useState<IReservations[]>([]);
-  const { user } = useUser();
 
   useEffect(() => {
     const fetchReservations = async () => {
       const token = localStorage.getItem("user");
       console.log(token);
-      
+
       if (!token) return;
 
       const usuario = JSON.parse(token);
@@ -26,10 +24,9 @@ const BookingHistorial = () => {
         const response = await getReservations(usuario.email);
         const arrayReservation = response.data;
         console.log(arrayReservation);
-        
 
         if (Array.isArray(arrayReservation)) {
-          setReservations(arrayReservation);          
+          setReservations(arrayReservation);
         } else {
           setReservations([]); // Si la API responde con un error, aseguramos que el estado se actualiza correctamente
         }
@@ -42,9 +39,9 @@ const BookingHistorial = () => {
     fetchReservations();
   }, [userNormal]);
 
-    const cancelReservations = async (id: string) => {
+  const cancelReservations = async (id: string) => {
     try {
-      const response = await cancelledReservation(id);
+      await cancelledReservation(id);
       setReservations((prevReservations) =>
         prevReservations.filter((reservation) => reservation.id !== id)
       );
@@ -55,7 +52,6 @@ const BookingHistorial = () => {
       alert("No se pudo cancelar la reserva");
     }
   };
-  
 
   return (
     <div>

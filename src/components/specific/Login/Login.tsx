@@ -21,11 +21,16 @@ const Login = () => {
       if (response) {        
 
         const token = response.data.token;
+        console.log(token);
+        
         const user = response.data.user;
+        console.log(user);
+        
 
         Cookies.set("token", token, { expires: 7, secure: true });
         setUser(user);
         localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("backendToken", token);
         router.push("/profile");
       } else {
         setError("Credenciales incorrectas");
