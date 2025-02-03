@@ -1,4 +1,5 @@
-"use client";
+"use client"
+
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import styles from '@/app/Cloudinary/Cloudinary.module.css';
@@ -10,8 +11,11 @@ interface UserProps {
   image_url?: string;
 }
 
-// Definir el componente correctamente con las props tipadas
-const FileUploadComponent: React.FC<{ userprops: UserProps }> = ({ userprops }) => {
+interface FileUploadProps {
+  userprops: UserProps;
+}
+
+const FileUploadComponent: React.FC<FileUploadProps> = ({ userprops }) => {
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [fileUrl, setFileUrl] = useState(userprops?.image_url || 'https://e7.pngegg.com/pngimages/178/595/png-clipart-user-profile-computer-icons-login-user-avatars-monochrome-black-thumbnail.png');
