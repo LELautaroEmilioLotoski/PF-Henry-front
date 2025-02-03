@@ -23,11 +23,16 @@ const Login = () => {
         const token = response.data.token;
         const user = response.data.user;
 
-        Cookies.set("token", token, { expires: 7, secure: true });
+        Cookies.set("token", token, { expires: 7 });
         setUser(user);
         localStorage.setItem("user", JSON.stringify(user));
-        router.push("/profile");
-      } else {
+        if (user.role === "worker") {
+          router.push("/employee/inicio"); // Redirige al dashboard del empleado
+        } else {
+          router.push("/profile"); // Redirige al perfil si no es Worker
+        }
+      }
+       else {
         setError("Credenciales incorrectas");
       }
     } catch (error) {
