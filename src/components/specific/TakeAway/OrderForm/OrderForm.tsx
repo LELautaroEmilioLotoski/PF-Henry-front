@@ -1,7 +1,5 @@
-"use client"
-
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router"; // Llamar a useRouter fuera de useEffect
+import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { ICartItem, IOrder } from "@/interfaces/Menu-item.interfaces";
 import { createOrder } from "@/helpers/menu-items.helper";
@@ -12,71 +10,92 @@ import OrderSummary from "@/components/specific/TakeAway/OrderForm/OrderSummary"
 
 const OrderForm: React.FC = () => {
   const { cartItems, total, clearCart } = useCart();
-  const [isClient, setIsClient] = useState(false);
   const [formData, setFormData] = useState<{
     name: string;
     email: string;
     address: string;
     comments: string;
-    paymentMethod: "Efectivo" | "Transferencia";
+    paymentMethod: "Cash" | "PayPal";
     id: string;
   }>({
     name: "",
     email: "",
     address: "",
     comments: "",
-    paymentMethod: "Efectivo",
+    paymentMethod: "Cash",
     id: "",
   });
 
-  const router = useRouter(); 
+  const [isOrderCreated, setIsOrderCreated] = useState(false);
+  const router = useRouter(); // Use the useRouter hook here
 
   useEffect(() => {
-    setIsClient(true);
-
     const userData = localStorage.getItem("user");
-    const user = JSON.parse(userData!);
-
-    if (user) {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        name: user.name,
-        email: user.email,
-        address: user.address,
-        id: user.id,
-      }));
-    } else {
-      console.warn("User data is incomplete or missing.");
+    if (userData) {
+      const user = JSON.parse(userData);
+      
+      if (user.name && user.email && user.address && user.id) {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          name: user.name,
+          email: user.email,
+          address: user.address,
+          id: user.id,
+        }));
+      }
     }
   }, []);
 
+  useEffect(() => {
+    if (isOrderCreated) {
+      setTimeout(() => {
+        router.push("/orders");
+      }, 1000);
+    }
+  }, [isOrderCreated, router]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+  
+    const menuItems = cartItems
+      .filter((item) => item.type === "menuItem")
+      .map((item: ICartItem) => ({
+        idMenuItem: item.id,
+        quantity: item.quantity,
+      }));
+
+    const combos = cartItems
+      .filter((item) => item.type === "combo")
+      .map((item: ICartItem) => ({
+        idCombo: item.id,
+        quantity: item.quantity,
+      }));
+
+    const allItems = [
+      ...menuItems,
+      ...combos
+    ];
 
     const orderData: IOrder = {
       idUser: formData.id,
       paymentMethod: formData.paymentMethod,
-      MenuItems: cartItems.map((item: ICartItem) => ({
-        idMenuItem: item.id,
-        quantity: item.quantity,
-      })),
       comment: formData.comments,
+      MenuItems: allItems.length > 0 ? allItems : [],
     };
 
+    console.log("Order data being sent:", JSON.stringify(orderData, null, 2));
+
     if (!orderData.idUser) {
-      console.error("Missing user ID in the order data");
       alert("User ID is required to place the order.");
       return;
     }
 
     try {
-      const response = await createOrder(orderData);
-      console.log("Response from server:", response);
+      await createOrder(orderData);
       clearCart();
       alert("Order placed successfully!");
-      router.push("/orders");
-    } catch (error) {
-      console.error("Error creating order:", error);
+      setIsOrderCreated(true);
+    } catch {
       alert("There was an error placing your order.");
     }
   };
@@ -88,8 +107,6 @@ const OrderForm: React.FC = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  if (!isClient) return null;
-
   return (
     <div className="bg-white rounded-lg shadow-sm p-6">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Complete Your Order</h2>
@@ -99,7 +116,6 @@ const OrderForm: React.FC = () => {
           name={formData.name} 
           email={formData.email} 
           address={formData.address} 
-          handleChange={handleChange}
         />
         
         <CommentsForm 

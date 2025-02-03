@@ -38,8 +38,12 @@ export const fetchMenuItems = async () => {
 
   export const createOrder = async (orderData: {
     idUser: string;
-    paymentMethod: "Efectivo" | "Transferencia" | "PayPal";
-    MenuItems: { idMenuItem: string; quantity: number }[];
+    paymentMethod: "Cash" | "PayPal";
+    MenuItems: (
+      | { idMenuItem: string; quantity: number }
+      | { idCombo: string; quantity: number }
+    )[];
+    comment: string;
   }) => {
     const res = await fetch(`${APIURL}orders`, {
       method: "POST",
@@ -55,4 +59,4 @@ export const fetchMenuItems = async () => {
   
     const data = await res.json();
     return data;
-  };
+  };  

@@ -1,33 +1,32 @@
-"use client"
+"use client";
 
-import React from "react"
-import { useCart } from "@/context/CartContext"
-import { Minus, Plus, Trash2 } from "lucide-react"
+import React from "react";
+import { useCart } from "@/context/CartContext";
+import { Minus, Plus, Trash2 } from "lucide-react";
 
 interface CartProps {
-  onCreateOrder: () => void
+  onCreateOrder: () => void;
 }
 
 const Cart: React.FC<CartProps> = ({ onCreateOrder }) => {
-  const { cartItems, removeFromCart, updateQuantity, total, setCartItems } = useCart()
-  const [isOrderCreated, setIsOrderCreated] = React.useState(false)
+  const { cartItems, removeFromCart, updateQuantity, total, setCartItems } = useCart();
+  const [isOrderCreated, setIsOrderCreated] = React.useState(false);
 
   const handleCreateOrder = () => {
-    const isConfirmed = window.confirm("Are you sure you want to create the order?")
+    const isConfirmed = window.confirm("Are you sure you want to create the order?");
     if (isConfirmed) {
-      setIsOrderCreated(true)
-      onCreateOrder()
-      localStorage.setItem("cart", JSON.stringify(cartItems))
+      setIsOrderCreated(true);
+      onCreateOrder();
+      localStorage.setItem("cart", JSON.stringify(cartItems));
     }
-  }
+  };
 
   React.useEffect(() => {
-    // Recuperar carrito desde localStorage
-    const savedCart = localStorage.getItem("cart")
+    const savedCart = localStorage.getItem("cart");
     if (savedCart) {
-      setCartItems(JSON.parse(savedCart))
+      setCartItems(JSON.parse(savedCart));
     }
-  }, [setCartItems])
+  }, [setCartItems]);
 
   return (
     <div className="bg-white rounded-lg shadow-sm h-full border">
@@ -45,6 +44,7 @@ const Cart: React.FC<CartProps> = ({ onCreateOrder }) => {
               <div className="flex-1 min-w-0">
                 <h3 className="font-semibold text-lg truncate">{item.name}</h3>
                 <p className="text-amber-500 font-bold">${item.price}</p>
+                <p className="text-sm text-gray-500">{item.type === "combo" ? "Combo" : "Menu Item"}</p>
               </div>
               <div className="flex items-center gap-2">
                 <button
@@ -94,7 +94,7 @@ const Cart: React.FC<CartProps> = ({ onCreateOrder }) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Cart
+export default Cart;
