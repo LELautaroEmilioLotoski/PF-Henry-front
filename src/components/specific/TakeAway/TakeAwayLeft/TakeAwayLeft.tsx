@@ -5,7 +5,7 @@ import { useCart } from "@/context/CartContext";
 import SearchBar from "./SearchBar";
 import CategorySelector from "./CategorySelector";
 import ProductList from "./ProductList";
-import { fetchMenuItems } from "@/helpers/menu-items.helper";
+import { fetchMenuItems, fetchCombos } from "@/helpers/menu-items.helper";
 
 const TakeAwayLeft: React.FC = () => {
   const { addToCart } = useCart();
@@ -16,10 +16,23 @@ const TakeAwayLeft: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const getMenuItems = async () => {
+    const getMenuItemsAndCombos = async () => {
       try {
-        const menuItems = await fetchMenuItems();
-        setProducts(menuItems);
+        const [menuItems, combos] = await Promise.all([fetchMenuItems(), fetchCombos()]);
+
+        // Agregar la categoría "Combo" sin modificar la estructura de los combos
+        const comboProducts = combos.map((combo: any) => ({
+          ...combo,
+          category: {
+            id: "combo",
+            name: "Combo",
+            icon: "Package",
+          },
+        }));
+
+        // Combinar menuItems y comboProducts
+        const allProducts = [...menuItems, ...comboProducts];
+        setProducts(allProducts);
         setLoading(false);
       } catch (error) {
         setError("Error fetching products");
@@ -27,7 +40,7 @@ const TakeAwayLeft: React.FC = () => {
       }
     };
 
-    getMenuItems();
+    getMenuItemsAndCombos();
   }, []);
 
   return (

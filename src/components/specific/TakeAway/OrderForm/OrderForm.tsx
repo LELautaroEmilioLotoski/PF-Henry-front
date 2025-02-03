@@ -1,4 +1,7 @@
+"use client"
+
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router"; // Llamar a useRouter fuera de useEffect
 import { useCart } from "@/context/CartContext";
 import { ICartItem, IOrder } from "@/interfaces/Menu-item.interfaces";
 import { createOrder } from "@/helpers/menu-items.helper";
@@ -9,7 +12,7 @@ import OrderSummary from "@/components/specific/TakeAway/OrderForm/OrderSummary"
 
 const OrderForm: React.FC = () => {
   const { cartItems, total, clearCart } = useCart();
-  
+  const [isClient, setIsClient] = useState(false);
   const [formData, setFormData] = useState<{
     name: string;
     email: string;
@@ -26,16 +29,15 @@ const OrderForm: React.FC = () => {
     id: "",
   });
 
-  useEffect(() => {
-    // const user = JSON.parse(localStorage.getItem("user") || "{}");
-    // console.log(user);
+  const router = useRouter(); 
 
-    const userData = localStorage.getItem(("user"));
-    const user = JSON.parse(userData!)
-    console.log(user);
-    
-    
-    if (user) {     
+  useEffect(() => {
+    setIsClient(true);
+
+    const userData = localStorage.getItem("user");
+    const user = JSON.parse(userData!);
+
+    if (user) {
       setFormData((prevFormData) => ({
         ...prevFormData,
         name: user.name,
@@ -58,7 +60,7 @@ const OrderForm: React.FC = () => {
         idMenuItem: item.id,
         quantity: item.quantity,
       })),
-      comment: formData.comments
+      comment: formData.comments,
     };
 
     if (!orderData.idUser) {
@@ -72,6 +74,7 @@ const OrderForm: React.FC = () => {
       console.log("Response from server:", response);
       clearCart();
       alert("Order placed successfully!");
+      router.push("/orders");
     } catch (error) {
       console.error("Error creating order:", error);
       alert("There was an error placing your order.");
@@ -85,6 +88,8 @@ const OrderForm: React.FC = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  if (!isClient) return null;
+
   return (
     <div className="bg-white rounded-lg shadow-sm p-6">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Complete Your Order</h2>
@@ -94,6 +99,7 @@ const OrderForm: React.FC = () => {
           name={formData.name} 
           email={formData.email} 
           address={formData.address} 
+          handleChange={handleChange}
         />
         
         <CommentsForm 

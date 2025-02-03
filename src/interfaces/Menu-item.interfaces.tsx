@@ -52,7 +52,7 @@ export interface ICategory {
 /////ORDERS//////
 export interface IOrder {
   idUser: string;
-  paymentMethod: "Efectivo" | "Transferencia";
+  paymentMethod: "Efectivo" | "Transferencia" | "PayPal";
   MenuItems: { idMenuItem: string; quantity: number }[];
   comment: string;
 }
@@ -63,8 +63,13 @@ export interface UserDataFormProps {
   address: string;
 }
 
+export interface CommentsFormProps {
+  comments: string;
+  handleChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+}
+
 export interface PaymentMethodFormProps {
-  paymentMethod: "Efectivo" | "Transferencia";
+  paymentMethod: "Efectivo" | "Transferencia" | "PayPal";
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
