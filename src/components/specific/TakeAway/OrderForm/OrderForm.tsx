@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { ICartItem, IOrder } from "@/interfaces/Menu-item.interfaces";
 import { createOrder } from "@/helpers/menu-items.helper";
@@ -9,71 +10,92 @@ import OrderSummary from "@/components/specific/TakeAway/OrderForm/OrderSummary"
 
 const OrderForm: React.FC = () => {
   const { cartItems, total, clearCart } = useCart();
-  
   const [formData, setFormData] = useState<{
     name: string;
     email: string;
     address: string;
     comments: string;
-    paymentMethod: "Efectivo" | "Transferencia";
+    paymentMethod: "Cash" | "PayPal";
     id: string;
   }>({
     name: "",
     email: "",
     address: "",
     comments: "",
-    paymentMethod: "Efectivo",
+    paymentMethod: "Cash",
     id: "",
   });
 
-  useEffect(() => {
-    // const user = JSON.parse(localStorage.getItem("user") || "{}");
-    // console.log(user);
+  const [isOrderCreated, setIsOrderCreated] = useState(false);
+  const router = useRouter(); // Use the useRouter hook here
 
-    const userData = localStorage.getItem(("user"));
-    const user = JSON.parse(userData!)
-    console.log(user);
-    
-    
-    if (user) {     
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        name: user.name,
-        email: user.email,
-        address: user.address,
-        id: user.id,
-      }));
-    } else {
-      console.warn("User data is incomplete or missing.");
+  useEffect(() => {
+    const userData = localStorage.getItem("user");
+    if (userData) {
+      const user = JSON.parse(userData);
+      
+      if (user.name && user.email && user.address && user.id) {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          name: user.name,
+          email: user.email,
+          address: user.address,
+          id: user.id,
+        }));
+      }
     }
   }, []);
 
+  useEffect(() => {
+    if (isOrderCreated) {
+      setTimeout(() => {
+        router.push("/orders");
+      }, 1000);
+    }
+  }, [isOrderCreated, router]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+  
+    const menuItems = cartItems
+      .filter((item) => item.type === "menuItem")
+      .map((item: ICartItem) => ({
+        idMenuItem: item.id,
+        quantity: item.quantity,
+      }));
+
+    const combos = cartItems
+      .filter((item) => item.type === "combo")
+      .map((item: ICartItem) => ({
+        idCombo: item.id,
+        quantity: item.quantity,
+      }));
+
+    const allItems = [
+      ...menuItems,
+      ...combos
+    ];
 
     const orderData: IOrder = {
       idUser: formData.id,
       paymentMethod: formData.paymentMethod,
-      MenuItems: cartItems.map((item: ICartItem) => ({
-        idMenuItem: item.id,
-        quantity: item.quantity,
-      })),
-      comment: formData.comments
+      comment: formData.comments,
+      MenuItems: allItems.length > 0 ? allItems : [],
     };
 
+    console.log("Order data being sent:", JSON.stringify(orderData, null, 2));
+
     if (!orderData.idUser) {
-      console.error("Missing user ID in the order data");
       alert("User ID is required to place the order.");
       return;
     }
 
     try {
-      const response = await createOrder(orderData);
-      console.log("Response from server:", response);
+      await createOrder(orderData);
       clearCart();
       alert("Order placed successfully!");
-    } catch (error) {
-      console.error("Error creating order:", error);
+      setIsOrderCreated(true);
+    } catch {
       alert("There was an error placing your order.");
     }
   };
