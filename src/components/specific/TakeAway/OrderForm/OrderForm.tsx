@@ -13,33 +13,30 @@ const OrderForm: React.FC = () => {
   const [formData, setFormData] = useState<{
     name: string;
     email: string;
-    address: string;
     comments: string;
     paymentMethod: "Cash" | "PayPal";
     id: string;
   }>({
     name: "",
     email: "",
-    address: "",
     comments: "",
     paymentMethod: "Cash",
     id: "",
   });
 
   const [isOrderCreated, setIsOrderCreated] = useState(false);
-  const router = useRouter(); // Use the useRouter hook here
+  const router = useRouter();
 
   useEffect(() => {
     const userData = localStorage.getItem("user");
     if (userData) {
       const user = JSON.parse(userData);
       
-      if (user.name && user.email && user.address && user.id) {
+      if (user.name && user.email && user.id) {
         setFormData((prevFormData) => ({
           ...prevFormData,
           name: user.name,
           email: user.email,
-          address: user.address,
           id: user.id,
         }));
       }
@@ -114,8 +111,7 @@ const OrderForm: React.FC = () => {
       <form onSubmit={handleSubmit} className="space-y-6">
         <UserDataForm 
           name={formData.name} 
-          email={formData.email} 
-          address={formData.address} 
+          email={formData.email}
         />
         
         <CommentsForm 

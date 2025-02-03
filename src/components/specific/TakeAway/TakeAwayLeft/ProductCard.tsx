@@ -29,7 +29,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart, type }) =
           </div>
           <button
             onClick={() => addToCart(product, itemType)}
-            className="w-full bg-amber-500 text-white py-2 px-4 rounded-lg font-medium hover:bg-amber-600 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+            className={`w-full py-2 px-4 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 ${product.stock === 0 ? "bg-gray-400 text-gray-600 cursor-not-allowed" : "bg-amber-500 text-white hover:bg-amber-600"}`}
+            disabled={product.stock === 0}
           >
             Add to Cart
           </button>
