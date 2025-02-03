@@ -142,3 +142,17 @@ export const getReview = async (id: string) => {
   const data = await res.json();
   return data;
 };
+
+
+export const uploadImage = async (file: File) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", "ml_default");
+
+  const response = await fetch("https://api.cloudinary.com/v1_1/demo/image/upload", {
+    method: "POST",
+    body: formData,
+  });
+
+  return response.json();
+};
