@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"; // ✅ Usar `next/navigation` en Ap
 import { useUser } from "@auth0/nextjs-auth0/client";
 import DashboardSidebar from "@/components/header/Header";
 import FileUploadComponent from "@/app/Cloudinary/page";
+import Cookies from "js-cookie";
 
 const ProfilePage = () => {
   const router = useRouter();
@@ -16,7 +17,9 @@ const ProfilePage = () => {
 
     const registerUserIfNeeded = async () => {
       try {
-        const backendToken = localStorage.getItem("backendToken");
+        const backendToken = Cookies.get("token");
+        console.log("estoy en el try");
+        
 
         if (!backendToken) {
           const userData = {
@@ -25,6 +28,9 @@ const ProfilePage = () => {
             email: user.email,
             isComplete: false,
           };
+
+          console.log("estoy en el if");
+          
 
           const response = await fetch("http://localhost:3000/auth/signupWithAuth0", {
             method: "POST",
@@ -63,7 +69,7 @@ const ProfilePage = () => {
         if (response.ok) {
           const backendData = await response.json();
           localStorage.setItem("user", JSON.stringify(backendData.user));
-          localStorage.setItem("backendToken", backendData.token);
+          Cookies.set("token", backendData.token);
           setIsAuthenticated(true);
         }
       } catch (error) {
@@ -76,7 +82,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push("/profile");
+      router.push("/profile"); // ✅ Redirige solo cuando el usuario esté autenticado
     }
   }, [isAuthenticated, router]);
 

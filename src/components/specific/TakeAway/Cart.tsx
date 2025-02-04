@@ -3,6 +3,7 @@
 import React from "react";
 import { useCart } from "@/context/CartContext";
 import { Minus, Plus, Trash2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface CartProps {
   onCreateOrder: () => void;
@@ -11,8 +12,16 @@ interface CartProps {
 const Cart: React.FC<CartProps> = ({ onCreateOrder }) => {
   const { cartItems, removeFromCart, updateQuantity, total, setCartItems } = useCart();
   const [isOrderCreated, setIsOrderCreated] = React.useState(false);
+  const router = useRouter();
 
   const handleCreateOrder = () => {
+    const token = document.cookie.split('; ').find(row => row.startsWith('token='));
+    
+    if (!token) {
+      router.push('/login');
+      return;
+    }
+
     const isConfirmed = window.confirm("Are you sure you want to create the order?");
     if (isConfirmed) {
       setIsOrderCreated(true);

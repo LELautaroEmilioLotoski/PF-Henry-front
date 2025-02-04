@@ -1,5 +1,5 @@
 import React from 'react'
-import DashboardHeader from '@/components/specific/adminHeader/AdminHeader'
+import DashboardHeader from '@/components/specific/admin/AdminHeader/AdminHeader'
 
 const page = () => {
   return (

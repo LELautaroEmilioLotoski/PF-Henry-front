@@ -1,5 +1,6 @@
+import CreateEmployee from '@/components/specific/admin/CreateEmployee/CreateEmployee'
 import React from 'react'
-import CreateEmployee from '@/components/admin/createEmployee/CreateEmployee'
+
 
 const page = () => {
   return (
