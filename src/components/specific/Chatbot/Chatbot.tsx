@@ -28,9 +28,9 @@ export function DobbyAssistant() {
           <div className="bg-white rounded-lg p-6 w-full sm:max-w-[425px]">
             <div className="flex justify-between items-center">
               <h3 className="text-lg font-semibold">Dobby</h3>
-              <Button onClick={handleClose} className="text-gray-500 bg-primary text-white hover:text-gray-700">X</Button>
+              <Button onClick={handleClose} className="text-gray-500 text--primary-font bg-primary text-white hover:text-gray-700">X</Button>
             </div>
-            <p className="text-sm text-gray-600">How can I help you today wizard🧙‍♂️✨?</p>
+            <p className="text-sm text--primary-font text-gray-600">How can I help you today wizard🧙‍♂️✨?</p>
 
             {step === 'start' && (
               <div className="grid gap-4 py-4 ">
