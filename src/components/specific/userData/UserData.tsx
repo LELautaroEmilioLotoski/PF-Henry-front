@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation"; // ✅ Usar `next/navigation` en App Router
+import { useRouter } from "next/navigation";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import DashboardSidebar from "@/components/header/Header";
 import FileUploadComponent from "@/app/Cloudinary/page";
@@ -76,7 +76,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push("/profile"); // ✅ Redirige solo cuando el usuario esté autenticado
+      router.push("/profile");
     }
   }, [isAuthenticated, router]);
 

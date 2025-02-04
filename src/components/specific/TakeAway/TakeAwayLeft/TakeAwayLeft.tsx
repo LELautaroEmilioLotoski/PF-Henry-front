@@ -46,7 +46,7 @@ const TakeAwayLeft: React.FC = () => {
 
   return (
     <div className="bg-white rounded-lg shadow-sm">
-      <div className="sticky top-0 bg-white z-10 space-y-6 p-4 border-b">
+      <div className="bg-white z-10 space-y-6 p-4 border-b">
         <SearchBar search={search} setSearch={setSearch} />
         <CategorySelector
           selectedCategory={selectedCategory}

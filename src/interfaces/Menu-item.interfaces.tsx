@@ -8,6 +8,7 @@ export interface Product {
   isActive: boolean;
   category: ICategory | null;
   type: "menuItem" | "combo";
+  stockCombos?: number;
 }
 
 export interface SearchBarProps {
