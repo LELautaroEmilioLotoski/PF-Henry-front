@@ -31,8 +31,12 @@ const OrderForm: React.FC = () => {
     const userData = localStorage.getItem("user");
     if (userData) {
       const user = JSON.parse(userData);
+      console.log(user);
+      
       
       if (user.name && user.email && user.id) {
+        console.log(user.name);
+        
         setFormData((prevFormData) => ({
           ...prevFormData,
           name: user.name,
@@ -83,7 +87,7 @@ const OrderForm: React.FC = () => {
       MenuItems: allItems.length > 0 ? allItems : [],
     };
 
-    console.log(orderData);
+    // console.log(orderData);
     
 
     console.log("Order data being sent:", JSON.stringify(orderData, null, 2));
@@ -94,7 +98,11 @@ const OrderForm: React.FC = () => {
     }
 
     try {
-      await createOrder(orderData);
+      console.log("estoy en el try");
+      
+      const a = await createOrder(orderData);
+      console.log(a);
+      
       clearCart();
       alert("Order placed successfully!");
       setIsOrderCreated(true);
