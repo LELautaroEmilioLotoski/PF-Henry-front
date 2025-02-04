@@ -80,9 +80,9 @@ const ProfilePage = () => {
     }
   }, [isAuthenticated, router]);
 
-  if (isLoading) {
-    return <div>Cargando...</div>;
-  }
+//   if (isLoading) {
+//     return <div>Cargando...</div>;
+//   }
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -112,4 +112,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+// export default ProfilePage;
