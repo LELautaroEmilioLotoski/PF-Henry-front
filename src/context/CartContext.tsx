@@ -40,13 +40,12 @@ export const CartContextProvider = ({ children }: { children: React.ReactNode })
             : item
         );
       } else {
-        
         return [
           ...prev,
           { 
             id: product.id, 
             name: product.name, 
-            price: parseFloat(product.price), 
+            price: parseFloat(product.price),
             quantity: 1, 
             type,
           },
@@ -54,7 +53,6 @@ export const CartContextProvider = ({ children }: { children: React.ReactNode })
       }
     });
   };
-  
 
   const removeFromCart = (id: string) => {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
@@ -70,7 +68,9 @@ export const CartContextProvider = ({ children }: { children: React.ReactNode })
     setCartItems([]);
   };
 
-  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const total = cartItems.reduce((sum, item) => {
+    return sum + (item.price * item.quantity);
+  }, 0);
 
   return (
     <CartContext.Provider
@@ -80,7 +80,7 @@ export const CartContextProvider = ({ children }: { children: React.ReactNode })
         removeFromCart,
         updateQuantity,
         clearCart,
-        total,
+        total: parseFloat(total.toFixed(2)),
         setCartItems,
       }}
     >
