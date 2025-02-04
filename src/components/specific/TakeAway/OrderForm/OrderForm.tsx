@@ -6,6 +6,8 @@ import UserDataForm from "@/components/specific/TakeAway/OrderForm/UserDataForm"
 import CommentsForm from "@/components/specific/TakeAway/OrderForm/CommentsForm";
 import PaymentMethodForm from "@/components/specific/TakeAway/OrderForm/PaymentMethodForm";
 import OrderSummary from "@/components/specific/TakeAway/OrderForm/OrderSummary";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import { toast } from "react-toastify";
 
 const OrderForm: React.FC = () => {
   const { cartItems, total, clearCart } = useCart();
@@ -15,9 +17,9 @@ const OrderForm: React.FC = () => {
     email: string;
     address: string;
     comments: string;
-    paymentMethod: "Efectivo" | "Transferencia";
+    paymentMethod: "Efectivo" | "Transferencia" | "PayPal";
     id: string;
-  }>({
+  }>( {
     name: "",
     email: "",
     address: "",
@@ -26,15 +28,13 @@ const OrderForm: React.FC = () => {
     id: "",
   });
 
-  useEffect(() => {
-    // const user = JSON.parse(localStorage.getItem("user") || "{}");
-    // console.log(user);
+  const [showPayPal, setShowPayPal] = useState(false);
 
-    const userData = localStorage.getItem(("user"));
-    const user = JSON.parse(userData!)
+  useEffect(() => {
+    const userData = localStorage.getItem("user");
+    const user = JSON.parse(userData!);
     console.log(user);
-    
-    
+
     if (user) {     
       setFormData((prevFormData) => ({
         ...prevFormData,
@@ -47,6 +47,20 @@ const OrderForm: React.FC = () => {
       console.warn("User data is incomplete or missing.");
     }
   }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+
+    if (name === "paymentMethod" && value === "PayPal") {
+      setShowPayPal(true);
+    } else {
+      setShowPayPal(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,29 +81,12 @@ const OrderForm: React.FC = () => {
       return;
     }
 
-    try {
-      const response = await createOrder(orderData);
-      console.log("Response from server:", response);
-      clearCart();
-      alert("Order placed successfully!");
-    } catch (error) {
-      console.error("Error creating order:", error);
-      alert("There was an error placing your order.");
-    }
-  };
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+   
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Complete Your Order</h2>
-
-      <form onSubmit={handleSubmit} className="space-y-6">
+    <div>
+      <form onSubmit={handleSubmit}>
         <UserDataForm 
           name={formData.name} 
           email={formData.email} 
@@ -115,6 +112,53 @@ const OrderForm: React.FC = () => {
           Confirm Order
         </button>
       </form>
+
+      {showPayPal && (
+        <PayPalScriptProvider
+          options={{
+            clientId: "AeTVy8fpYKvZ_q372W1dasinGPVVFwUAQ5Lfh_gFd73-G6218PUgYkWTDE6NPY78_pNh4XhEVXf5ieFv",
+            currency: "USD",
+          }}
+        >
+          <PayPalButtons
+            style={{ layout: "vertical" }}
+            createOrder={(data, actions) => {
+              if (!actions.order) {
+                toast.error("Error al inicializar el pedido.");
+                return Promise.reject("actions.order es undefined");
+              }
+
+              return actions.order.create({
+                intent: "CAPTURE",
+                purchase_units: [
+                  {
+                    amount: {
+                      currency_code: "USD",
+                      value: total.toString(),
+                    },
+                  },
+                ],
+              });
+            }}
+            onApprove={(data, actions) => {
+              if (!actions.order) {
+                toast.error("Error al procesar el pago.");
+                return Promise.reject("actions.order es undefined");
+              }
+
+              return actions.order.capture().then((details) => {
+                toast.success("¡Pago realizado con éxito!");
+                console.log(details);
+                setShowPayPal(false);
+              });
+            }}
+            onError={(err) => {
+              toast.error("Pago rechazado o error al procesar.");
+              console.error(err);
+            }}
+          />
+        </PayPalScriptProvider>
+      )}
     </div>
   );
 };
