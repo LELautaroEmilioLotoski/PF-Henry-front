@@ -58,24 +58,26 @@ const ProductList: React.FC<ProductListProps> = ({
   }
 
   return (
-    <div className="p-4 space-y-6">
-      {Object.entries(groupedProducts).map(([category, categoryProducts]) => (
-        <div key={category} className="space-y-4">
-          <h2 className="text-2xl font-bold text-gray-800 capitalize">
-            {category}
-          </h2>
-          <div className="grid sm:grid-cols-2 gap-4">
-            {categoryProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                addToCart={addToCart}
-                type={product.type || "menuItem"}
-              />
-            ))}
+    <div className="p-4 space-y-6 h-full">
+      <div className="overflow-y-auto h-[calc(100vh-15rem)]">
+        {Object.entries(groupedProducts).map(([category, categoryProducts]) => (
+          <div key={category} className="space-y-4">
+            <h2 className="text-2xl font-bold text-gray-800 capitalize">
+              {category}
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              {categoryProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  addToCart={addToCart}
+                  type={product.type || "menuItem"}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };
