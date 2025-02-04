@@ -19,10 +19,31 @@ export const fetchMenuItems = async () => {
   };
 
 
+  export const fetchCombos = async () => {
+    const res = await fetch(`${APIURL}combos`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  
+    if (!res.ok) {
+      throw new Error(`Error fetching combos: ${res.statusText}`);
+    }
+  
+    const data = await res.json();
+    return data;
+  };
+
+
   export const createOrder = async (orderData: {
     idUser: string;
-    paymentMethod: "Efectivo" | "Transferencia";
-    MenuItems: { idMenuItem: string; quantity: number }[];
+    paymentMethod: "Cash" | "PayPal";
+    MenuItems: (
+      | { idMenuItem: string; quantity: number }
+      | { idCombo: string; quantity: number }
+    )[];
+    comment: string;
   }) => {
     const res = await fetch(`${APIURL}orders`, {
       method: "POST",
@@ -38,4 +59,4 @@ export const fetchMenuItems = async () => {
   
     const data = await res.json();
     return data;
-  };
+  };  

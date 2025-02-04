@@ -5,8 +5,7 @@ import { useUserContext } from "@/context/UserContext";
 import DashboardSidebar from "@/components/header/Header";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import FileUploadComponent from "@/app/Cloudinary/page";
-import ProfilePage from "../userData/UserData";
-
+import ProfilePage from "@/app/profile/page";
 
 const UserDashboard = () => {
   const { userNormal, logoutUser } = useUserContext();
