@@ -84,12 +84,18 @@ const OrderForm: React.FC = () => {
       ...combos
     ];
 
+    console.log(formData);
+    
+
     const orderData: IOrder = {
       idUser: formData.id,
       paymentMethod: formData.paymentMethod,
       comment: formData.comments,
       MenuItems: allItems.length > 0 ? allItems : [],
     };
+
+    // console.log(orderData);
+    
 
     console.log("Order data being sent:", JSON.stringify(orderData, null, 2));
 
@@ -99,7 +105,11 @@ const OrderForm: React.FC = () => {
     }
 
     try {
-      await createOrder(orderData);
+      console.log("estoy en el try");
+      
+      const a = await createOrder(orderData);
+      console.log(a);
+      
       clearCart();
       alert("Order placed successfully!");
       setIsOrderCreated(true);

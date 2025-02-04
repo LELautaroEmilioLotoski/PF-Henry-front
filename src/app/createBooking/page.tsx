@@ -1,5 +1,5 @@
 import React from 'react'
-import Booking from '@/components/Booking/Booking'
+import Booking from '@/components/specific/Booking/Booking'
 
 const page = () => {
   return (
