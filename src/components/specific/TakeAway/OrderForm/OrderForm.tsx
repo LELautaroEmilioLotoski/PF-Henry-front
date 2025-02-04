@@ -18,7 +18,7 @@ const OrderForm: React.FC = () => {
     comments: string;
     paymentMethod: "Cash" | "PayPal";
     id: string;
-  }>( {
+  }>({
     name: "",
     email: "",
     comments: "",
@@ -27,7 +27,6 @@ const OrderForm: React.FC = () => {
   });
 
   const [showPayPal, setShowPayPal] = useState(false);
-
   const [isOrderCreated, setIsOrderCreated] = useState(false);
   const router = useRouter();
 
@@ -35,14 +34,8 @@ const OrderForm: React.FC = () => {
     const userData = localStorage.getItem("user");
     if (userData) {
       const user = JSON.parse(userData);
-      
       if (user.name && user.email && user.id) {
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          name: user.name,
-          email: user.email,
-          id: user.id,
-        }));
+        setFormData((prev) => ({ ...prev, name: user.name, email: user.email, id: user.id }));
       }
     }
   }, []);
@@ -71,7 +64,7 @@ const OrderForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     const menuItems = cartItems
       .filter((item) => item.type === "menuItem")
       .map((item: ICartItem) => ({
@@ -120,33 +113,31 @@ const OrderForm: React.FC = () => {
       <form onSubmit={handleSubmit}>
         <UserDataForm 
           name={formData.name} 
-          email={formData.email}
+          email={formData.email} 
         />
-        
         <CommentsForm 
           comments={formData.comments} 
           handleChange={handleChange} 
         />
-        
         <PaymentMethodForm 
           paymentMethod={formData.paymentMethod} 
           handleChange={handleChange} 
         />
-        
         <OrderSummary total={total} />
-
-        <button
-          type="submit"
-          className="w-full bg-amber-500 text-white py-3 px-4 rounded-lg font-medium hover:bg-amber-600 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
-        >
-          Confirm Order
-        </button>
+        {!showPayPal && (
+          <button
+            type="submit"
+            className="w-full bg-amber-500 text-white py-3 px-4 rounded-lg font-medium hover:bg-amber-600"
+          >
+            Confirm Order
+          </button>
+        )}
       </form>
 
       {showPayPal && (
         <PayPalScriptProvider
           options={{
-            clientId: "AeTVy8fpYKvZ_q372W1dasinGPVVFwUAQ5Lfh_gFd73-G6218PUgYkWTDE6NPY78_pNh4XhEVXf5ieFv",
+            clientId: "AeTVy8fpYKvZ_q372W1dasinGPVVFwUAQ5Lfh_gFd73-G6218PUgYkWTDE6NPY78_pNh4XhEVXf5ieFv", //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             currency: "USD",
           }}
         >
@@ -154,8 +145,8 @@ const OrderForm: React.FC = () => {
             style={{ layout: "vertical" }}
             createOrder={(data, actions) => {
               if (!actions.order) {
-                toast.error("Error al inicializar el pedido.");
-                return Promise.reject("actions.order es undefined");
+                toast.error("Error initializing the order.");
+                return Promise.reject("actions.order is undefined");
               }
 
               return actions.order.create({
@@ -170,22 +161,40 @@ const OrderForm: React.FC = () => {
                 ],
               });
             }}
-            onApprove={(data, actions) => {
+            onApprove={async (data, actions) => {
               if (!actions.order) {
-                toast.error("Error al procesar el pago.");
-                return Promise.reject("actions.order es undefined");
+                toast.error("Error processing the payment.");
+                return;
               }
 
-              return actions.order.capture().then((details) => {
-                toast.success("¡Pago realizado con éxito!");
-                console.log(details);
-                setShowPayPal(false);
-              });
+              const details = await actions.order.capture();
+              if (!details || !details.purchase_units) {
+                toast.error("Error processing the payment.");
+                return;
+              }
+
+              const orderData: IOrder = {
+                idUser: formData.id,
+                paymentMethod: "PayPal",
+                comment: formData.comments,
+                MenuItems: cartItems
+                  .filter((item) => item.type === "menuItem")
+                  .map((item: ICartItem) => ({
+                    idMenuItem: item.id,
+                    quantity: item.quantity,
+                  })),
+              };
+
+              try {
+                await createOrder(orderData);
+                clearCart();
+                toast.success("Order completed and saved successfully.");
+                setIsOrderCreated(true);
+              } catch {
+                toast.error("There was an error placing your order.");
+              }
             }}
-            onError={(err) => {
-              toast.error("Pago rechazado o error al procesar.");
-              console.error(err);
-            }}
+            onError={() => toast.error("Payment rejected or error processing.")}
           />
         </PayPalScriptProvider>
       )}
