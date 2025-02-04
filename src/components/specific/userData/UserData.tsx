@@ -1,12 +1,12 @@
 import FileUploadComponent from "@/app/Cloudinary/page";
 import DashboardSidebar from "@/components/header/Header";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 const ProfilePage = () => {
   const { user, isLoading, error } = useUser();
-  const router = useRouter();
+  // const router = useRouter();
 
   useEffect(() => {
     const registerUserIfNeeded = async () => {

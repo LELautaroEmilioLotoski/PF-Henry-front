@@ -13,20 +13,23 @@ function HomeComponent() {
   return (
     <>
       <div className={styles.card} id="Home">
-        <div className={styles.backgound}>
-          <Image src={Image1} alt="Imagen de Fondo" className={styles.Image1}></Image>
-          <h2 className={styles.title}>WINGARDIUM LEVIOSA!!</h2>
+        <div className={styles.background}>
+          <Image src={Image1} alt="Imagen de Fondo" className={styles.Image1} />
+          <div className={styles.titleContainer}>
+            <h2 className={styles.title}>WINGARDIUM LEVIOSA!!</h2>
+          </div>
         </div>
       </div>
 
-      <BotonsComponent/>
-      <AboutComponent/>
-      <UbicationComponent/>
-      <CharactersComponent/>
-      <BestProducts/>
+      <BotonsComponent />
+      <AboutComponent />
+      <UbicationComponent />
+      <CharactersComponent />
+      <BestProducts />
     </>
 
-   
+
+
   )
 }
 

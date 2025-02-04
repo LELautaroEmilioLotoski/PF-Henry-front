@@ -57,6 +57,7 @@ const FileUploadComponent: React.FC<{ userprops: UserProps }> = ({ userprops }) 
 
       alert('Archivo subido correctamente.');
 
+      // Guardar la imagen en localStorage usando el email como clave
       localStorage.setItem(`profileImageUrl_${userprops?.email}`, response.data.img);
       setFileUrl(response.data.img);
     } catch (error) {
@@ -120,6 +121,7 @@ const FileUploadComponent: React.FC<{ userprops: UserProps }> = ({ userprops }) 
 };
 
 export default FileUploadComponent;
+
 
 
 
