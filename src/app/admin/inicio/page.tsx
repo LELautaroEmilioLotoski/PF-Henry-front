@@ -1,11 +1,10 @@
 import React from 'react'
 import AdminView from '@/views/AdminView/inicio/AdminView'
-import DashboardHeader from '@/components/specific/adminHeader/AdminHeader'
-
+import DashboardSidebar from '@/components/header/Header'
 const page = () => {
   return (
     <div className='flex m-auto'>
-        <DashboardHeader/>
+        <DashboardSidebar/>
         <AdminView/>
     </div>
   )
