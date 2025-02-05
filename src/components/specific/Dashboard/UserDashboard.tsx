@@ -4,7 +4,7 @@ import React from "react";
 import { useUserContext } from "@/context/UserContext";
 import DashboardSidebar from "@/components/header/Header";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import FileUploadComponent from "@/app/Cloudinary/page";
+import CloudinaryPage from "@/app/Cloudinary/page";
 import ProfilePage from "../userData/UserData";
 
 const UserDashboard = () => {
@@ -51,7 +51,7 @@ const UserDashboard = () => {
                 Cerrar sesión
               </button>
             </div>
-            <FileUploadComponent userprops={{ email: userNormal?.email, image_url: userNormal?.image_url }} />
+            <CloudinaryPage userprops={{ email: userNormal?.email, image_url: userNormal?.image_url }} />
           </div>
         ) : (
           <div className="text-center mt-20">

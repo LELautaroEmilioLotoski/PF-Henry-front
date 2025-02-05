@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation"; // ✅ Usar `next/navigation` en App Router
 import { useUser } from "@auth0/nextjs-auth0/client";
 import DashboardSidebar from "@/components/header/Header";
-import FileUploadComponent from "@/app/Cloudinary/page";
+import CloudinaryPage from "@/app/Cloudinary/page";
 import Cookies from "js-cookie";
 
 const ProfilePage = () => {
@@ -113,7 +113,7 @@ const ProfilePage = () => {
           Address: <span className="text-gray-800">{userData?.address || "No disponible"}</span>
         </p>
       </div>
-      <FileUploadComponent userprops={{ email: userData?.email, image_url: userData?.picture }} />
+      <CloudinaryPage userprops={{ email: userData?.email, image_url: userData?.picture }} />
     </div>
   );
 };
