@@ -1,22 +1,6 @@
-"use client"
-
 import type React from "react"
 import Image from "next/image"
-
-interface InfoCardProps {
-  isOpen: boolean
-  onClose: () => void
-  combo: {
-    name: string
-    menuItems?: {
-      id: string
-      name: string
-      description: string
-      price: string
-      image_url?: string
-    }[]
-  }
-}
+import { InfoCardProps } from "@/interfaces/Types"
 
 const InfoCard: React.FC<InfoCardProps> = ({ isOpen, onClose, combo }) => {
   if (!isOpen) return null
@@ -53,7 +37,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ isOpen, onClose, combo }) => {
                   <h4 className="font-semibold text-sm text-gray-900">{item.name}</h4>
                   <p className="text-sm text-gray-500 line-clamp-2">{item.description}</p>
                   <p className="text-sm font-medium text-amber-500 mt-1">
-                    ${Number.parseFloat(item.price).toLocaleString()}
+                    ${Number.parseFloat(String(item.price)).toLocaleString()}
                   </p>
                 </div>
               </div>
