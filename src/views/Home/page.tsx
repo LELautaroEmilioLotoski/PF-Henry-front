@@ -13,7 +13,7 @@ const HomeView = () => {
       {user ? (
         <Dashboard />
       ) : (
-        <Link href="/Login" className="flex justify-center items-center bg-red-300">
+        <Link href="/login" className="flex justify-center items-center bg-red-300">
           Ir al login
         </Link>
       )}
