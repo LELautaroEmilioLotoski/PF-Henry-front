@@ -141,7 +141,7 @@ const Register = () => {
       </div>
 
       <div>
-        <label htmlFor="address" className="text-body mb-1 block">
+       <label htmlFor="address" className="text-body mb-1 block">
           Address
         </label>
         <input
