@@ -59,4 +59,25 @@ export const fetchMenuItems = async () => {
   
     const data = await res.json();
     return data;
-  };  
+  };
+
+  export const updatePaymentStatus = async (orderId: string) => {
+    if (!orderId) throw new Error("Order ID is required to update payment status");
+  
+    try {
+      const response = await fetch(`${APIURL}orders/${orderId}/payment-status`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: "paid" }),
+      });
+  
+      const data = await response.json().catch(() => ({ message: response.statusText }));
+  
+      if (!response.ok) throw new Error(`Failed to update payment status: ${data.message || "Unknown error"}`);
+  
+      return data;
+    } catch (error) {
+      console.error("Error updating payment status:", error);
+      throw error;
+    }
+  };
