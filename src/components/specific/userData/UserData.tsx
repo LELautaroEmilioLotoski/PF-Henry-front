@@ -113,7 +113,7 @@ const ProfilePage = () => {
           Address: <span className="text-gray-800">{userData?.address || "No disponible"}</span>
         </p>
       </div>
-      <FileUploadComponent userprops={{ email: userData?.email, image_url: userData?.picture || '' }} />
+      <FileUploadComponent userprops={{ email: userData?.email, image_url: userData?.picture }} />
     </div>
   );
 };
