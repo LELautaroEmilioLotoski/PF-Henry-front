@@ -5,7 +5,7 @@ import { register } from "@/helpers/auth.helper";
 import { validateRegisterForm } from "@/helpers/validate";
 import { IRegisterErrors, IRegisterProps } from "@/interfaces/Types";
 
-const Register = () => {
+const CreateEmployee = () => {
   const router = useRouter();
   const initialState: IRegisterProps = {
     id: "",
@@ -166,4 +166,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default CreateEmployee;

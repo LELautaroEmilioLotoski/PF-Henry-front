@@ -1,11 +1,8 @@
-import CreateEmployee from '@/components/specific/admin/CreateEmployee/CreateEmployee'
-import React from 'react'
-
+import CreateEmployee from "@/components/specific/admin/CreateEmployee/CreateEmployee";
+import React from "react";
 
 const page = () => {
-  return (
-    <CreateEmployee/>
-  )
-}
+  return <CreateEmployee />;
+};
 
-export default page
+export default page;
