@@ -229,13 +229,10 @@ export interface IReview {
 }
 
 export interface UserProps {
-  email: string
-  image_url?: string
+  email: string;
+  image_url?: string;
 }
 
 export interface FileUploadProps {
-  userprops: {
-    email?: string;
-    image_url?: string;
-  };
+  userprops: UserProps; // Reutiliza la interfaz en lugar de redefinir las propiedades
 }
