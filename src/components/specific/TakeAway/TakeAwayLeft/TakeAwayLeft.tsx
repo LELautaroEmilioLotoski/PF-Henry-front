@@ -6,13 +6,13 @@ import SearchBar from "./SearchBar";
 import CategorySelector from "./CategorySelector";
 import ProductList from "./ProductList";
 import { fetchMenuItems, fetchCombos } from "@/helpers/menu-items.helper";
-import { Product, ICategory } from "@/interfaces/Menu-item.interfaces";
+import { IProduct, ICategory } from "@/interfaces/Types";
 
 const TakeAwayLeft: React.FC = () => {
   const { addToCart } = useCart();
   const [search, setSearch] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const TakeAwayLeft: React.FC = () => {
         const [menuItems, combos] = await Promise.all([fetchMenuItems(), fetchCombos()]);
 
         
-        const comboProducts = combos.map((combo: Product) => ({
+        const comboProducts = combos.map((combo: IProduct) => ({
           ...combo,
           category: {
             id: "combo",
@@ -46,7 +46,7 @@ const TakeAwayLeft: React.FC = () => {
 
   return (
     <div className="bg-white rounded-lg shadow-sm">
-      <div className="sticky top-0 bg-white z-10 space-y-6 p-4 border-b">
+      <div className="bg-white z-10 space-y-6 p-4 border-b">
         <SearchBar search={search} setSearch={setSearch} />
         <CategorySelector
           selectedCategory={selectedCategory}

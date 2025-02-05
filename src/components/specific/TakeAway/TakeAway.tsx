@@ -5,6 +5,7 @@ import { useState } from "react"
 import TakeAwayLeft from "./TakeAwayLeft/TakeAwayLeft"
 import Cart from "./Cart"
 import OrderForm from "@/components/specific/TakeAway/OrderForm/OrderForm"
+import { ToastContainer } from "react-toastify"
 
 const TakeAway: React.FC = () => {
   const [showOrderForm, setShowOrderForm] = useState(false)
@@ -12,6 +13,7 @@ const TakeAway: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <ToastContainer /> 
       <div className="container mx-auto px-4 py-6">
         <h1 className="text-3xl font-bold text-gray-800 mb-6">Take-away</h1>
         <div className="grid lg:grid-cols-2 gap-6">

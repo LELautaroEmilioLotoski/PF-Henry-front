@@ -1,6 +1,6 @@
 import React from 'react'
 import AdminView from '@/views/AdminView/inicio/AdminView'
-import DashboardHeader from '@/components/admin/adminHeader/AdminHeader'
+import DashboardHeader from '@/components/specific/adminHeader/AdminHeader'
 
 const page = () => {
   return (
