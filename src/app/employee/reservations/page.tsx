@@ -126,7 +126,7 @@ const EmployeeReservations = () => {
         <tbody>
           {(reservations || []) .map((reservation) => (
             <tr key={reservation.id}>
-              <td>{(reservation as any).userId?.email || "No disponible"}</td>
+              <td>{reservation.userId?.email || "No disponible"}</td>
               <td>{reservation.date}</td>
               <td>{reservation.time}</td>
               <td>{reservation.status}</td>

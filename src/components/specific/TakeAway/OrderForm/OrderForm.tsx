@@ -84,7 +84,7 @@ const OrderForm: React.FC = () => {
     }
 
     try {
-      const response = await createOrder(orderData);
+      await createOrder(orderData);
       clearCart();
       alert("Order placed successfully!");
       setIsOrderCreated(true);

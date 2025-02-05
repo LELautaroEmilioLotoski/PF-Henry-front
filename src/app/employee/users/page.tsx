@@ -14,7 +14,7 @@ const UsersPage = () => {
       try {
         const data = await getActiveUsers();
         setUsers(data);
-      } catch (err) {
+      } catch {
         setError("Error al cargar los usuarios.");
       } finally {
         setLoading(false);
