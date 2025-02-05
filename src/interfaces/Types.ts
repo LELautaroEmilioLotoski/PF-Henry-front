@@ -117,7 +117,7 @@ export interface UserProps {
   email: string;
   image_url?: string;
 }
-export default interface FileUploadProps {
+export interface FileUploadProps {
   userprops: {
     email: string;
     image_url?: string;
