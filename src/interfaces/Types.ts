@@ -118,8 +118,5 @@ export interface UserProps {
   image_url?: string;
 }
 export interface FileUploadProps {
-  userprops: {
-    email: string;
-    image_url?: string;
-  };
+  userprops: UserProps;
 }
