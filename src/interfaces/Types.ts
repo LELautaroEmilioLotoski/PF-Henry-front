@@ -103,6 +103,7 @@ export interface IReservations extends IReservation {
   id: string;
   status: string;
   create_at: string;
+  userId?: IUser;  
 }
 
 //REVIEW
