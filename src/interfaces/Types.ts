@@ -228,7 +228,7 @@ export interface IReview {
   description: string
 }
 
-export default interface FileUploadProps {
+export interface FileUploadProps {
   userprops?: {
     email?: string;
     image_url?: string;

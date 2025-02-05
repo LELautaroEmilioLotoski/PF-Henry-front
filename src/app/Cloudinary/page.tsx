@@ -123,26 +123,32 @@ import axios from "axios";
 import styles from "@/app/Cloudinary/Cloudinary.module.css";
 import { CircleUserRoundIcon } from "lucide-react";
 import ImageModal from "./ImageModal";
-import FileUploadProps  from "@/interfaces/Types";
 
-const FileUploadComponent: React.FC<FileUploadProps> = ({ userprops }) => {
+export interface FileUploadProps {
+  userprops?: {
+    email?: string;
+    image_url?: string;
+  };
+}
+
+const FileUploadComponent = (FileUploadProps: FileUploadProps) => {
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [fileUrl, setFileUrl] = useState(
-    userprops?.image_url ||
+    FileUploadProps?.userprops?.image_url ||
       "https://e7.pngegg.com/pngimages/178/595/png-clipart-user-profile-computer-icons-login-user-avatars-monochrome-black-thumbnail.png"
   );
   const [showModal, setShowModal] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (userprops?.email) {
-      const storedImageUrl = localStorage.getItem(`profileImageUrl_${userprops.email}`);
+    if (FileUploadProps?.userprops?.email) {
+      const storedImageUrl = localStorage.getItem(`profileImageUrl_${FileUploadProps?.userprops?.email}`);
       if (storedImageUrl) {
         setFileUrl(storedImageUrl);
       }
     }
-  }, [userprops?.email]);
+  }, [FileUploadProps?.userprops?.email]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0] || null;
@@ -168,7 +174,7 @@ const FileUploadComponent: React.FC<FileUploadProps> = ({ userprops }) => {
       formData.append("file", file);
 
       const response = await axios.post(
-        `http://localhost:3000/users/${userprops?.email}/upload`,
+        `http://localhost:3000/users/${FileUploadProps?.userprops?.email}/upload`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -176,7 +182,7 @@ const FileUploadComponent: React.FC<FileUploadProps> = ({ userprops }) => {
       );
 
       alert("Archivo subido correctamente.");
-      localStorage.setItem(`profileImageUrl_${userprops?.email}`, response.data.img);
+      localStorage.setItem(`profileImageUrl_${FileUploadProps?.userprops?.email}`, response.data.img);
       setFileUrl(response.data.img);
     } catch (error) {
       console.error("Error al subir el archivo:", error);

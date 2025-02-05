@@ -51,12 +51,7 @@ const UserDashboard = () => {
                 Cerrar sesión
               </button>
             </div>
-            <FileUploadComponent
-              userprops={{
-                email: userNormal.email,
-                image_url: userNormal.image_url,
-              }}
-            />
+            <FileUploadComponent userprops={{ email: userNormal?.email, image_url: userNormal?.image_url }} />
           </div>
         ) : (
           <div className="text-center mt-20">
