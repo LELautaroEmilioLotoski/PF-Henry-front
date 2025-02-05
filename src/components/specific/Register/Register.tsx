@@ -157,8 +157,7 @@ const Register = () => {
             {errors.address}
           </span>
         )}
-      </div>
-      
+      </div>      
       <button type="submit" className="button-primary" disabled={isLoading}>
         {isLoading ? "Registering..." : "Register"}
       </button>

@@ -1,15 +1,9 @@
+import { CommentsFormProps } from "@/interfaces/Menu-item.interfaces";
 import React from "react";
-
-interface CommentsFormProps {
-  comments: string;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-}
 
 const CommentsForm: React.FC<CommentsFormProps> = ({ comments, handleChange }) => (
   <div>
-    <label htmlFor="comments" className="block text-sm font-medium text-black mb-1">
-      Additional Comments
-    </label>
+    <label htmlFor="comments" className="block text-sm font-medium text-black mb-1">Additional Comments</label>
     <textarea
       id="comments"
       name="comments"

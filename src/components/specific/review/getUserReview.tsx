@@ -11,10 +11,12 @@ const GetUserAllReview = () => {
     const fetchReviews = async () => {
       try {
         const user = localStorage.getItem("user");
+        console.log(user);
+        
         if (!user) return;
 
         const userData = JSON.parse(user);
-        console.log("Usuario:", userData);
+        console.log("Usuario:", userData.id);
 
         const response = await getReview(userData.id);
         console.log("Reseñas obtenidas:", response);
