@@ -1,9 +1,6 @@
-"use client";
-
 import React, { useMemo } from "react";
 import * as Icons from "lucide-react";
-import { CategorySelectorProps } from "@/interfaces/Menu-item.interfaces";
-import { ICategory } from "@/interfaces/Menu-item.interfaces";
+import { ICategory, CategorySelectorProps } from "@/interfaces/Types";
 
 const CategorySelector: React.FC<CategorySelectorProps> = ({
   selectedCategory,
@@ -13,7 +10,7 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({
   const categories = useMemo(() => {
     const categoryMap = new Map<string, ICategory>();
     products.forEach((product) => {
-      if (product.category && product.category.id) {
+      if (product.category && typeof product.category !== 'string' && product.category.id) {
         categoryMap.set(product.category.id, product.category);
       }
     });

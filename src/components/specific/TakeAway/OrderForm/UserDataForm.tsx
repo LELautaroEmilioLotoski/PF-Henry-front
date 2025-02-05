@@ -1,4 +1,4 @@
-import { UserDataFormProps } from "@/interfaces/Menu-item.interfaces";
+import { UserDataFormProps } from "@/interfaces/Types";
 import React from "react";
 
 const UserDataForm: React.FC<UserDataFormProps> = ({ name, email }) => (

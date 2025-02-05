@@ -3,7 +3,7 @@
 import type React from "react"
 import { useState } from "react"
 import Image from "next/image"
-import type { ProductCardProps } from "@/interfaces/Menu-item.interfaces"
+import type { ProductCardProps } from "@/interfaces/Types"
 import InfoCard from "@/components/specific/TakeAway/TakeAwayLeft/InfoCard"
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart, type }) => {
@@ -21,7 +21,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart, type }) =
           </div>
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <p className="text-amber-500 font-bold text-lg">${Number.parseFloat(product.price).toLocaleString()}</p>
+              <p className="text-amber-500 font-bold text-lg">${Number.parseFloat(String(product.price)).toLocaleString()}</p>
               <span className="text-sm text-gray-500">Stock: {stock || 0}</span>
             </div>
             <div className="flex gap-2">

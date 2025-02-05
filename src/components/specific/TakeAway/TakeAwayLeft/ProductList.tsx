@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ProductListProps } from "@/interfaces/Menu-item.interfaces";
+import { ProductListProps } from "@/interfaces/Types";
 import ProductCard from "@/components/specific/TakeAway/TakeAwayLeft/ProductCard";
 
 const ProductList: React.FC<ProductListProps> = ({
@@ -19,13 +19,15 @@ const ProductList: React.FC<ProductListProps> = ({
 
     const matchesCategory =
       selectedCategory === "all" ||
-      product.category?.id.toLowerCase() === selectedCategory.toLowerCase();
+      (typeof product.category === "object" &&
+        product.category?.id.toLowerCase() === selectedCategory.toLowerCase());
 
     return matchesSearch && matchesCategory;
   });
 
   const groupedProducts = filteredProducts.reduce((acc, product) => {
-    const categoryName = product.category?.name || "Sin categoría";
+    const categoryName =
+      typeof product.category === "object" ? product.category?.name : "Sin categoría";
     if (!acc[categoryName]) {
       acc[categoryName] = [];
     }
