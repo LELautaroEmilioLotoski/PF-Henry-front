@@ -123,7 +123,7 @@ import axios from "axios";
 import styles from "@/app/Cloudinary/Cloudinary.module.css";
 import { CircleUserRoundIcon } from "lucide-react";
 import ImageModal from "./ImageModal";
-import {FileUploadProps} from "@/interfaces/Types";
+import { FileUploadProps } from "@/interfaces/Types";
 
 const FileUploadComponent: React.FC<FileUploadProps> = ({ userprops }) => {
   const [file, setFile] = useState<File | null>(null);
