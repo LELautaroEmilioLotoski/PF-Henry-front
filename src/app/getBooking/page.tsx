@@ -1,4 +1,4 @@
-import BookingHistorial from '@/components/Booking/BookingHistorial'
+import BookingHistorial from '@/components/specific/Booking/BookingHistorial'
 import React from 'react'
 
 const page = () => {
