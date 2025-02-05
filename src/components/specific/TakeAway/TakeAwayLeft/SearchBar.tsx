@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Search } from "lucide-react";
-import { SearchBarProps } from "@/interfaces/Menu-item.interfaces"
+import { SearchBarProps } from "@/interfaces/Types"
 
 const SearchBar: React.FC<SearchBarProps> = ({ search, setSearch }) => {
   return (

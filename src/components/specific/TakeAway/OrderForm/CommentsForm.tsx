@@ -1,4 +1,4 @@
-import { CommentsFormProps } from "@/interfaces/Menu-item.interfaces";
+import { CommentsFormProps } from "@/interfaces/Types";
 import React from "react";
 
 const CommentsForm: React.FC<CommentsFormProps> = ({ comments, handleChange }) => (

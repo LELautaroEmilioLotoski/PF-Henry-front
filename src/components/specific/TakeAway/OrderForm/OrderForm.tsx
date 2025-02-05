@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
-import type { ICartItem, IOrder } from "@/interfaces/Menu-item.interfaces";
+import type { ICartItem, IOrder } from "@/interfaces/Types";
 import { createOrder } from "@/helpers/menu-items.helper";
 import { updatePaymentStatus } from "@/helpers/menu-items.helper";
 import UserDataForm from "@/components/specific/TakeAway/OrderForm/UserDataForm";
