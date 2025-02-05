@@ -1,30 +1,30 @@
 "use client";
-
+ 
 import { useState } from "react";
 import { useUserContext } from "@/context/UserContext";
 import { login } from "@/helpers/auth.helper";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-
+ 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const { setUser } = useUserContext();
   const router = useRouter();
-
+ 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const response = await login({ email, password });
-
+ 
       if (response) {        
-
+ 
         const token = response.data.token;
         console.log(token);
-        
+ 
         const user = response.data.user;
-
+ 
         Cookies.set("token", token, { expires: 7 });
         setUser(user);
         localStorage.setItem("user", JSON.stringify(user));
@@ -41,9 +41,9 @@ const Login = () => {
       console.error("Login Error:", error);
       setError("Error al iniciar sesión");
     }  
-    
+ 
   };
-
+ 
   return (
     <form onSubmit={handleLogin} className="p-6 space-y-6 max-w-sm mx-auto">
       <div>
@@ -64,7 +64,7 @@ const Login = () => {
           <span className="text-red-500 text-sm mt-1 block">{error}</span>
         )}
       </div>
-
+ 
       <div>
         <label htmlFor="password" className="text-body mb-1 block">
           Contraseña
@@ -80,11 +80,11 @@ const Login = () => {
           required
         />
       </div>
-
+ 
       <button type="submit" className="button-primary" onClick={handleLogin}>
         Iniciar sesión
       </button>
-
+ 
       <button
         type="button"
         onClick={() => (window.location.href = "/api/auth/login")}
@@ -95,5 +95,5 @@ const Login = () => {
     </form>
   );
 };
-
+ 
 export default Login;

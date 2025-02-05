@@ -1,4 +1,4 @@
-import { OrderSummaryProps } from "@/interfaces/Menu-item.interfaces";
+import { OrderSummaryProps } from "@/interfaces/Types";
 import React from "react";
 
 const OrderSummary: React.FC<OrderSummaryProps> = ({ total }) => (

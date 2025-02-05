@@ -1,4 +1,4 @@
-import { PaymentMethodFormProps } from "@/interfaces/Menu-item.interfaces";
+import { PaymentMethodFormProps } from "@/interfaces/Types";
 import React from "react";
 
 const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({ paymentMethod, handleChange }) => (
