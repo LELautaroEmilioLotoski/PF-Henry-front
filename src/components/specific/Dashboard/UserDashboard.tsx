@@ -3,7 +3,7 @@ import { useUserContext } from "@/context/UserContext"
 import DashboardSidebar from "@/components/header/Header"
 import { useUser } from "@auth0/nextjs-auth0/client"
 import FileUploadComponent from "@/app/Cloudinary/page"
-import ProfilePage from "@/app/profile/page"
+import ProfilePage from "@/components/specific/userData/UserData"
 import styles from "./Dashboard.module.css"
 
 const UserDashboard = () => {
