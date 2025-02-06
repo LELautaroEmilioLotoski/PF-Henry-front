@@ -18,25 +18,40 @@ const Login = () => {
   const router = useRouter()
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
+    e.preventDefault();
+    console.log("Login attempt with:", { email, password });
+
     try {
       const response = await login({ email, password })
 
-      if (response) {
-        const token = response.data.token
-        const user = response.data.user
+      console.log("Response from server:", response.data);
 
-        Cookies.set("token", token, { expires: 7 })
-        setUser(user)
-        localStorage.setItem("user", JSON.stringify(user))
+      if (response && response.data.token && response.data.user) {
+        const token = response.data.token;
+        const user = response.data.user;
+
+        Cookies.set("token", token, { expires: 7 });
+        console.log("Token stored in cookies:", Cookies.get("token"));
+
+        setUser(user);
+        localStorage.setItem("user", JSON.stringify(user));
+        console.log("User stored in localStorage:", localStorage.getItem("user"));
+
+        console.log("User Role:", user.role);
+
         if (user.role === "worker") {
-          router.push("/employee/inicio")
+          console.log("Redirecting to /employee/dashboard");
+          router.push("/employee/dashboard");
+        } else if (user.role === "admin") {
+          console.log("Redirecting to /admin/dashboard");
+          router.push("/admin/dashboard");
         } else {
-          router.push("/profile")
+          console.log("Redirecting to /profile");
+          router.push("/profile");
         }
       } else {
-        setError("Acceso denegado. ¡Alohomora fallido!")
+        console.log("Login failed: Invalid credentials");
+        setError("Credenciales incorrectas");
       }
     } catch (error) {
       console.error("Login Error:", error)

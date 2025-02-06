@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ProductListProps } from "@/interfaces/Menu-item.interfaces";
+import { ProductListProps } from "@/interfaces/Types";
 import ProductCard from "@/components/specific/TakeAway/TakeAwayLeft/ProductCard";
 
 const ProductList: React.FC<ProductListProps> = ({
@@ -19,13 +19,15 @@ const ProductList: React.FC<ProductListProps> = ({
 
     const matchesCategory =
       selectedCategory === "all" ||
-      product.category?.id.toLowerCase() === selectedCategory.toLowerCase();
+      (typeof product.category === "object" &&
+        product.category?.id.toLowerCase() === selectedCategory.toLowerCase());
 
     return matchesSearch && matchesCategory;
   });
 
   const groupedProducts = filteredProducts.reduce((acc, product) => {
-    const categoryName = product.category?.name || "Sin categoría";
+    const categoryName =
+      typeof product.category === "object" ? product.category?.name : "Sin categoría";
     if (!acc[categoryName]) {
       acc[categoryName] = [];
     }
@@ -58,24 +60,26 @@ const ProductList: React.FC<ProductListProps> = ({
   }
 
   return (
-    <div className="p-4 space-y-6">
-      {Object.entries(groupedProducts).map(([category, categoryProducts]) => (
-        <div key={category} className="space-y-4">
-          <h2 className="text-2xl font-bold text-gray-800 capitalize">
-            {category}
-          </h2>
-          <div className="grid sm:grid-cols-2 gap-4">
-            {categoryProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                addToCart={addToCart}
-                type={product.type || "menuItem"}
-              />
-            ))}
+    <div className="p-4 space-y-6 h-full">
+      <div className="overflow-y-auto h-[calc(100vh-15rem)]">
+        {Object.entries(groupedProducts).map(([category, categoryProducts]) => (
+          <div key={category} className="space-y-4">
+            <h2 className="text-2xl font-bold text-gray-800 capitalize">
+              {category}
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              {categoryProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  addToCart={addToCart}
+                  type={product.type || "menuItem"}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

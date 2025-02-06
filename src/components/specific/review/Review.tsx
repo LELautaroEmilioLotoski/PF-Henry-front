@@ -163,6 +163,7 @@ import {
 } from "@/components/ui/card";
 import { createReview } from "@/helpers/auth.helper";
 import { IReview } from "@/interfaces/Types";
+import Cookies from "js-cookie";
 
 interface User {
   id: string;
@@ -185,7 +186,7 @@ export default function RestaurantReview() {
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const tokenData = localStorage.getItem("backendToken");
+    const tokenData = Cookies.get("token");
     console.log("Token guardado en localStorage:", tokenData);
     
     if (tokenData) {

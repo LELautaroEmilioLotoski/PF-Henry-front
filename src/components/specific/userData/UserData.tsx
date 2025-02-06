@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import DashboardSidebar from "@/components/header/Header";
 import FileUploadComponent from "@/app/Cloudinary/page";
- 
+import Cookies from "js-cookie";
+
 const ProfilePage = () => {
   const router = useRouter();
   const { user, isLoading, error } = useUser();
@@ -16,8 +17,10 @@ const ProfilePage = () => {
  
     const registerUserIfNeeded = async () => {
       try {
-        const backendToken = localStorage.getItem("backendToken");
- 
+        const backendToken = Cookies.get("token");
+        console.log("estoy en el try");
+        
+
         if (!backendToken) {
           const userData = {
             auth0Id: user.sub,
@@ -25,7 +28,10 @@ const ProfilePage = () => {
             email: user.email,
             isComplete: false,
           };
- 
+
+          console.log("estoy en el if");
+          
+
           const response = await fetch("http://localhost:3000/auth/signupWithAuth0", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -63,7 +69,7 @@ const ProfilePage = () => {
         if (response.ok) {
           const backendData = await response.json();
           localStorage.setItem("user", JSON.stringify(backendData.user));
-          localStorage.setItem("backendToken", backendData.token);
+          Cookies.set("token", backendData.token);
           setIsAuthenticated(true);
         }
       } catch (error) {
@@ -79,11 +85,11 @@ const ProfilePage = () => {
       router.push("/profile");
     }
   }, [isAuthenticated, router]);
- 
+
   if (isLoading) {
     return <div>Cargando...</div>;
   }
- 
+
   if (error) {
     return <div>Error: {error.message}</div>;
   }
@@ -107,9 +113,9 @@ const ProfilePage = () => {
           Address: <span className="text-gray-800">{userData?.address || "No disponible"}</span>
         </p>
       </div>
-      <FileUploadComponent userprops={{ email: userData?.email, image_url: userData?.picture || '' }} />
+      <FileUploadComponent userprops={{ email: userData?.email, image_url: userData?.picture }} />
     </div>
   );
 };
- 
+
 export default ProfilePage;
