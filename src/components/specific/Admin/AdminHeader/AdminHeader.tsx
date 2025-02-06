@@ -1,7 +1,7 @@
 import { Utensils, Users, FileText, UserPen } from 'lucide-react'
 import Link from 'next/link'
 
-export default function DashboardSidebar() {
+export default function AdminHeader() {
   return (
     <aside className="w-64 bg-gray-100 p-4 hidden md:block h-[100%]">
       <nav className="space-y-2">
