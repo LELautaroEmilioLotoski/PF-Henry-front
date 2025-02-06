@@ -10,6 +10,10 @@ export interface ILoginErrors {
   password?: string
 }
 
+export interface JwtPayload {
+  roles: string[];
+}
+
 // USERS
 
 export interface IUser {
