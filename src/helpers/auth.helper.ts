@@ -1,3 +1,5 @@
+import { IOrderEmployee } from "@/components/specific/Employee/GetAllOrders/GetAllOrders";
+import { IReservationTable } from "@/components/specific/Employee/GetAllReservations/GetAllReservations";
 import {
   AuthResponse,
   ILoginProps,
@@ -8,6 +10,7 @@ import {
   IOrder,
   IOrderResponse,
   IUser,
+  IReservations,
 } from "@/interfaces/Types";
 
 const APIURL = process.env.NEXT_PUBLIC_API_URL;
@@ -145,7 +148,7 @@ export const getActiveUsers = async (): Promise<IUser[]> => {
   return data.data;
 };
 
-export const getAllReservations = async (token: string | null): Promise<IOrderResponse[]> => {
+export const getAllReservations = async (token: string | null): Promise<IReservationTable[]> => {
   if (!token) throw new Error("No token provided");
 
   const res = await fetch(`${APIURL}reservations`, {
@@ -156,11 +159,11 @@ export const getAllReservations = async (token: string | null): Promise<IOrderRe
     },
   });
 
-  const data: { data: IOrderResponse[] } = await res.json();
+  const data: { data: IReservationTable[] } = await res.json();
   return data.data;
 };
 
-export const getReservationsByEmail = async (email: string, token: string | null): Promise<IOrderResponse[]> => {
+export const getReservationsByEmail = async (email: string, token: string | null): Promise<IReservationTable[]> => {
   console.log('token en userContext:', token);
   if (!token) throw new Error("No token provided");
 
@@ -172,9 +175,10 @@ export const getReservationsByEmail = async (email: string, token: string | null
     },
   });
 
-  const data: { data: IOrderResponse[] } = await res.json();
+  const data: { data: IReservationTable[] } = await res.json();
   return data.data;
 };
+
 
 export const updateReservationStatus = async (id: string, status: string, token: string | null): Promise<IReservation> => {
   if (!token) throw new Error("No token provided");
@@ -207,7 +211,7 @@ export const cancelReservation = async (id: string, token: string | null): Promi
   return data;
 };
 
-export const getAllOrders = async (token: string | null): Promise<IOrder[]> => {
+export const getAllOrders = async (token: string | null): Promise<IOrderEmployee[]> => {
   if (!token) throw new Error("No token provided");
 
   const res = await fetch(`${APIURL}orders/findAllActives`, {
@@ -218,7 +222,7 @@ export const getAllOrders = async (token: string | null): Promise<IOrder[]> => {
     },
   });
 
-  const data: { orders: IOrder[] } = await res.json();
+  const data: { orders: IOrderEmployee[] } = await res.json();
   return data.orders;
 };
 

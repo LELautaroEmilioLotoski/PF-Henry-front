@@ -4,7 +4,7 @@ import React from 'react'
 function GetAllUsersPage() {
   return (
     <GetAllUsers />
-  )
+  );
 }
 
-export default GetAllUsersPage
+export default GetAllUsersPage;

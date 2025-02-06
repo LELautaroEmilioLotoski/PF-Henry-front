@@ -1,37 +1,50 @@
-"use client";
+'use client'
+import React, { useEffect, useState } from "react";
+import { getActiveUsers } from "@/helpers/auth.helper";  // Suponiendo que este es tu helper
+import { IUser } from "@/interfaces/Types";
 
-import { useUserContext } from "@/context/UserContext";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import EmployeeHeader from "@/components/specific/Employee/EmployeeHeader/EmployeeHeader";
-
-
-const GetAllUsers = ({ children }: { children: React.ReactNode }) => {
-  const { userNormal, loading } = useUserContext();
-  const router = useRouter();
+const GetAllUsers = () => {
+  const [users, setUsers] = useState<IUser[]>([]);
 
   useEffect(() => {
- 
-    if (loading) return; // 🔹 No hacer nada mientras el contexto aún carga
+    const fetchUsers = async () => {
+      try {
+        // Obtener los usuarios desde la API
+        const response = await getActiveUsers();
 
-    if (!userNormal) return;
+        // Transformar los datos para que coincidan con la interfaz IUser
+        const transformedUsers = response.map(user => {
+          return {
+            id: user.id,
+            email: user.email,
+            roles: user.roles,
+            name: user.name,
+            address: user.address,
+            role: user.role,
+            image_url: user.image_url,
+            created_atts: user.created_atts,
+            // Omitimos las propiedades que no están en la interfaz IUser
+          };
+        });
 
-    if (!userNormal || !userNormal.roles?.includes("worker") && !userNormal.roles?.includes("admin")) {
-      router.push("/unauthorized"); // Si no tiene permisos, lo redirige
-    } else {
-      router.replace("/employee/inicio"); // Redirige automáticamente a /employee/inicio
-    }
-  }, [userNormal, loading, router]);
+        // Actualizar el estado con los usuarios transformados
+        setUsers(transformedUsers);
+      } catch (error) {
+        console.error("Error al obtener los usuarios:", error);
+      }
+    };
 
-  // Mientras se valida el usuario, mostramos un loader
-  if (loading) {
-    return <div className="flex justify-center items-center h-screen">Cargando...</div>;
-  }
+    fetchUsers();
+  }, []); // Se ejecuta solo una vez al montar el componente
 
   return (
-    <div className="flex">
-      <EmployeeHeader />
-      <main className="flex-grow p-4">{children}</main>
+    <div>
+      <h1>Usuarios Activos</h1>
+      <ul>
+        {users.map(user => (
+          <li key={user.id}>{user.name} - {user.email}</li>
+        ))}
+      </ul>
     </div>
   );
 };
