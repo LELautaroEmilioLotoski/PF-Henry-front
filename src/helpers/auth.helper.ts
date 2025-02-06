@@ -4,9 +4,8 @@ import {
   IRegisterProps,
   IReservation,
   IReview,
-  IUser,
+  IUserDataUpdate,
 } from "@/interfaces/Types";
-import { useUserContext } from "@/context/UserContext";
 
 const APIURL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -44,7 +43,7 @@ export const login = async (userData: ILoginProps): Promise<AuthResponse> => {
 
 export const updateAccount = async (
   id: string,
-  userData: IUser
+  userData: IUserDataUpdate
 ) => {
   const res = await fetch(`${APIURL}users/${id}`, {
     method: "PUT",
@@ -131,4 +130,166 @@ export const createReview = async (reviewContent: IReview, token: string | null)
   const data = await res.json();
   return data;
 };
+
+export const getActiveUsers = async () => {
+  const res = await fetch(`${APIURL}users`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error("Error al obtener los usuarios activos");
+  }
+
+  const data = await res.json();
+  return data.data; // Retorna solo la parte relevante del JSON
+};
+
+export const getAllReservations = async (token: string | null) => {
+  if (!token) throw new Error("No token provided");
+
+  const res = await fetch(`${APIURL}reservations`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await res.json();
+  return data.data;
+};
+
+export const getReservationsByEmail = async (email: string, token: string | null) => {
+  console.log('token en userContext:', token)
+  if (!token) throw new Error("No token provided");
+
+  const res = await fetch(`${APIURL}users/reservations/${email}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await res.json();
+  return data.data;
+};
+
+export const updateReservationStatus = async (id: string, status: string, token: string | null) => {
+  if (!token) throw new Error("No token provided");
+
+  const res = await fetch(`${APIURL}reservations/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ status }),
+  });
+
+  const data = await res.json();
+  return data;
+};
+
+export const cancelReservation = async (id: string, token: string | null) => {
+  if (!token) throw new Error("No token provided");
+
+  const res = await fetch(`${APIURL}reservations/cancelled/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+
+export const getAllOrders = async (token: string | null) => {
+  if (!token) throw new Error("No token provided");
+
+  const res = await fetch(`${APIURL}orders/findAllActives`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await res.json();
+  return data.orders; // Retorna solo la parte relevante del JSON
+};
+
+
+export const getOrdersByEmail = async (email: string, token: string | null) => {
+  if (!token) throw new Error("No token provided");
+
+  const res = await fetch(`${APIURL}users/orders/${email}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await res.json();
+  return data.data;
+};
+export const updateOrderStatus = async (
+  orderId: string,
+  status: string,
+  token: string | null
+) => {
+  if (!token) throw new Error("No token provided");
+  console.log("Enviando petición PATCH:", {
+    orderId,
+    status,
+    token,
+  });
+
+  console.log("URL de la API:", `${APIURL}orders/${orderId}/status`);
+  const res = await fetch(`${APIURL}orders/${orderId}/status`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ status }), // Aquí se pasa el nuevo estado de la orden
+  });
+
+  const data = await res.json();
+  console.log("Respuesta de la API:", data);
+  return data;
+};
+
+
 ;
+
+export const getReview = async (id: string) => {
+  const res = await fetch(`${APIURL}review/user/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+    },
+  });
+  const data = await res.json();
+  return data;
+};
+
+
+export const uploadImage = async (file: File) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", "ml_default");
+
+  const response = await fetch("https://api.cloudinary.com/v1_1/demo/image/upload", {
+    method: "POST",
+    body: formData,
+  });
+
+  return response.json();
+};

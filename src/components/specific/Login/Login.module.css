@@ -1,0 +1,198 @@
+@keyframes wandAnimation {
+    0%, 100% {
+      opacity: 0;
+      transform: translateX(-50%) translateY(0);
+    }
+    50% {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-10px);
+    }
+  }
+  
+  @keyframes magicReveal {
+    0% {
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  
+  @keyframes glowingBorder {
+    0%, 100% {
+      box-shadow: 0 0 5px rgba(15, 52, 96, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 20px rgba(15, 52, 96, 0.8);
+    }
+  }
+  
+  @keyframes magicSparkle {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+  
+  .loginContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .loginForm {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    padding: 10px; /* Reduce el padding para disminuir la altura */
+    width: 100%;
+    max-width: 350px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    animation: magicReveal 0.8s ease-out, glowingBorder 3s infinite;
+    position: relative;
+    overflow: visible;
+  }
+  
+  .loginForm::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: rotate(45deg);
+    animation: magicSparkle 3s linear infinite;
+  }
+  
+  .loginForm::after {
+    content: "⚡";
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 32px;
+    animation: wandAnimation 2s ease-in-out infinite;
+  }
+  
+  .formTitle {
+    color: #16213e;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+  }
+  
+  .formGroup {
+    margin-bottom: 15px;
+    position: relative;
+  }
+  
+  .label {
+    display: block;
+    margin-bottom: 6px;
+    color: #16213e;
+    font-weight: 500;
+    font-size: 14px;
+  }
+  
+  .inputField {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+  }
+  
+  .inputField:focus {
+    outline: none;
+    border-color: #0f3460;
+    box-shadow: 0 0 0 2px rgba(15, 52, 96, 0.2);
+  }
+  
+  .errorMessage {
+    color: #e94560;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  
+  .button {
+    width: 100%;
+    padding: 10px;
+    background-color: #0f3460;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .button::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: rotate(45deg);
+    transition: all 0.3s ease;
+  }
+  
+  .button:hover::after {
+    left: 100%;
+  }
+  
+  .button:hover {
+    background-color: #16213e;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .auth0Button {
+    background-color: #533483;
+    margin-top: 10px;
+  }
+  
+  .auth0Button:hover {
+    background-color: #6b44ad;
+  }
+  
+  .passwordField {
+    position: relative;
+  }
+  
+  .passwordToggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #16213e;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

@@ -5,29 +5,43 @@ import { useCart } from "@/context/CartContext";
 import SearchBar from "./SearchBar";
 import CategorySelector from "./CategorySelector";
 import ProductList from "./ProductList";
-import { fetchMenuItems } from "@/helpers/menu-items.helper";
+import { fetchMenuItems, fetchCombos } from "@/helpers/menu-items.helper";
+import { Product, ICategory } from "@/interfaces/Menu-item.interfaces";
 
 const TakeAwayLeft: React.FC = () => {
   const { addToCart } = useCart();
-  const [search, setSearch] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [products, setProducts] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [search, setSearch] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const getMenuItems = async () => {
+    const getMenuItemsAndCombos = async () => {
       try {
-        const menuItems = await fetchMenuItems();
-        setProducts(menuItems);
+        const [menuItems, combos] = await Promise.all([fetchMenuItems(), fetchCombos()]);
+
+        
+        const comboProducts = combos.map((combo: Product) => ({
+          ...combo,
+          category: {
+            id: "combo",
+            name: "Combo",
+            icon: "Package",
+          } as ICategory,
+          type: "combo",
+        }));
+
+        
+        const allProducts = [...menuItems, ...comboProducts];
+        setProducts(allProducts);
         setLoading(false);
       } catch (error) {
-        setError("Error fetching products");
+        console.log(error);
         setLoading(false);
       }
     };
 
-    getMenuItems();
+    getMenuItemsAndCombos();
   }, []);
 
   return (
@@ -46,7 +60,6 @@ const TakeAwayLeft: React.FC = () => {
         selectedCategory={selectedCategory}
         addToCart={addToCart}
         loading={loading}
-        error={error}
       />
     </div>
   );

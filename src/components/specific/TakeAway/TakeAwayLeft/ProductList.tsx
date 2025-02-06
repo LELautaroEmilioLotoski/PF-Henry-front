@@ -70,6 +70,7 @@ const ProductList: React.FC<ProductListProps> = ({
                 key={product.id}
                 product={product}
                 addToCart={addToCart}
+                type={product.type || "menuItem"}
               />
             ))}
           </div>

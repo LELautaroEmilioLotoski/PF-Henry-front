@@ -20,6 +20,6 @@ export default async function callback(req: NextApiRequest, res: NextApiResponse
     await handleCallback(req, res); // Sin 'redirectTo'
   } catch (error) {
     console.error('Error during Auth0 callback:', error);
-    res.redirect('/profile'); 
+    // res.redirect('/profile'); 
   }
 }
