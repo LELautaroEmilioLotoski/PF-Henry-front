@@ -34,3 +34,20 @@ export const postMenuItem = async (menuItem: IMenuItem): Promise<ApiResponse<IMe
   const data: IMenuItem = await res.json();
   return { data };
 };
+
+export const patchMenuItem = async (menuItemId: string, updatedMenuItem: IMenuItem): Promise<ApiResponse<IMenuItem>> => {
+  const res = await fetch(`${APIURL}menu-items/${menuItemId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(updatedMenuItem),
+  });
+
+  if (!res.ok) {
+    throw new Error(`Error updating menu item: ${res.statusText}`);
+  }
+
+  const data: IMenuItem = await res.json();
+  return { data };
+};
