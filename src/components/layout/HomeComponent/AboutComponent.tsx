@@ -15,10 +15,11 @@ const AboutComponent = () => {
             inspired by the enchanted world of Harry Potter. In our restaurant,
             we invite you to immerse yourself in the atmosphere of the famous J.K. saga. Rowling, while you enjoy delicious dishes and drinks that could have been prepared in the Hogwarts kitchen itself.
           </h3>
-          <Image src={Image6} alt="logo" className={styles.Image6}></Image>
+          <Image src={Image6} alt="logo" className={styles.Image6} />
         </div>
         <BotonsComponent />
       </div>
+
     </>
   )
 }

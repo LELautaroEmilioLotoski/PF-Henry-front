@@ -1,74 +1,62 @@
-"use client";
-
+"use client"
 import React from "react";
-import { useUserContext } from "@/context/UserContext";
-import DashboardSidebar from "@/components/header/Header";
-import { useUser } from "@auth0/nextjs-auth0/client";
-import ProfilePage from "../userData/UserData";
+import { useUserContext } from "@/context/UserContext"
+import DashboardSidebar from "@/components/header/Header"
+import { useUser } from "@auth0/nextjs-auth0/client"
+import ProfilePage from "@/components/specific/userData/UserData"
+import styles from "./Dashboard.module.css"
 import Cloudinary from "../Cloudinary/Cloudinary";
 
 const UserDashboard = () => {
-  const { userNormal, logoutUser } = useUserContext();
-  const { user } = useUser();
+  const { userNormal, logoutUser } = useUserContext()
+  const { user } = useUser()
 
   const handleLogout = () => {
-    logoutUser();
-    window.location.href = "/api/auth/logout";
-  };
+    logoutUser()
+    window.location.href = "/api/auth/logout"
+  }
 
   return (
-    <div className="flex justify-center bg-gray-100 py-10">
-      <div className="min-h-screen bg-gray-100 flex flex-col items-center">
+    <div className={styles.dashboardContainer}>
+      <div className={styles.dashboardContent}>
         {user ? (
           <ProfilePage />
         ) : userNormal ? (
-          <div className="flex">
+          <div className={styles.flexContainer}>
             <DashboardSidebar />
-            <div className="bg-white shadow-lg rounded-lg w-full max-w-6xl p-6">
-              <h1 className="text-3xl font-semibold text-gray-800 mb-6">
-                Bienvenido, {userNormal.name}
-              </h1>
-              <div className="bg-gray-50 rounded-lg p-6 shadow">
-                <h2 className="text-xl font-semibold text-gray-800 mb-4">
-                  Tus datos personales
-                </h2>
-                <p className="text-lg font-medium text-gray-600">
-                  Name: <span className="text-gray-800">{userNormal.name}</span>
+            <div className={styles.mainContent}>
+              <h1 className={styles.welcomeTitle}>Bienvenido a Hogwarts, {userNormal.name}</h1>
+              <div className={styles.userInfoContainer}>
+                <h2 className={styles.userInfoTitle}>Tus datos mágicos personales</h2>
+                <p className={styles.userInfoItem}>
+                  Nombre: <span>{userNormal.name}</span>
                 </p>
-                <p className="text-lg font-medium text-gray-600">
-                  Email:{" "}
-                  <span className="text-gray-800">{userNormal.email}</span>
+                <p className={styles.userInfoItem}>
+                  Correo lechuza: <span>{userNormal.email}</span>
                 </p>
-                <p className="text-lg font-medium text-gray-600">
-                  Address:{" "}
-                  <span className="text-gray-800">{userNormal.address}</span>
+                <p className={styles.userInfoItem}>
+                  Dirección: <span>{userNormal.address}</span>
                 </p>
               </div>
-              <button
-                onClick={handleLogout}
-                className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300"
-              >
-                Cerrar sesión
+              <button onClick={handleLogout} className={styles.logoutButton}>
+                Desaparecer (Cerrar sesión)
               </button>
             </div>
             <Cloudinary />
           </div>
         ) : (
-          <div className="text-center mt-20">
-            <h1 className="text-2xl font-semibold text-gray-800">
-              No se encontró información del usuario.
-            </h1>
-            <button
-              onClick={handleLogout}
-              className="mt-6 bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300"
-            >
-              Iniciar sesión
+          <div>
+            <h1 className={styles.welcomeTitle}>No se encontró tu pergamino de ingreso.</h1>
+            <button onClick={handleLogout} className={styles.logoutButton}>
+              Volver al Expreso de Hogwarts (Iniciar sesión)
             </button>
           </div>
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default UserDashboard;
+export default UserDashboard
+
+

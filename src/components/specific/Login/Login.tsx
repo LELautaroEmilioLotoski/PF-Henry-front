@@ -1,24 +1,28 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { useUserContext } from "@/context/UserContext";
-import { login } from "@/helpers/auth.helper";
-import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
+import type React from "react"
+import { useState } from "react"
+import { useUserContext } from "@/context/UserContext"
+import { login } from "@/helpers/auth.helper"
+import { useRouter } from "next/navigation"
+import Cookies from "js-cookie"
+import styles from "./Login.module.css"
+import { Eye, EyeOff } from "lucide-react"
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const { setUser } = useUserContext();
-  const router = useRouter();
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
+  const { setUser } = useUserContext()
+  const router = useRouter()
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Login attempt with:", { email, password });
 
     try {
-      const response = await login({ email, password });
+      const response = await login({ email, password })
 
       console.log("Response from server:", response.data);
 
@@ -50,59 +54,80 @@ const Login = () => {
         setError("Credenciales incorrectas");
       }
     } catch (error) {
-      console.error("Login Error:", error);
-      setError("Error al iniciar sesión");
+      console.error("Login Error:", error)
+      setError("Error mágico. ¡Repara tu varita e intenta de nuevo!")
     }
-  };
+  }
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword)
+  }
 
   return (
-    <form onSubmit={handleLogin} className="p-6 space-y-6 max-w-sm mx-auto">
-      <div>
-        <label htmlFor="email" className="text-body mb-1 block">
-          Email
-        </label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="input-field"
-          required
-        />
-        {error && <span className="text-red-500 text-sm mt-1 block">{error}</span>}
-      </div>
+    <div className={styles.loginContainer}>
+      <form onSubmit={handleLogin} className={styles.loginForm}>
+        <h2 className={styles.formTitle}>Portal Mágico de Hogwarts</h2>
+        <div className={styles.formGroup}>
+          <label htmlFor="email" className={styles.label}>
+            Correo de lechuza 🦉
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="harry.potter@hogwarts.edu"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className={styles.inputField}
+            required
+          />
+        </div>
 
-      <div>
-        <label htmlFor="password" className="text-body mb-1 block">
-          Contraseña
-        </label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="input-field"
-          required
-        />
-      </div>
+        <div className={styles.formGroup}>
+          <label htmlFor="password" className={styles.label}>
+            Contraseña mágica 🔮
+          </label>
+          <div className={styles.passwordField}>
+            <input
+              id="password"
+              name="password"
+              type={showPassword ? "text" : "password"}
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={styles.inputField}
+              required
+            />
+            <button type="button" onClick={togglePasswordVisibility} className={styles.passwordToggle}>
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
+        </div>
 
-      <button type="submit" className="button-primary">
-        Iniciar sesión
-      </button>
+        {error && <p className={styles.errorMessage}>{error}</p>}
 
-      <button
-        type="button"
-        onClick={() => (window.location.href = "/api/auth/login")}
-        className="button-primary"
-      >
-        Iniciar sesión con Auth0
-      </button>
-    </form>
-  );
-};
+        <button type="submit" className={styles.button}>
+          Alohomora 🗝️
+        </button>
 
-export default Login;
+        <button
+          type="button"
+          onClick={() => (window.location.href = "/api/auth/login")}
+          className={`${styles.button} ${styles.auth0Button}`}
+        >
+          Accio Auth0 🪄
+        </button>
+      </form>
+    </div>
+  )
+}
+
+export default Login
+
+
+
+
+
+
+
+

@@ -121,9 +121,9 @@
 // export default ProfilePage;
 
 "use client";
-
+ 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation"; // ✅ Usar `next/navigation` en App Router
+import { useRouter } from "next/navigation";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import DashboardSidebar from "@/components/header/Header";
 import Cookies from "js-cookie";
@@ -133,10 +133,10 @@ const ProfilePage = () => {
   const router = useRouter();
   const { user, isLoading, error } = useUser();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+ 
   useEffect(() => {
     if (!user) return;
-
+ 
     const registerUserIfNeeded = async () => {
       try {
         const backendToken = Cookies.get("token");
@@ -173,13 +173,13 @@ const ProfilePage = () => {
         console.error("Error al registrar usuario:", err);
       }
     };
-
+ 
     registerUserIfNeeded();
   }, [user]);
-
+ 
   useEffect(() => {
     if (!user) return;
-
+ 
     const sendTokenToBackend = async () => {
       try {
         const userData = {
@@ -206,13 +206,13 @@ const ProfilePage = () => {
         console.error("Error al enviar los datos al backend:", error);
       }
     };
-
+ 
     sendTokenToBackend();
   }, [user]);
-
+ 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push("/profile"); // ✅ Redirige solo cuando el usuario esté autenticado
+      router.push("/profile");
     }
   }, [isAuthenticated, router]);
 
@@ -223,7 +223,7 @@ const ProfilePage = () => {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-
+ 
   const userDataLocalStorage = localStorage.getItem("user");
   const userData = userDataLocalStorage
     ? JSON.parse(userDataLocalStorage)
