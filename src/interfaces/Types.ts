@@ -227,7 +227,6 @@ export interface IReview {
   rate: number
   description: string
 }
-
 export interface FileUploadProps {
   userprops?: {
     email?: string;
