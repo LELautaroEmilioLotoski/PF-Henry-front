@@ -11,13 +11,14 @@ const BestProducts = () => {
 <div className={styles.container} id='Products'>
   <h1 className={styles.title}>ENJOY THEM</h1>
   <Image src={Image1} alt='fondo de pantalla' className={styles.backgroundImage}></Image>
-  <div className="flex flex-wrap gap-4 mt-15 justify-center">
+  <div className={styles.cardsContainer}>
     {combos.map(combo => (
       <ComboCard key={combo.nombre} {...combo} />
     ))}
   </div>
   <BotonsComponent/>
 </div>
+
   )
 }
 

@@ -1,0 +1,279 @@
+.dashboardContainer {
+    background-image: url("../../../../public/The\ Three\ Broomsticks\ 2.jpg"), linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Luminari", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .dashboardContent {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    border-radius: 30px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    padding: 3rem;
+    max-width: 1200px;
+    width: 100%;
+  }
+  
+  .welcomeTitle {
+    color: #ffd700;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.5);
+    letter-spacing: 3px;
+    animation: titleGlow 2s infinite alternate;
+  }
+  
+  @keyframes titleGlow {
+    from {
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.5);
+    }
+    to {
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 215, 0, 0.8);
+    }
+  }
+  
+  .userInfoContainer {
+    background: linear-gradient(145deg, #f3e5ab, #e5e5e5);
+    border-radius: 20px;
+    padding: 2.5rem;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .userInfoTitle {
+    color: #740001;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 3px solid #d3a625;
+    padding-bottom: 0.8rem;
+    position: relative;
+  }
+  
+  .userInfoTitle::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 50%;
+    height: 3px;
+    background: #740001;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  
+  .userInfoContainer:hover .userInfoTitle::after {
+    transform: scaleX(1);
+  }
+  
+  .userInfoItem {
+    color: #0d1821;
+    font-size: 1.3rem;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+  }
+  
+  .userInfoItem::before {
+    content: "⚡";
+    margin-right: 15px;
+    color: #d3a625;
+    font-size: 1.5rem;
+  }
+  
+  .logoutButton {
+    background: linear-gradient(45deg, #740001, #d3a625);
+    color: white;
+    border: none;
+    padding: 1.2rem 2.5rem;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .logoutButton::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(45deg);
+    z-index: 1;
+    transition: all 0.6s ease;
+  }
+  
+  .logoutButton:hover::before {
+    left: 100%;
+  }
+  
+  .sidebar {
+    background: linear-gradient(to right, #0d1821, #8b4513);
+    color: #e5e5e5;
+    width: 300px;
+    padding: 3rem;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .sidebar::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("/magic-pattern.png");
+    opacity: 0.1;
+    z-index: 0;
+  }
+  
+  .sidebarTitle {
+    color: #d3a625;
+    font-size: 2rem;
+    margin-bottom: 2.5rem;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 1;
+  }
+  
+  .sidebarLink {
+    color: #e5e5e5;
+    text-decoration: none;
+    display: block;
+    padding: 1.2rem 0;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .sidebarLink:hover {
+    color: #d3a625;
+    border-left: 3px solid #d3a625;
+    padding-left: 15px;
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  .flexContainer {
+    display: flex;
+    gap: 3rem;
+  }
+  
+  .mainContent {
+    flex-grow: 1;
+    padding: 3rem;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border-radius: 30px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  }
+  
+  .uploadContainer {
+    background: linear-gradient(145deg, #e5e5e5, #f3e5ab);
+    border-radius: 25px;
+    padding: 2.5rem;
+    margin-top: 2.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+  
+  .uploadTitle {
+    color: #740001;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    position: relative;
+  }
+  
+  .uploadTitle::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    width: 50px;
+    height: 3px;
+    background: #d3a625;
+    transform: translateX(-50%);
+  }
+  
+  .uploadButton {
+    background: linear-gradient(45deg, #0e6ba8, #d3a625);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: block;
+    margin: 0 auto;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .uploadButton::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(45deg);
+    z-index: 1;
+    transition: all 0.6s ease;
+  }
+  
+  .uploadButton:hover::before {
+    left: 100%;
+  }
+  
+  @media (max-width: 768px) {
+    .flexContainer {
+      flex-direction: column;
+    }
+  
+    .sidebar {
+      width: 100%;
+      height: auto;
+      padding: 2rem;
+    }
+  
+    .dashboardContent {
+      padding: 2rem;
+    }
+  
+    .welcomeTitle {
+      font-size: 2.8rem;
+    }
+  }
+  
+  
+  
+  
+  
+  
+  
+  
