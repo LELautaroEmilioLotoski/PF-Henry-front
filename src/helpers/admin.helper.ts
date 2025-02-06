@@ -1,4 +1,4 @@
-import { ICategory, IMenuItem, ApiResponse } from '@/interfaces/Types';
+import { ICategory, IMenuItem, ApiResponse, ICombo } from '@/interfaces/Types';
 
 const APIURL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -50,4 +50,40 @@ export const patchMenuItem = async (menuItemId: string, updatedMenuItem: IMenuIt
 
   const data: IMenuItem = await res.json();
   return { data };
+};
+
+export const fetchComboById = async (comboId: string): Promise<ICombo> => {
+  const res = await fetch(`${APIURL}combos/${comboId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error(`Error fetching combo details: ${res.statusText}`);
+  }
+
+  const data: ICombo = await res.json();
+  return data;
+};
+
+export const updateCombo = async (
+  comboId: string,
+  comboData: Partial<ICombo>
+): Promise<ICombo> => {
+  const res = await fetch(`${APIURL}combos/${comboId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(comboData),
+  });
+
+  if (!res.ok) {
+    throw new Error(`Error updating combo: ${res.statusText}`);
+  }
+
+  const data: ICombo = await res.json();
+  return data;
 };
