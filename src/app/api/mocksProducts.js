@@ -1,11 +1,11 @@
-
+import gryffindorBurger from '../../../public/Combos/hufflepuff.svg'; 
 
 export const combos = [
     {
       nombre: "The Butterbeer Beast",
       precio: 12.40,
       descripcion: "Butterbeer-infused bun, Double Smoked Patty, Cheddar, Bacon, Special Sauce",
-      imagen: "https://static.vecteezy.com/system/resources/thumbnails/036/333/937/small/ai-generated-yummy-street-food-burger-isolated-png.png"
+      imagen: gryffindorBurger 
     },
     {
       nombre: "Hagrid’s Classic Burger",

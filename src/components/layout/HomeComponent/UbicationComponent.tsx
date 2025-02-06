@@ -16,7 +16,7 @@ const UbicationComponent = () => {
             <p className={styles.details}>Titan Plaza Avenida Boyacá 80 - 94</p>
             <p className={styles.details}>Tel: 3203810987</p>
             <p className={styles.details}>Email: threebroomsticks@mail.com</p>
-            <p className={styles.details}>Horario de Atención: Lunes a Viernes 8:00 AM - 00:00 AM</p>
+            <p className={styles.details}>Office Hours: Lunes a Viernes 8:00 AM - 00:00 AM</p>
           </div>
           <iframe
             className={styles.iframe}

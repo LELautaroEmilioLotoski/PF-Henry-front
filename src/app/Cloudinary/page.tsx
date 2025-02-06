@@ -285,7 +285,7 @@ const FileUploadComponent: React.FC<FileUploadProps> = ({ userprops }) => {
 
   const handleFileUpload = async () => {
     if (!file) {
-      alert("Por favor, selecciona un archivo.");
+      alert("Please select a file.");
       return;
     }
 
@@ -302,12 +302,12 @@ const FileUploadComponent: React.FC<FileUploadProps> = ({ userprops }) => {
         }
       );
 
-      alert("Archivo subido correctamente.");
+      alert("File uploaded successfully.");
       localStorage.setItem(`profileImageUrl_${userprops?.email}`, response.data.img);
       setFileUrl(response.data.img);
     } catch (error) {
-      console.error("Error al subir el archivo:", error);
-      alert("Error al subir el archivo. Por favor, inténtalo de nuevo.");
+      console.error("Error uploading file", error);
+      alert("Error uploading file. Please try again.");
     } finally {
       setUploading(false);
     }
@@ -322,45 +322,45 @@ const FileUploadComponent: React.FC<FileUploadProps> = ({ userprops }) => {
   const handleOpenFileInput = () => fileInputRef.current?.click();
 
   return (
-    <div className={styles.ImageProfile}>
-      <h1 className={styles.title}>Imagen de Perfil</h1>
-      <div className={styles.profilePicContainer} onClick={handleImageClick}>
-        <input
-          type="file"
-          onChange={handleFileChange}
-          ref={fileInputRef}
-          className={styles.fileInput}
+<div className={styles.ImageProfile}>
+  <h1 className={styles.title}>Profile Image</h1>
+  <div className={styles.profilePicContainer} onClick={handleImageClick}>
+    <input
+      type="file"
+      onChange={handleFileChange}
+      ref={fileInputRef}
+      className={styles.fileInput}
+    />
+    <div className={styles.iconContainer}>
+      {fileUrl ? (
+        <img
+          src={fileUrl}
+          alt="Uploaded Image"
+          className={styles.profilePic}
+          onClick={handleImageClick}
         />
-        <div className={styles.iconContainer}>
-          {fileUrl ? (
-            <img
-              src={fileUrl}
-              alt="Imagen subida"
-              className={styles.profilePic}
-              onClick={handleImageClick}
-            />
-          ) : (
-            <CircleUserRoundIcon className={styles.icon} />
-          )}
-        </div>
-      </div>
-      {showModal && (
-        <div className={styles.modal}>
-          <div className={styles.modalContent}>
-            <span className={styles.close} onClick={handleCloseModal}>
-              &times;
-            </span>
-            <img src={fileUrl} alt="Vista previa" className={styles.modalImage} />
-            <button onClick={handleOpenFileInput} disabled={uploading}>
-              Seleccionar otra imagen
-            </button>
-            <button onClick={handleFileUpload} disabled={uploading}>
-              {uploading ? "Subiendo..." : "Subir imagen"}
-            </button>
-          </div>
-        </div>
+      ) : (
+        <CircleUserRoundIcon className={styles.icon} />
       )}
     </div>
+  </div>
+  {showModal && (
+    <div className={styles.modal}>
+      <div className={styles.modalContent}>
+        <span className={styles.close} onClick={handleCloseModal}>
+          &times;
+        </span>
+        <img src={fileUrl} alt="Preview" className={styles.modalImage} /> 
+        <button onClick={handleOpenFileInput} disabled={uploading}>
+          Select another image
+        </button>
+        <button onClick={handleFileUpload} disabled={uploading}>
+          {uploading ? "Uploading..." : "Upload Image"} 
+        </button>
+      </div>
+    </div>
+  )}
+</div>
   );
 };
 
