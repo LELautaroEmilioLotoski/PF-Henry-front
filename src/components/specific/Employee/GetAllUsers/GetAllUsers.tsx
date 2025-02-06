@@ -7,13 +7,11 @@ import EmployeeHeader from "@/components/specific/Employee/EmployeeHeader/Employ
 
 
 const GetAllUsers = ({ children }: { children: React.ReactNode }) => {
-  const { userNormal, loading } = useUserContext();
+  const { userNormal } = useUserContext();
   const router = useRouter();
 
   useEffect(() => {
  
-    if (loading) return; // 🔹 No hacer nada mientras el contexto aún carga
-
     if (!userNormal) return;
 
     if (!userNormal || !userNormal.roles?.includes("worker") && !userNormal.roles?.includes("admin")) {
@@ -21,10 +19,10 @@ const GetAllUsers = ({ children }: { children: React.ReactNode }) => {
     } else {
       router.replace("/employee/inicio"); // Redirige automáticamente a /employee/inicio
     }
-  }, [userNormal, loading, router]);
+  }, [userNormal, router]);
 
   // Mientras se valida el usuario, mostramos un loader
-  if (loading) {
+  if (!userNormal) {
     return <div className="flex justify-center items-center h-screen">Cargando...</div>;
   }
 

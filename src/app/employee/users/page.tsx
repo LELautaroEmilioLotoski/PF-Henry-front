@@ -1,4 +1,4 @@
-import GetAllUsers from '@/components/specific/Employee/GetAllUsers/GetAllUsers'
+ import GetAllUsers from '@/components/specific/Employee/GetAllUsers/GetAllUsers'
 import React from 'react'
 
 function GetAllUsersPage() {
