@@ -226,6 +226,11 @@ export interface IReservations extends IReservation {
   create_at: string
 }
 
+// export interface IApiResponse {
+//   message: string;
+//   data: IReservations[]; // El arreglo de reservas está dentro de `data`
+// }
+
 // REVIEW
 
 export interface IReview {
