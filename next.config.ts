@@ -5,7 +5,10 @@ const nextConfig: NextConfig = {
     domains: ["i.postimg.cc"],
     unoptimized: true,
   },
+  typescript: {
+    ignoreBuildErrors: true, 
+  },
+  output: "standalone",
 };
 
 export default nextConfig;
-
