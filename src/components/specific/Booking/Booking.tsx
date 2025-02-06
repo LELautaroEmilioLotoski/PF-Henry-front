@@ -1,5 +1,5 @@
-"use client"
-import { useState } from "react";
+"use client";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useUserContext } from "@/context/UserContext";
 import { reservation } from "@/helpers/auth.helper";
@@ -12,15 +12,26 @@ export default function CreateReservation() {
   const [date, setDate] = useState<Date>();
   const [time, setTime] = useState("");
   const [guests, setGuests] = useState(1);
-  const token = localStorage.getItem("user");
-  if (!token) return;
 
-  const usuario = JSON.parse(token);
-  console.log(usuario.id);
+  // Estados para el token y el id del usuario
+  const [token, setToken] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
 
-  const userId = userNormal?.id || usuario.id
+  // useEffect para acceder a localStorage solo en el cliente
+  useEffect(() => {
+    const storedToken = localStorage.getItem("user");
+    if (storedToken) {
+      setToken(storedToken);
+      const usuario = JSON.parse(storedToken);
+      // Se da prioridad al id del contexto, si no se usa el del token
+      const id = userNormal?.id || usuario.id;
+      setUserId(id);
+    }
+  }, [userNormal]);
 
-  if (!userId) return null;
+  // Mientras se carga el token, se puede mostrar un estado de carga
+  if (token === null) return <p>Cargando...</p>;
+  if (!userId) return <p>No se pudo identificar al usuario.</p>;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,17 +48,12 @@ export default function CreateReservation() {
     };
 
     try {
-      if (userId) {
-        const bookingData = await reservation(userId, userData);
-        console.log(bookingData);
-        
-        alert("Reserva creada correctamente.");
-        setDate(undefined);
-        setTime("");
-        setGuests(1);
-      } else {
-        alert("No se pudo identificar al usuario.");
-      }
+      const bookingData = await reservation(userId, userData);
+      console.log(bookingData);
+      alert("Reserva creada correctamente.");
+      setDate(undefined);
+      setTime("");
+      setGuests(1);
     } catch (error) {
       console.error("Error al crear la reserva:", error);
       alert("Error al crear la reserva.");

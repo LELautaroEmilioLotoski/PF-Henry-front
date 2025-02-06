@@ -217,6 +217,7 @@ export interface IReservation {
   date: string
   time: string
   guest: number
+  userId?: IUser
 }
 
 export interface IReservations extends IReservation {
@@ -225,13 +226,17 @@ export interface IReservations extends IReservation {
   create_at: string
 }
 
+// export interface IApiResponse {
+//   message: string;
+//   data: IReservations[]; // El arreglo de reservas está dentro de `data`
+// }
+
 // REVIEW
 
 export interface IReview {
   rate: number
   description: string
 }
-
 export interface FileUploadProps {
   userprops?: {
     email?: string;

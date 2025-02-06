@@ -1,12 +1,10 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { registerWorker } from "@/helpers/auth.helper";
 import { validateRegisterForm } from "@/helpers/validate";
 import { IRegisterErrors, IRegisterProps } from "@/interfaces/Types";
  
 const RegisterWorker = () => {
-  const router = useRouter();
   const initialState: IRegisterProps = {
     id: "",
     role: "",
@@ -44,16 +42,11 @@ const RegisterWorker = () => {
  
     try {
       const res = await registerWorker(dataUser); 
-      console.log(dataUser);
- 
-      console.log("Registration response:", res); // Log de la respuesta de la API
- 
-      if (res.message === "Registro exitoso") {
+
+      if (res.data) {
        alert("created employee")
       } else {
-        setErrors({
-          name: res.message,
-        });
+        alert("Hubo un error al crear el usuario")
       }
     } catch (error) {
       console.error("Registration error:", error); // Log del error de la solicitud

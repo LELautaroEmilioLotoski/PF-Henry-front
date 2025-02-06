@@ -12,7 +12,7 @@ const BookingHistorial = () => {
   useEffect(() => {
     const fetchReservations = async () => {
       const token = localStorage.getItem("user");
-      console.log(token);
+      // console.log(token);
 
       if (!token) return;
 
@@ -22,10 +22,12 @@ const BookingHistorial = () => {
       try {
         // console.log(usuario.email);
         const response = await getReservations(usuario.email);
+        console.log(response);
+        
         const arrayReservation = response.data;
-        console.log(arrayReservation);
+        // console.log(arrayReservation);
 
-        if (Array.isArray(arrayReservation)) {
+        if (arrayReservation) {
           setReservations(arrayReservation);
         } else {
           setReservations([]); // Si la API responde con un error, aseguramos que el estado se actualiza correctamente
