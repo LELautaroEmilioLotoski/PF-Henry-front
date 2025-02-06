@@ -6,8 +6,9 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   typescript: {
-    ignoreBuildErrors: true, // Ignora los errores de TypeScript en el build
+    ignoreBuildErrors: true, 
   },
+  output: "standalone",
 };
 
 export default nextConfig;
