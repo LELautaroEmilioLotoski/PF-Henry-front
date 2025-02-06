@@ -296,3 +296,20 @@ export const registerWorker = async (userData: IRegisterProps): Promise<AuthResp
  
   return data;
 };
+
+export const uploadFile = async (file: File, email: string) => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await fetch(`http://localhost:3000/users/${email}/upload`, {
+    method: "POST",
+    body: formData,
+    headers: {},
+  });
+
+  if (!response.ok) {
+    throw new Error("Error al subir el archivo");
+  }
+
+  return response.json();
+};

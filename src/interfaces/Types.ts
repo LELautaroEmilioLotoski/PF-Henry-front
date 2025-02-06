@@ -10,6 +10,10 @@ export interface ILoginErrors {
   password?: string
 }
 
+export interface JwtPayload {
+  roles: string[];
+}
+
 // USERS
 
 export interface IUser {
@@ -227,7 +231,6 @@ export interface IReview {
   rate: number
   description: string
 }
-
 export interface FileUploadProps {
   userprops?: {
     email?: string;
