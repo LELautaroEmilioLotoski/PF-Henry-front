@@ -29,7 +29,7 @@ export const UserContextProvider = ({ children }: { children: React.ReactNode })
  
     if (storedToken) {
       setToken(storedToken);
-      fetch("http://localhost:3000/auth/validate-token", {
+      fetch(`${process.env.API_URL}/auth/validate-token`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${storedToken}`,

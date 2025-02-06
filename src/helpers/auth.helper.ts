@@ -602,7 +602,7 @@ export const uploadFile = async (file: File, email: string) => {
   const formData = new FormData();
   formData.append("file", file);
 
-  const response = await fetch(`http://localhost:3000/users/${email}/upload`, {
+  const response = await fetch(`${APIURL}users/${email}/upload`, {
     method: "POST",
     body: formData,
     headers: {},

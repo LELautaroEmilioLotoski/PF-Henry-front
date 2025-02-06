@@ -153,7 +153,7 @@ const ProfilePage = () => {
           console.log("estoy en el if");
 
           const response = await fetch(
-            "http://localhost:3000/auth/signupWithAuth0",
+            `${process.env.API_URL}/auth/signupWithAuth0`,
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -188,7 +188,7 @@ const ProfilePage = () => {
           email: user.email,
         };
         const response = await fetch(
-          "http://localhost:3000/auth/signInWithAuth0",
+          `${process.env.API_URL}/auth/signInWithAuth0`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
