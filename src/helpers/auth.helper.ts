@@ -585,19 +585,35 @@ export const getReview = async (id: string): Promise<IReview> => {
   return data;
 };
  
-export const uploadImage = async (file: File): Promise<{ url: string }> => {
+// export const uploadImage = async (file: File): Promise<{ url: string }> => {
+//   const formData = new FormData();
+//   formData.append("file", file);
+//   formData.append("upload_preset", "ml_default");
+ 
+//   const response = await fetch("https://api.cloudinary.com/v1_1/demo/image/upload", {
+//     method: "POST",
+//     body: formData,
+//   });
+ 
+//   return response.json();
+// };
+ 
+export const uploadFile = async (file: File, email: string) => {
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("upload_preset", "ml_default");
- 
-  const response = await fetch("https://api.cloudinary.com/v1_1/demo/image/upload", {
+
+  const response = await fetch(`http://localhost:3000/users/${email}/upload`, {
     method: "POST",
     body: formData,
+    headers: {},
   });
- 
+
+  if (!response.ok) {
+    throw new Error("Error al subir el archivo");
+  }
+
   return response.json();
 };
- 
  
  
 export const registerWorker = async (userData: IRegisterProps): Promise<AuthResponse> => {
