@@ -232,14 +232,9 @@ export interface IReview {
   description: string
 }
 
-export interface UserProps {
-  email: string
-  image_url?: string
-}
-
 export interface FileUploadProps {
-  userprops: {
-    email: string
-    image_url?: string
-  }
+  userprops?: {
+    email?: string;
+    image_url?: string;
+  };
 }

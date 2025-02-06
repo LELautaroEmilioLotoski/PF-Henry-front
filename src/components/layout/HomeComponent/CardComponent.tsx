@@ -21,7 +21,7 @@ function ComboCard({ nombre, precio, descripcion, imagen }: ComboCardProps) {
             <h3 className={styles.card__subtitle}>$ {precio}</h3>
             <h4 className={styles.card__title}>{nombre}</h4>
             <p>{descripcion}</p>
-            <a href="/login"><button className={styles.card__button1}>Buy Product</button></a>
+            <a href="/menu"><button className={styles.card__button1}>Buy Product</button></a>
             </span>
           </div>
           </article>
