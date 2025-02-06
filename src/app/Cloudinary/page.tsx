@@ -131,7 +131,7 @@ export interface FileUploadProps {
   };
 }
 
-const FileUploadComponent = ({userprops}: FileUploadProps) => {
+const FileUploadComponent: React.FC<FileUploadProps> = ({ userprops }) => {
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [fileUrl, setFileUrl] = useState(
