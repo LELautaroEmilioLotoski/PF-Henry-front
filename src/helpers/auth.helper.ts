@@ -280,3 +280,19 @@ export const uploadImage = async (file: File): Promise<{ url: string }> => {
 
   return response.json();
 };
+
+
+
+export const registerWorker = async (userData: IRegisterProps): Promise<AuthResponse> => {
+  const res = await fetch(`${APIURL}auth/signup/worker`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(userData),
+  });
+  const data = await res.json();
+  console.log(data);
+ 
+  return data;
+};
