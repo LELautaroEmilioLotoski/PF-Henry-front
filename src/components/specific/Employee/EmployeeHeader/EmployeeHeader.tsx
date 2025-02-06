@@ -1,4 +1,4 @@
-import { Home, ClipboardList, Users, Settings, UserCheck, Box, Clipboard } from "lucide-react";
+import { Home, ClipboardList, Users, Clipboard } from "lucide-react";
 import Link from "next/link";
 import { ElementType } from "react";
 
