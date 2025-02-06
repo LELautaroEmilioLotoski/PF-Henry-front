@@ -1,16 +1,20 @@
 // AUTH
 
+
 export interface ILoginProps {
   email: string
   password: string
 }
+
 
 export interface ILoginErrors {
   email?: string
   password?: string
 }
 
+
 // USERS
+
 
 export interface IUser {
   id: string
@@ -23,6 +27,7 @@ export interface IUser {
   created_atts?: string
 }
 
+
 export interface IRegisterProps {
   id: string
   name: string
@@ -34,6 +39,7 @@ export interface IRegisterProps {
   role: string
 }
 
+
 export interface IRegisterErrors {
   name?: string
   email?: string
@@ -43,13 +49,16 @@ export interface IRegisterErrors {
   image_url?: string
 }
 
+
 // PRODUCTS
+
 
 export interface ICategory {
   id: string
   name: string
   icon: string
 }
+
 
 export interface IBaseProduct {
   id: string
@@ -64,9 +73,11 @@ export interface IBaseProduct {
   updatedAt?: string
 }
 
+
 export interface IMenuItem extends IBaseProduct {
   type: "menuItem"
 }
+
 
 export interface ICombo extends IBaseProduct {
   type: "combo"
@@ -74,12 +85,15 @@ export interface ICombo extends IBaseProduct {
   stockCombos: number
 }
 
+
 export type IProduct = IMenuItem | ICombo
+
 
 export interface ICartItem extends IBaseProduct {
   quantity: number
   type: "menuItem" | "combo"
 }
+
 
 export interface IProductCardProps {
   product: IProduct
@@ -87,7 +101,9 @@ export interface IProductCardProps {
   type: "menuItem" | "combo"
 }
 
+
 // ORDERS
+
 
 export interface IOrder {
   idUser: string
@@ -96,6 +112,7 @@ export interface IOrder {
   comment: string
 }
 
+
 export interface IOrderDetail {
   id: string
   quantity: number
@@ -103,6 +120,19 @@ export interface IOrderDetail {
   menuItem?: IMenuItem
   combo?: ICombo
 }
+
+
+// export interface IOrderEmployee {
+//   id: string;
+//   status: string;
+//   totalPrice: number;
+//   createdAt: string;
+//   paymentMethod: string;
+//   comment: string;
+//   orderDetails: { id: string; quantity: number; subtotal: number }[];
+//   user?: IUser;
+// }
+
 
 export interface IOrderResponse {
   id: string
@@ -116,44 +146,92 @@ export interface IOrderResponse {
   orderDetails: IOrderDetail[]
 }
 
+
 export interface IOrdersResponse {
   data: IOrderResponse[]
   message?: string
 }
+export interface IOrder {
+  id: string; // Nueva propiedad, porque necesitas tener un id
+  idUser: string;
+  status: string; // Para la propiedad status
+  totalPrice: number; // Cambiamos a número directamente
+  createdAt: string; // Cambiamos a string directamente
+  paymentMethod: "Cash" | "PayPal";
+  comment: string;
+  orderDetails: {
+    id: string;
+    quantity: number;
+    subtotal: number; // Convertimos subtotal a número
+    menuItem?: IMenuItem;
+    combo?: ICombo;
+  }[]; // Lo adaptamos a lo que esperas
+  user?: IUser; // Para que puedas tener el detalle del usuario
+}
+
+
+export interface IOrderResponse {
+  id: string;
+  status: string;
+  totalPrice: string; // Mantengo como string por ahora, ya que la API lo devuelve así
+  createdAt: string;
+  payment_status: string;
+  paymentMethod: "Cash" | "PayPal";
+  comment: string;
+  isActive: boolean;
+  orderDetails: IOrderDetail[];
+}
+
+
+export interface IOrdersResponse {
+  data: IOrderResponse[]; // No hay cambios aquí
+  message?: string;
+}
+
+
+
 
 export interface OrderSummaryProps {
   total: number
 }
 
+
 // EMPLOYEE
+
 
 export interface UserDataFormProps {
   name: string
   email: string
 }
 
+
 export interface CommentsFormProps {
   comments: string
   handleChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
 }
+
 
 export interface PaymentMethodFormProps {
   paymentMethod: "Cash" | "PayPal"
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
+
 // PRODUCT LISTING
+
 
 export interface SearchBarProps {
   search: string
   setSearch: (value: string) => void
 }
 
+
 export interface CategorySelectorProps {
   selectedCategory: string
   setSelectedCategory: (category: string) => void
   products: IProduct[]
 }
+
 
 export interface ProductListProps {
   products: IProduct[]
@@ -164,13 +242,16 @@ export interface ProductListProps {
   error?: string | null
 }
 
+
 export interface ProductCardProps {
   product: IProduct
   addToCart: (product: IProduct, type: "menuItem" | "combo") => void
   type: "menuItem" | "combo"
 }
 
+
 // RESPONSE TYPES
+
 
 export interface ApiResponse<T> {
   data?: T
@@ -179,7 +260,9 @@ export interface ApiResponse<T> {
   statusCode?: number
 }
 
+
 // INFO CARD
+
 
 export interface InfoCardProps {
   isOpen: boolean
@@ -190,9 +273,12 @@ export interface InfoCardProps {
   }
 }
 
+
 // ADDED INTERFACES
 
+
 // AUTH
+
 
 export interface AuthResponse {
   data: {
@@ -202,12 +288,15 @@ export interface AuthResponse {
   loggin: boolean
 }
 
+
 export interface IUserDataUpdate {
   address: string
   password: string
 }
 
+
 // RESERVATIONS
+
 
 export interface IReservation {
   date: string
@@ -215,23 +304,28 @@ export interface IReservation {
   guest: number
 }
 
+
 export interface IReservations extends IReservation {
   id: string
   status: string
   create_at: string
 }
 
+
 // REVIEW
+
 
 export interface IReview {
   rate: number
   description: string
 }
 
+
 export interface UserProps {
   email: string
   image_url?: string
 }
+
 
 export interface FileUploadProps {
   userprops: {

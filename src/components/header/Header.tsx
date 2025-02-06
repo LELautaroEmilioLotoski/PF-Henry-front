@@ -1,7 +1,6 @@
 import {
   Home,
   Utensils,
-  Users,
   FileText,
   Book,
   BookOpenText,

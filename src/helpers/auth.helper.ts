@@ -8,6 +8,7 @@ import {
   IOrder,
   IOrderResponse,
   IUser,
+  IReservations,
 } from "@/interfaces/Types";
 
 const APIURL = process.env.NEXT_PUBLIC_API_URL;
@@ -145,7 +146,7 @@ export const getActiveUsers = async (): Promise<IUser[]> => {
   return data.data;
 };
 
-export const getAllReservations = async (token: string | null): Promise<IOrderResponse[]> => {
+export const getAllReservations = async (token: string | null): Promise<IReservations[]> => {
   if (!token) throw new Error("No token provided");
 
   const res = await fetch(`${APIURL}reservations`, {
@@ -156,11 +157,11 @@ export const getAllReservations = async (token: string | null): Promise<IOrderRe
     },
   });
 
-  const data: { data: IOrderResponse[] } = await res.json();
+  const data: { data: IReservations[] } = await res.json();
   return data.data;
 };
 
-export const getReservationsByEmail = async (email: string, token: string | null): Promise<IOrderResponse[]> => {
+export const getReservationsByEmail = async (email: string, token: string | null): Promise<IReservations[]> => {
   console.log('token en userContext:', token);
   if (!token) throw new Error("No token provided");
 
@@ -172,7 +173,7 @@ export const getReservationsByEmail = async (email: string, token: string | null
     },
   });
 
-  const data: { data: IOrderResponse[] } = await res.json();
+  const data: { data: IReservations[] } = await res.json();
   return data.data;
 };
 
@@ -279,4 +280,20 @@ export const uploadImage = async (file: File): Promise<{ url: string }> => {
   });
 
   return response.json();
+};
+
+
+
+export const registerWorker = async (userData: IRegisterProps): Promise<AuthResponse> => {
+  const res = await fetch(`${APIURL}auth/signup/worker`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(userData),
+  });
+  const data = await res.json();
+  console.log(data);
+ 
+  return data;
 };

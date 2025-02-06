@@ -1,15 +1,15 @@
 import React from 'react'
-import Register from '@/components/specific/Register/Register'
-
+import RegisterWorker from '@/components/specific/Register/RegisterWorker'
+ 
 function CreateEmployee() {
   return (
     <div>
       <div className="flex justify-center">
         <h1>Crear nuevo Empleado</h1>
       </div>
-      <Register />
+      <RegisterWorker />
     </div>
   )
 }
-
+ 
 export default CreateEmployee

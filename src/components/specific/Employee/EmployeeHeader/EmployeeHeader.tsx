@@ -1,4 +1,4 @@
-import { Home, ClipboardList, Users, Settings, UserCheck, Box, Clipboard } from "lucide-react";
+import { Home, ClipboardList, Users, Clipboard } from "lucide-react";
 import Link from "next/link";
 import { ElementType } from "react";
 
@@ -14,7 +14,7 @@ export default function EmployeeHeader() {
 
       {/* Navegación */}
       <nav className="space-y-3">
-        <NavItem href="/employee/inicio" icon={Home} label="Inicio" />
+        <NavItem href="/employee/dashboard" icon={Home} label="Inicio" />
         <NavItem href="/employee/reservations" icon={Clipboard} label="Reservas" />
         <NavItem href="/employee/orders" icon={ClipboardList} label="Órdenes" />
         <NavItem href="/employee/users" icon={Users} label="Usuarios" />

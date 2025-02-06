@@ -1,7 +1,8 @@
+
 "use client";
 
 import { useUserContext } from "@/context/UserContext";
-import EmployeeHeader from "@/components/employee/employeeHeader/employeeHeader";
+import EmployeeHeader from "@/components/specific/Employee/EmployeeHeader/EmployeeHeader";
 import FileUploadComponent from "@/app/Cloudinary/page";
 
 const EmployeeDashboard = () => {

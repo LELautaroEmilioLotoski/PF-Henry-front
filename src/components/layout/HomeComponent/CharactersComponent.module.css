@@ -1,30 +1,75 @@
-.characters {
-  height: 100vh;
+.fondo {
   position: relative;
+  width: 100%;
+  height: 100vh; /* Ajusta a 100vh para ocupar toda la vista */
+  overflow: hidden; 
 }
 
-.Image4 {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-  filter: brightness(0.5);
+.fondo .imagenFondo {
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  z-index: -1; 
+  filter: brightness(0.5);
 }
 
-.text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-size: 3rem; /* Adjust font size as needed */
+/* Estilos carrusel */
+.banner {
+  width: 100%;
+  height: 100vh; /* Ajusta a 100vh para ocupar toda la vista */
   text-align: center;
-  z-index: 10; 
-  padding: 2rem;
-  width: 80%;
-  background-color: rgba(0, 0, 0, 0.5); /* Add a semi-transparent background */
-  border-radius: 10px; /* Add rounded corners */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Add a subtle shadow */
+  overflow: hidden;
+  position: relative;
+  margin-top: 0; /* Remueve el margen superior */
+  font-family: 'Roboto Slab', serif;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: normal;
 }
+
+.banner .slider {
+  position: absolute;
+  width: 150px;
+  height: 200px;
+  top: 20%;
+  left: calc(50% - 100px);
+  transform-style: preserve-3d;
+  transform: perspective(1000px); 
+  animation: autoRun 40s linear infinite;
+}
+
+@keyframes autoRun {
+  from {
+    transform: perspective(1000px) rotateX(-16deg) rotateY(0deg);
+  }
+  to {
+    transform: perspective(1000px) rotateX(-16deg) rotateY(360deg);
+  }
+}
+
+.banner .slider .item {
+  position: absolute;
+  inset: 0 0 0 0;
+  transform: 
+    rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg))
+    translateZ(450px);
+}
+
+.banner .slider .item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease; /* Añade una transición suave */
+}
+
+.banner .slider .item img:hover {
+  transform: translateY(-20px); /* Mueve la imagen hacia arriba al pasar el cursor */
+}
+
+
+
+
+
