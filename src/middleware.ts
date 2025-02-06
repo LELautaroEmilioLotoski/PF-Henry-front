@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
-import { jwtVerify } from "jose";
+import { jwtVerify, JWTPayload } from "jose";
+import { JwtPayload } from "./interfaces/Types";
 
 export async function middleware(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
@@ -13,22 +14,44 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  // Verifica si el token es una cadena válida
   if (typeof token !== 'string') {
     console.log("Invalid token format, redirecting to /login.");
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
   try {
-    const { payload } = await jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET as string));
+    const { payload }: { payload: JWTPayload } = await jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET as string));
     console.log("Decoded Token:", payload);
 
-    const userRoles = payload.roles;
-    console.log("User Roles:", userRoles);
+    const payloadWithRoles = payload as unknown;
 
-    // Verifica si el usuario tiene el rol adecuado
-    if (!userRoles || (!userRoles.includes("admin") && !userRoles.includes("worker"))) {
-      console.log("User is not authorized, redirecting to /profile.");
+    if ((payloadWithRoles as JwtPayload).roles) {
+      const userRoles = (payloadWithRoles as JwtPayload).roles;
+      console.log("User Roles:", userRoles);
+
+      if (!userRoles || userRoles.length === 0) {
+        console.log("User has no roles, redirecting to /profile.");
+        return NextResponse.redirect(new URL("/profile", req.url));
+      }
+
+      if (userRoles.includes("worker")) {
+        if (req.nextUrl.pathname.startsWith("/admin")) {
+          console.log("Worker not authorized for admin routes, redirecting to /employee/dashboard.");
+          return NextResponse.redirect(new URL("/employee/dashboard", req.url)); // Redirigir a /employee/dashboard
+        }
+        console.log("Worker authorized for employee routes.");
+      }
+
+      if (userRoles.includes("admin")) {
+        console.log("Admin authorized for both admin and employee routes.");
+      }
+
+      if (!userRoles.includes("admin") && !userRoles.includes("worker")) {
+        console.log("User not authorized for these routes, redirecting to /profile.");
+        return NextResponse.redirect(new URL("/profile", req.url));
+      }
+    } else {
+      console.log("No roles found in token, redirecting to /profile.");
       return NextResponse.redirect(new URL("/profile", req.url));
     }
 
