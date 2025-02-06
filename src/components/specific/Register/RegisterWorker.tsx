@@ -1,12 +1,10 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { registerWorker } from "@/helpers/auth.helper";
 import { validateRegisterForm } from "@/helpers/validate";
 import { IRegisterErrors, IRegisterProps } from "@/interfaces/Types";
  
 const RegisterWorker = () => {
-  const router = useRouter();
   const initialState: IRegisterProps = {
     id: "",
     role: "",

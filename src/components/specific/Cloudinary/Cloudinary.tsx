@@ -127,10 +127,11 @@ import React, { useState, useRef, useEffect } from "react";
 import styles from "@/components/specific/Cloudinary/Cloudinary.module.css";
 import { CircleUserRoundIcon } from "lucide-react";
 import { uploadFile } from "@/helpers/auth.helper";
+import { IUser } from "@/interfaces/Types";
 
 const Cloudinary = () => {
   const [isMounted, setIsMounted] = useState(false);
-  const [userData, setUserData] = useState<any>(null);
+  const [userData, setUserData] = useState<IUser | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [fileUrl, setFileUrl] = useState(
@@ -191,6 +192,7 @@ const Cloudinary = () => {
       localStorage.setItem(`profileImageUrl_${userData.email}`, response.img);
       setFileUrl(response.img);
     } catch (error) {
+      console.error("Error al subir el archivo:", error); // Usa la variable para evitar la advertencia
       alert("Error al subir el archivo. Por favor, inténtalo de nuevo.");
     } finally {
       setUploading(false);

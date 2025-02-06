@@ -217,6 +217,7 @@ export interface IReservation {
   date: string
   time: string
   guest: number
+  userId?: IUser
 }
 
 export interface IReservations extends IReservation {
