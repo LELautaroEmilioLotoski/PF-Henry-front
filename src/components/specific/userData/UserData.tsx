@@ -1,25 +1,24 @@
 "use client";
- 
+
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import DashboardSidebar from "@/components/header/Header";
 import FileUploadComponent from "@/app/Cloudinary/page";
+import { signUpWithAuth0, signInWithAuth0 } from "@/helpers/auth.helper";
 import Cookies from "js-cookie";
 
 const ProfilePage = () => {
   const router = useRouter();
   const { user, isLoading, error } = useUser();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
- 
+
   useEffect(() => {
     if (!user) return;
- 
+
     const registerUserIfNeeded = async () => {
       try {
         const backendToken = Cookies.get("token");
-        console.log("estoy en el try");
-        
 
         if (!backendToken) {
           const userData = {
@@ -29,57 +28,34 @@ const ProfilePage = () => {
             isComplete: false,
           };
 
-          console.log("estoy en el if");
-          
-
-          const response = await fetch("http://localhost:3000/auth/signupWithAuth0", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(userData),
-          });
- 
-          if (response.ok) {
-            console.log("Usuario registrado con éxito");
-          } else if (response.status === 400) {
-            console.log("El usuario ya está registrado.");
-          } else {
-            throw new Error("Error al registrar usuario.");
-          }
+          await signUpWithAuth0(userData);
+          console.log("Usuario registrado con éxito");
         }
       } catch (err) {
         console.error("Error al registrar usuario:", err);
       }
     };
- 
+
     registerUserIfNeeded();
   }, [user]);
- 
+
   useEffect(() => {
     if (!user) return;
- 
+
     const sendTokenToBackend = async () => {
       try {
         const userData = { auth0Id: user.sub, name: user.name, email: user.email };
-        const response = await fetch("http://localhost:3000/auth/signInWithAuth0", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(userData),
-        });
- 
-        if (response.ok) {
-          const backendData = await response.json();
-          localStorage.setItem("user", JSON.stringify(backendData.user));
-          Cookies.set("token", backendData.token);
-          setIsAuthenticated(true);
-        }
+        const backendUser = await signInWithAuth0(userData);
+        localStorage.setItem("user", JSON.stringify(backendUser));
+        setIsAuthenticated(true);
       } catch (error) {
         console.error("Error al enviar los datos al backend:", error);
       }
     };
- 
+
     sendTokenToBackend();
   }, [user]);
- 
+
   useEffect(() => {
     if (isAuthenticated) {
       router.push("/profile");
@@ -93,11 +69,10 @@ const ProfilePage = () => {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
- 
+
   const userDataLocalStorage = localStorage.getItem("user");
   const userData = userDataLocalStorage ? JSON.parse(userDataLocalStorage) : null;
- 
- 
+
   return (
     <div className="flex">
       <DashboardSidebar />
