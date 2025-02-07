@@ -1,4 +1,5 @@
 import { ICategory, IMenuItem, ApiResponse, ICombo, IUser } from '@/interfaces/Types';
+import { getAuthToken } from '@/helpers/cookie.helper';
 
 const APIURL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -19,10 +20,14 @@ export const fetchCategories = async (): Promise<ApiResponse<ICategory[]>> => {
 };
 
 export const postMenuItem = async (menuItem: IMenuItem): Promise<ApiResponse<IMenuItem>> => {
+  const token = getAuthToken();
+  if (!token) throw new Error("No authentication token found");
+
   const res = await fetch(`${APIURL}menu-items`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(menuItem),
   });
@@ -35,11 +40,18 @@ export const postMenuItem = async (menuItem: IMenuItem): Promise<ApiResponse<IMe
   return { data };
 };
 
-export const patchMenuItem = async (menuItemId: string, updatedMenuItem: IMenuItem): Promise<ApiResponse<IMenuItem>> => {
+export const patchMenuItem = async (
+  menuItemId: string,
+  updatedMenuItem: IMenuItem
+): Promise<ApiResponse<IMenuItem>> => {
+  const token = getAuthToken();
+  if (!token) throw new Error("No authentication token found");
+
   const res = await fetch(`${APIURL}menu-items/${menuItemId}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(updatedMenuItem),
   });
@@ -72,10 +84,14 @@ export const updateCombo = async (
   comboId: string,
   comboData: Partial<ICombo>
 ): Promise<ICombo> => {
+  const token = getAuthToken();
+  if (!token) throw new Error("No authentication token found");
+
   const res = await fetch(`${APIURL}combos/${comboId}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(comboData),
   });
@@ -88,10 +104,10 @@ export const updateCombo = async (
   return data;
 };
 
+export const getAllUsers = async (): Promise<IUser[]> => {
+  const token = getAuthToken();
+  if (!token) throw new Error("No authentication token found");
 
-
-
-export const getAllUsers = async (token: string): Promise<IUser[]> => {
   const res = await fetch(`${APIURL}users/findAllUsers`, {
     method: "GET",
     headers: {
@@ -108,7 +124,10 @@ export const getAllUsers = async (token: string): Promise<IUser[]> => {
   return data.data;
 };
 
-export const desactivateUser = async (email: string, token: string): Promise<any> => {
+export const desactivateUser = async (email: string): Promise<any> => {
+  const token = getAuthToken();
+  if (!token) throw new Error("No authentication token found");
+
   const res = await fetch(`${APIURL}users/desactivate/${email}`, {
     method: "PATCH",
     headers: {
@@ -116,7 +135,7 @@ export const desactivateUser = async (email: string, token: string): Promise<any
       Authorization: `Bearer ${token}`,
     },
   });
+
   const data = await res.json();
-  console.log(data);
   return data;
 };

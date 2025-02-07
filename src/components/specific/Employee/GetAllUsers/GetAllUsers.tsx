@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { getActiveUsers } from "@/helpers/auth.helper"
+import { getActiveUsers } from "@/helpers/user.helper"
 import type { IUser } from "@/interfaces/Types"
 import { ChevronUp, ChevronDown } from "lucide-react"
 import RoleHeader from "../../Admin/AdminHeader/AdminHeader"

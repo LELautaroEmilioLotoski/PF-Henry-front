@@ -1,9 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { cancelledReservation, getReservations } from "@/helpers/auth.helper";
+import { cancelledReservation } from "@/helpers/reservations.helper";
 import { IReservations } from "@/interfaces/Types";
 import Link from "next/link";
 import { useUserContext } from "@/context/UserContext";
+import { getReservations } from "@/helpers/user.helper";
 
 const BookingHistorial = () => {
   const { userNormal } = useUserContext();

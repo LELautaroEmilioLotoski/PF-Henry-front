@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "@/components/specific/Cloudinary/Cloudinary.module.css";
 import { CircleUserRoundIcon } from "lucide-react";
-import { uploadFile } from "@/helpers/auth.helper";
+import { uploadFile } from "@/helpers/user.helper";
 import { IUser } from "@/interfaces/Types";
 
 const Cloudinary = () => {

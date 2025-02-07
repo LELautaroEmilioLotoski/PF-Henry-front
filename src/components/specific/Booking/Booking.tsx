@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useUserContext } from "@/context/UserContext";
-import { reservation } from "@/helpers/auth.helper";
+import { reservation } from "@/helpers/reservations.helper";
 import TimeInput from "./TimeInput";
 import GuestsInput from "./GuestInput";
 import Calendar from "./CalendarComponent";

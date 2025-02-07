@@ -41,10 +41,19 @@ function CreateEmployee() {
       return
     }
 
-    console.log("Submitting registration data:", dataUser)
+    const token = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("token="))
+      ?.split("=")[1]
+
+    if (!token) {
+      alert("No se encontró el token. Por favor, inicia sesión.")
+      setIsLoading(false)
+      return
+    }
 
     try {
-      const res = await registerWorker(dataUser)
+      const res = await registerWorker(dataUser, token)
 
       if (res.data) {
         alert("Employee created successfully")
