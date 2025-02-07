@@ -11,7 +11,6 @@ import {
   IOrderResponse,
   IUser,
   IReservations,
-  IReservations,
 } from "@/interfaces/Types";
 import Cookies from "js-cookie";
 
