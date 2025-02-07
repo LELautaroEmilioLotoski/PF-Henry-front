@@ -1,4 +1,4 @@
-import { ICategory, IMenuItem, ApiResponse, ICombo, IUser, AuthResponse } from '@/interfaces/Types';
+import { ICategory, IMenuItem, ApiResponse, ICombo, IUser } from '@/interfaces/Types';
 
 const APIURL = process.env.NEXT_PUBLIC_API_URL;
 

@@ -1,0 +1,200 @@
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes scaleIn {
+    from {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes titleGlow {
+    from {
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.5);
+    }
+    to {
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 215, 0, 0.8);
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .reviewContainer {
+    background-image: url("/The Three Broomsticks 3.jpg"), linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
+    min-height: 10vh; /* Reduced the height to 70vh */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Luminari", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    animation: fadeIn 1s ease-out;
+  }
+  
+  .card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    border-radius: 30px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    padding: 2rem; /* Reduced padding inside the card */
+    max-width: 600px;
+    width: 100%;
+    animation: scaleIn 0.8s ease-out;
+  }
+  
+  .cardHeader {
+    margin-bottom: 1.5rem; /* Reduced margin */
+  }
+  
+  .cardTitle {
+    color: #ffd700;
+    font-size: 2.5rem;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.5);
+    letter-spacing: 3px;
+    animation: titleGlow 2s infinite alternate;
+  }
+  
+  .cardContent {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .inputGroup {
+    animation: fadeInUp 0.6s ease-out;
+  }
+  
+  .inputGroup:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+  .inputGroup:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .inputGroup:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+  
+  .label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #ffd700;
+    font-size: 1rem;
+  }
+  
+  .inputField {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #d3a625;
+    border-radius: 10px;
+    padding: 0.8rem;
+    color: #ffd700;
+    font-size: 1rem;
+    width: 100%;
+  }
+  
+  .starRating {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .star {
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .starEmpty {
+    color: rgba(255, 215, 0, 0.3);
+  }
+  
+  .starFilled {
+    color: #ffd700;
+  }
+  
+  .textarea {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #d3a625;
+    border-radius: 10px;
+    padding: 0.8rem;
+    color: #ffd700;
+    font-size: 1rem;
+    resize: vertical;
+  }
+  
+  .cardFooter {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .button {
+    background: linear-gradient(45deg, #740001, #d3a625);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .button::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(45deg);
+    z-index: 1;
+    transition: all 0.6s ease;
+  }
+  
+  .button:hover::before {
+    left: 100%;
+  }
+  
+  .button:hover {
+    background: linear-gradient(45deg, #d3a625, #740001);
+  }
+  
+  @media (max-width: 768px) {
+    .card {
+      padding: 2rem;
+    }
+  
+    .cardTitle {
+      font-size: 2rem;
+    }
+  }
+  
+  
+  
+  
+  
+  

@@ -29,7 +29,12 @@ const OrderForm: React.FC = () => {
     if (userData) {
       const user = JSON.parse(userData);
       if (user.name && user.email && user.id) {
-        setFormData((prev) => ({ ...prev, name: user.name, email: user.email, id: user.id }));
+        setFormData((prev) => ({
+          ...prev,
+          name: user.name,
+          email: user.email,
+          id: user.id,
+        }));
       }
     }
   }, []);
@@ -42,7 +47,9 @@ const OrderForm: React.FC = () => {
     }
   }, [isOrderCreated, router]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -59,15 +66,19 @@ const OrderForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const menuItems = cartItems.filter((item) => item.type === "menuItem").map((item: ICartItem) => ({
-      idMenuItem: item.id,
-      quantity: item.quantity,
-    }));
+    const menuItems = cartItems
+      .filter((item) => item.type === "menuItem")
+      .map((item: ICartItem) => ({
+        idMenuItem: item.id,
+        quantity: item.quantity,
+      }));
 
-    const combos = cartItems.filter((item) => item.type === "combo").map((item: ICartItem) => ({
-      idCombo: item.id,
-      quantity: item.quantity,
-    }));
+    const combos = cartItems
+      .filter((item) => item.type === "combo")
+      .map((item: ICartItem) => ({
+        idCombo: item.id,
+        quantity: item.quantity,
+      }));
 
     const allItems = [...menuItems, ...combos];
 
@@ -97,21 +108,31 @@ const OrderForm: React.FC = () => {
     <div>
       <form onSubmit={handleSubmit}>
         <UserDataForm name={formData.name} email={formData.email} />
-        <CommentsForm comments={formData.comments} handleChange={handleChange} />
-        <PaymentMethodForm paymentMethod={formData.paymentMethod} handleChange={handleChange} />
+        <CommentsForm
+          comments={formData.comments}
+          handleChange={handleChange}
+        />
+        <PaymentMethodForm
+          paymentMethod={formData.paymentMethod}
+          handleChange={handleChange}
+        />
         <OrderSummary total={total} />
         {!showPayPal && (
           <button
             type="submit"
             className="w-full bg-amber-500 text-white py-3 px-4 rounded-lg font-medium hover:bg-amber-600"
           >
-            Confirm Order
           </button>
         )}
       </form>
 
       {showPayPal && (
-        <PayPalScriptProvider options={{ clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "", currency: "USD" }}>
+        <PayPalScriptProvider
+          options={{
+            clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "",
+            currency: "USD",
+          }}
+        >
           <PayPalButtons
             style={{ layout: "vertical" }}
             createOrder={(data, actions) => {
@@ -121,7 +142,9 @@ const OrderForm: React.FC = () => {
               }
               return actions.order.create({
                 intent: "CAPTURE",
-                purchase_units: [{ amount: { currency_code: "USD", value: total.toString() } }],
+                purchase_units: [
+                  { amount: { currency_code: "USD", value: total.toString() } },
+                ],
               });
             }}
             onApprove={async (data, actions) => {
@@ -141,8 +164,18 @@ const OrderForm: React.FC = () => {
                 paymentMethod: "PayPal",
                 comment: formData.comments,
                 MenuItems: [
-                  ...cartItems.filter((item) => item.type === "menuItem").map((item: ICartItem) => ({ idMenuItem: item.id, quantity: item.quantity })),
-                  ...cartItems.filter((item) => item.type === "combo").map((item: ICartItem) => ({ idCombo: item.id, quantity: item.quantity })),
+                  ...cartItems
+                    .filter((item) => item.type === "menuItem")
+                    .map((item: ICartItem) => ({
+                      idMenuItem: item.id,
+                      quantity: item.quantity,
+                    })),
+                  ...cartItems
+                    .filter((item) => item.type === "combo")
+                    .map((item: ICartItem) => ({
+                      idCombo: item.id,
+                      quantity: item.quantity,
+                    })),
                 ],
               };
 

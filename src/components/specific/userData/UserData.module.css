@@ -1,0 +1,194 @@
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideInFromLeft {
+    from {
+      transform: translateX(-50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideInFromRight {
+    from {
+      transform: translateX(50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes scaleIn {
+    from {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes rotateIcon {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .dashboardContainer {
+    background-image: url("../../../../public/The\ Three\ Broomsticks\ 2.jpg"),
+      linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Luminari", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    animation: fadeIn 1s ease-out;
+  }
+  
+  .dashboardContent {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    border-radius: 30px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    padding: 3rem;
+    max-width: 1200px;
+    width: 100%;
+    animation: scaleIn 0.8s ease-out;
+  }
+  
+  .flexContainer {
+    display: flex;
+    gap: 3rem;
+  }
+  
+  .mainContent {
+    flex-grow: 1;
+    padding: 3rem;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border-radius: 30px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  }
+  
+  .title {
+    color: #ffd700;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.5);
+    letter-spacing: 3px;
+    animation: slideInFromLeft 1s ease-out;
+  }
+  
+  .userInfo {
+    background: linear-gradient(145deg, #f3e5ab, #e5e5e5);
+    border-radius: 20px;
+    padding: 2.5rem;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    animation: slideInFromRight 1s ease-out 0.3s;
+    animation-fill-mode: both;
+  }
+  
+  .userInfoItem {
+    color: #0d1821;
+    font-size: 1.3rem;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    animation: fadeIn 0.5s ease-out;
+    animation-fill-mode: both;
+  }
+  
+  .userInfoItem::before {
+    content: "⚡";
+    margin-right: 15px;
+    color: #d3a625;
+    font-size: 1.5rem;
+    animation: rotateIcon 2s linear infinite; /* Animación de giro infinita */
+  }
+  
+  .userInfoLabel {
+    font-weight: bold;
+    margin-right: 10px;
+    color: #740001;
+  }
+  
+  .userInfoValue {
+    color: #0d1821;
+  }
+  
+  .uploadContainer {
+    background: linear-gradient(145deg, #e5e5e5, #f3e5ab);
+    border-radius: 25px;
+    padding: 2.5rem;
+    margin-top: 2.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    animation: slideInFromRight 0.8s ease-out 0.5s;
+    animation-fill-mode: both;
+  }
+  
+  .uploadTitle {
+    color: #740001;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    position: relative;
+  }
+  
+  .uploadTitle::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    width: 50px;
+    height: 3px;
+    background: #d3a625;
+    transform: translateX(-50%);
+  }
+  
+  .loadingText,
+  .errorText {
+    font-size: 1.5rem;
+    color: #ffd700;
+    text-align: center;
+    margin-top: 2rem;
+  }
+  
+  @media (max-width: 768px) {
+    .flexContainer {
+      flex-direction: column;
+    }
+  
+    .dashboardContent {
+      padding: 2rem;
+    }
+  
+    .title {
+      font-size: 2.5rem;
+    }
+  }
+  
+  
+  
+  
+  
+  

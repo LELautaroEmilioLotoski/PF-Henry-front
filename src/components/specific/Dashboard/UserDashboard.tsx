@@ -10,6 +10,8 @@ import Cloudinary from "../Cloudinary/Cloudinary";
 const UserDashboard = () => {
   const { userNormal, logoutUser } = useUserContext()
   const { user } = useUser()
+  // const [isLoaded, setIsLoaded] = useState(false)
+
 
   const handleLogout = () => {
     logoutUser()
@@ -25,30 +27,27 @@ const UserDashboard = () => {
           <div className={styles.flexContainer}>
             <DashboardSidebar />
             <div className={styles.mainContent}>
-              <h1 className={styles.welcomeTitle}>Bienvenido a Hogwarts, {userNormal.name}</h1>
+              <h1 className={styles.welcomeTitle}>Welcome to Hogwarts, {userNormal.name}</h1>
               <div className={styles.userInfoContainer}>
-                <h2 className={styles.userInfoTitle}>Tus datos mágicos personales</h2>
+                <h2 className={styles.userInfoTitle}>Your magical personal data</h2>
                 <p className={styles.userInfoItem}>
-                  Nombre: <span>{userNormal.name}</span>
+                  Name: <span>{userNormal.name}</span>
                 </p>
                 <p className={styles.userInfoItem}>
-                  Correo lechuza: <span>{userNormal.email}</span>
+                  Owl mail: <span>{userNormal.email}</span>
                 </p>
                 <p className={styles.userInfoItem}>
-                  Dirección: <span>{userNormal.address}</span>
+                  Address: <span>{userNormal.address}</span>
                 </p>
               </div>
-              <button onClick={handleLogout} className={styles.logoutButton}>
-                Desaparecer (Cerrar sesión)
-              </button>
             </div>
             <Cloudinary />
           </div>
         ) : (
           <div>
-            <h1 className={styles.welcomeTitle}>No se encontró tu pergamino de ingreso.</h1>
+            <h1 className={styles.welcomeTitle}>Your admission scroll was not found.</h1>
             <button onClick={handleLogout} className={styles.logoutButton}>
-              Volver al Expreso de Hogwarts (Iniciar sesión)
+              Return to the Hogwarts Express (Log in)
             </button>
           </div>
         )}
@@ -58,5 +57,3 @@ const UserDashboard = () => {
 }
 
 export default UserDashboard
-
-
