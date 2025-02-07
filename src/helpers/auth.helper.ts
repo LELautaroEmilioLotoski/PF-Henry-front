@@ -633,7 +633,7 @@ export const registerWorker = async (userData: IRegisterProps): Promise<AuthResp
 
 
 export const signUpWithAuth0 = async (userData: { auth0Id: string; name: string; email: string; isComplete: boolean }) => {
-  const res = await fetch(`${APIURL}signupWithAuth0`, {
+  const res = await fetch(`${APIURL}/signupWithAuth0`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(userData),
@@ -648,7 +648,7 @@ export const signUpWithAuth0 = async (userData: { auth0Id: string; name: string;
 };
 
 export const signInWithAuth0 = async (userData: { auth0Id: string; name: string; email: string }) => {
-  const res = await fetch(`${APIURL}signInWithAuth0`, {
+  const res = await fetch(`${APIURL}/signInWithAuth0`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(userData),

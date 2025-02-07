@@ -9,14 +9,10 @@ export default function AdminHeader() {
           <Utensils className="mr-2 h-4 w-4" />
           Menu
         </button>
-        <button className="flex align-middle items-center gap-8 p-2 w-full justify-start">
+        <Link href="/admin/getAllUsers" className="flex align-middle items-center gap-8 p-2 w-full justify-start">
           <Users className="mr-2 h-4 w-4" />
-          Clients
-        </button>
-        <button className="flex align-middle items-center gap-8 p-2 w-full justify-start">
-          <Users className="mr-2 h-4 w-4" />
-          Employee
-        </button>
+          Users
+        </Link>
         <button className="flex align-middle items-center gap-8 p-2 w-full justify-start">
           <FileText className="mr-2 h-4 w-4" />
           Orders

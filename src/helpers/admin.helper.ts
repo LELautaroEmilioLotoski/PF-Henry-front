@@ -1,4 +1,4 @@
-import { ICategory, IMenuItem, ApiResponse, ICombo } from '@/interfaces/Types';
+import { ICategory, IMenuItem, ApiResponse, ICombo, IUser, AuthResponse } from '@/interfaces/Types';
 
 const APIURL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -85,5 +85,38 @@ export const updateCombo = async (
   }
 
   const data: ICombo = await res.json();
+  return data;
+};
+
+
+
+
+export const getAllUsers = async (token: string): Promise<IUser[]> => {
+  const res = await fetch(`${APIURL}users/findAllUsers`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error("Error al obtener todos los usuarios");
+  }
+
+  const data: { data: IUser[] } = await res.json();
+  return data.data;
+};
+
+export const desactivateUser = async (email: string, token: string): Promise<any> => {
+  const res = await fetch(`${APIURL}users/desactivate/${email}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const data = await res.json();
+  console.log(data);
   return data;
 };

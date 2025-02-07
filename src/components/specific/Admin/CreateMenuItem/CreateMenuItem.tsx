@@ -56,7 +56,7 @@ function CreateMenuItem() {
     try {
       const response: ApiResponse<IMenuItem> = await postMenuItem(menuItem);
       if (response.data) {
-        alert("Item agregado con éxito");
+        alert("Item added successfully");
         setFormData({
           name: "",
           description: "",
@@ -67,19 +67,19 @@ function CreateMenuItem() {
         });
       }
     } catch (err) {
-      alert("Error al agregar el item");
+      alert("Error adding item");
       console.error(err);
     }
   };
 
   return (
     <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
-      <h2 className="text-xl font-bold mb-4">Agregar Item al Menú</h2>
+      <h2 className="text-xl font-bold mb-4">Add Menu Item</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"
           name="name"
-          placeholder="Nombre"
+          placeholder="Name"
           value={formData.name}
           onChange={handleChange}
           className="w-full p-2 border rounded"
@@ -88,7 +88,7 @@ function CreateMenuItem() {
         <input
           type="text"
           name="description"
-          placeholder="Descripción"
+          placeholder="Description"
           value={formData.description}
           onChange={handleChange}
           className="w-full p-2 border rounded"
@@ -97,7 +97,7 @@ function CreateMenuItem() {
         <input
           type="number"
           name="price"
-          placeholder="Precio"
+          placeholder="Price"
           value={formData.price}
           onChange={handleChange}
           className="w-full p-2 border rounded"
@@ -115,7 +115,7 @@ function CreateMenuItem() {
         <input
           type="text"
           name="image_url"
-          placeholder="URL de Imagen"
+          placeholder="Image URL"
           value={formData.image_url}
           onChange={handleChange}
           className="w-full p-2 border rounded"
@@ -128,7 +128,7 @@ function CreateMenuItem() {
           className="w-full p-2 border rounded"
           required
         >
-          <option value="">Selecciona una categoría</option>
+          <option value="">Select a category</option>
           {categories.map((category) => (
             <option key={category.id} value={category.name}>
               {category.name}
@@ -139,7 +139,7 @@ function CreateMenuItem() {
           type="submit"
           className="w-full bg-blue-500 text-white p-2 rounded"
         >
-          Agregar
+          Add
         </button>
       </form>
     </div>
