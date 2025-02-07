@@ -6,7 +6,7 @@ import {
   BookOpenText,
 } from "lucide-react";
 import Link from "next/link";
-
+ 
 export default function DashboardSidebar() {
   return (
     <aside className="w-64 bg-gray-100 p-4 hidden md:block h-[100%]">
@@ -57,3 +57,5 @@ export default function DashboardSidebar() {
     </aside>
   );
 }
+
+

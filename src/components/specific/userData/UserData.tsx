@@ -7,6 +7,7 @@ import DashboardSidebar from "@/components/header/Header";
 import { signUpWithAuth0, signInWithAuth0 } from "@/helpers/auth.helper";
 import Cookies from "js-cookie";
 import Cloudinary from "../Cloudinary/Cloudinary";
+import styles from "@/components/specific/userData/UserData.module.css"
 
 const ProfilePage = () => {
   const router = useRouter();
@@ -58,9 +59,9 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push("/profile");
+      router.push("/profile")
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, router])
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -74,34 +75,31 @@ const ProfilePage = () => {
   const userData = userDataLocalStorage ? JSON.parse(userDataLocalStorage) : null;
 
   return (
-    <div className="flex">
-      <DashboardSidebar />
-      <div className="bg-gray-50 rounded-lg p-6 shadow">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">
-          Your personal data
-        </h2>
-        <p className="text-lg font-medium text-gray-600">
-          Name:{" "}
-          <span className="text-gray-800">
-            {userData?.name || "Not available"}
-          </span>
-        </p>
-        <p className="text-lg font-medium text-gray-600">
-          Email:{" "}
-          <span className="text-gray-800">
-            {userData?.email || "Not available"}
-          </span>
-        </p>
-        <p className="text-lg font-medium text-gray-600">
-          Address:{" "}
-          <span className="text-gray-800">
-            {userData?.address || "Not available"}
-          </span>
-        </p>
+    <div className={styles.dashboardContainer}>
+      <div className={styles.dashboardContent}>
+        <div className={styles.flexContainer}>
+          <DashboardSidebar />
+          <div className={styles.mainContent}>
+            <h2 className={styles.title}>Your Personal Data</h2>
+            <div className={styles.userInfo}>
+              <p className={styles.userInfoItem}>
+                <span className={styles.userInfoLabel}>Name:</span>
+                <span className={styles.userInfoValue}>{userData?.name || "Not available"}</span>
+              </p>
+              <p className={styles.userInfoItem}>
+                <span className={styles.userInfoLabel}>Email:</span>
+                <span className={styles.userInfoValue}>{userData?.email || "Not available"}</span>
+              </p>
+            </div>
+            <div className={styles.uploadContainer}>
+              <h3 className={styles.uploadTitle}>Upload Image</h3>
+              {userData ? <Cloudinary /> : <h2>Cloudinary not found</h2>}
+            </div>
+          </div>
+        </div>
       </div>
-      {userData ? <Cloudinary /> : <h2>Cloudinary not found</h2>}
     </div>
-  );
-};
+  )
+}
 
 export default ProfilePage;

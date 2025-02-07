@@ -10,6 +10,8 @@ import Cloudinary from "../Cloudinary/Cloudinary";
 const UserDashboard = () => {
   const { userNormal, logoutUser } = useUserContext()
   const { user } = useUser()
+  // const [isLoaded, setIsLoaded] = useState(false)
+
 
   const handleLogout = () => {
     logoutUser()
@@ -38,9 +40,6 @@ const UserDashboard = () => {
                   Address: <span>{userNormal.address}</span>
                 </p>
               </div>
-              <button onClick={handleLogout} className={styles.logoutButton}>
-                Disappear (Log out)
-              </button>
             </div>
             <Cloudinary />
           </div>
