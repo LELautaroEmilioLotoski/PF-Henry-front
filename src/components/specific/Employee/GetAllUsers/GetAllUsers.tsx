@@ -38,13 +38,24 @@ const GetAllUsers = () => {
   }, []); // Se ejecuta solo una vez al montar el componente
 
   return (
-    <div>
-      <h1>Usuarios Activos</h1>
-      <ul>
-        {users.map(user => (
-          <li key={user.id}>{user.name} - {user.email}</li>
-        ))}
-      </ul>
+    <div style={{ margin: '20px' }}>
+      <h1 style={{ marginBottom: '20px' }}>Active Users</h1>
+      <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '20px' }}>
+        <thead>
+          <tr>
+            <th style={{ padding: '12px', border: '1px solid #ddd', textAlign: 'left' }}>Name</th>
+            <th style={{ padding: '12px', border: '1px solid #ddd', textAlign: 'left' }}>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map(user => (
+            <tr key={user.id}>
+              <td style={{ padding: '12px', border: '1px solid #ddd' }}>{user.name}</td>
+              <td style={{ padding: '12px', border: '1px solid #ddd' }}>{user.email}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

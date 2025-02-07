@@ -94,14 +94,14 @@ export default function OrdersPage() {
         <thead>
           <tr className="bg-gray-200">
             {orders.some(order => order.user?.email) && (
-              <th className="border border-gray-300 px-4 py-2 text-left">Correo del Usuario</th>
+              <th className="border border-gray-300 px-4 py-2 text-left">email</th>
             )}
-            <th className="border border-gray-300 px-4 py-2 text-left">Estado</th>
-            <th className="border border-gray-300 px-4 py-2 text-left">Precio Total</th>
-            <th className="border border-gray-300 px-4 py-2 text-left">Fecha</th>
-            <th className="border border-gray-300 px-4 py-2 text-left">Método de Pago</th>
-            <th className="border border-gray-300 px-4 py-2 text-left">Comentario</th>
-            <th className="border border-gray-300 px-4 py-2 text-left">Acción</th>
+            <th className="border border-gray-300 px-4 py-2 text-left">Estatus</th>
+            <th className="border border-gray-300 px-4 py-2 text-left">Total price</th>
+            <th className="border border-gray-300 px-4 py-2 text-left">Date</th>
+            <th className="border border-gray-300 px-4 py-2 text-left">Payment method</th>
+            <th className="border border-gray-300 px-4 py-2 text-left">Comments</th>
+            <th className="border border-gray-300 px-4 py-2 text-left">Acctions</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-300">
@@ -139,7 +139,7 @@ export default function OrdersPage() {
                 colSpan={orders.some(order => order.user?.email) ? 7 : 6}
                 className="border border-gray-300 px-4 py-2 text-center"
               >
-                No hay órdenes disponibles
+                No actives orders
               </td>
             </tr>
           )}

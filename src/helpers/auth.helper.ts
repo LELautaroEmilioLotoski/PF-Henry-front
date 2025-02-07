@@ -165,7 +165,7 @@ export const getAllReservations = async (token: string | null): Promise<IReserva
 };
 
 export const getReservationsByEmail = async (email: string, token: string | null): Promise<IReservationTable[]> => {
-  console.log('token en userContext:', token);
+  //console.log('token en userContext:', token);
   if (!token) throw new Error("No token provided");
 
   const res = await fetch(`${APIURL}users/reservations/${email}`, {
