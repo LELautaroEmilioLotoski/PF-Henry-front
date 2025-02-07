@@ -90,10 +90,6 @@ const ProfilePage = () => {
                 <span className={styles.userInfoLabel}>Email:</span>
                 <span className={styles.userInfoValue}>{userData?.email || "Not available"}</span>
               </p>
-              <p className={styles.userInfoItem}>
-                <span className={styles.userInfoLabel}>Address:</span>
-                <span className={styles.userInfoValue}>{userData?.address || "Not available"}</span>
-              </p>
             </div>
             <div className={styles.uploadContainer}>
               <h3 className={styles.uploadTitle}>Upload Image</h3>

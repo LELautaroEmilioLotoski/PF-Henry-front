@@ -40,9 +40,6 @@ const UserDashboard = () => {
                   Address: <span>{userNormal.address}</span>
                 </p>
               </div>
-              <button onClick={handleLogout} className={styles.logoutButton}>
-                Disappear (Log out)
-              </button>
             </div>
             <Cloudinary />
           </div>
