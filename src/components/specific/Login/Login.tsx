@@ -51,11 +51,11 @@ const Login = () => {
         }
       } else {
         console.log("Login failed: Invalid credentials");
-        setError("Credenciales incorrectas");
+        setError("Invalid credentials");
       }
     } catch (error) {
       console.error("Login Error:", error)
-      setError("Error mágico. ¡Repara tu varita e intenta de nuevo!")
+      setError("Magic error. Fix your wand and try again!")
     }
   }
 
@@ -66,10 +66,10 @@ const Login = () => {
   return (
     <div className={styles.loginContainer}>
       <form onSubmit={handleLogin} className={styles.loginForm}>
-        <h2 className={styles.formTitle}>Portal Mágico de Hogwarts</h2>
+        <h2 className={styles.formTitle}>Hogwarts Magic Portal</h2>
         <div className={styles.formGroup}>
           <label htmlFor="email" className={styles.label}>
-            Correo de lechuza 🦉
+            Owl Mail 🦉
           </label>
           <input
             id="email"
@@ -85,7 +85,7 @@ const Login = () => {
 
         <div className={styles.formGroup}>
           <label htmlFor="password" className={styles.label}>
-            Contraseña mágica 🔮
+            Magic Password 🔮
           </label>
           <div className={styles.passwordField}>
             <input
@@ -123,6 +123,7 @@ const Login = () => {
 }
 
 export default Login
+
 
 
 

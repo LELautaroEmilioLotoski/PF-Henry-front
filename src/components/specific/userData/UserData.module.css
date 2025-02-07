@@ -1,4 +1,55 @@
-.dashboardContainer {
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideInFromLeft {
+    from {
+      transform: translateX(-50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideInFromRight {
+    from {
+      transform: translateX(50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes scaleIn {
+    from {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes rotateIcon {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .dashboardContainer {
     background-image: url("../../../../public/The\ Three\ Broomsticks\ 2.jpg"),
       linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
     background-size: cover;
@@ -9,7 +60,7 @@
     justify-content: center;
     align-items: center;
     font-family: "Luminari", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    overflow: hidden; /* Prevents animation from spilling out */
+    animation: fadeIn 1s ease-out;
   }
   
   .dashboardContent {
@@ -20,103 +71,7 @@
     padding: 3rem;
     max-width: 1200px;
     width: 100%;
-    animation: fadeIn 1s ease-in-out; /* Fade-in animation */
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px); /* Start slightly below */
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .title {
-    color: #ffd700;
-    font-size: 3rem;
-    margin-bottom: 2rem;
-    text-align: center;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.5);
-    letter-spacing: 3px;
-    animation: titleGlow 2s infinite alternate, fadeInUp 1s ease-in-out; /* Added fadeInUp */
-  }
-
-  @keyframes fadeInUp {
-    from {
-      transform: translateY(-20px); /* Start above */
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-  
-  @keyframes titleGlow {
-    from {
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.5);
-    }
-    to {
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 215, 0, 0.8);
-    }
-  }
-  
-  .userInfo {
-    background: linear-gradient(145deg, #f3e5ab, #e5e5e5);
-    border-radius: 20px;
-    padding: 2.5rem;
-    margin-bottom: 2.5rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    animation: slideInLeft 1s ease-in-out; /* Slide in from left */
-  }
-
-  @keyframes slideInLeft {
-    from {
-      transform: translateX(-20px);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
-  
-  .userInfoItem {
-    color: #0d1821;
-    font-size: 1.3rem;
-    margin-bottom: 1.2rem;
-    display: flex;
-    align-items: center;
-  }
-  
-  .userInfoItem::before {
-    content: "⚡";
-    margin-right: 15px;
-    color: #d3a625;
-    font-size: 1.5rem;
-    animation: rotate 1s linear infinite; /* Rotate the icon */
-  }
-
-  @keyframes rotate {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  
-  .userInfoLabel {
-    font-weight: 600;
-    color: #740001;
-    margin-right: 0.5rem;
-  }
-  
-  .userInfoValue {
-    color: #333;
+    animation: scaleIn 0.8s ease-out;
   }
   
   .flexContainer {
@@ -131,18 +86,54 @@
     backdrop-filter: blur(10px);
     border-radius: 30px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-    animation: slideInRight 1s ease-in-out; /* Slide in from right */
   }
-
-  @keyframes slideInRight {
-    from {
-      transform: translateX(20px);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(0);
-      opacity: 1;
-    }
+  
+  .title {
+    color: #ffd700;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.5);
+    letter-spacing: 3px;
+    animation: slideInFromLeft 1s ease-out;
+  }
+  
+  .userInfo {
+    background: linear-gradient(145deg, #f3e5ab, #e5e5e5);
+    border-radius: 20px;
+    padding: 2.5rem;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    animation: slideInFromRight 1s ease-out 0.3s;
+    animation-fill-mode: both;
+  }
+  
+  .userInfoItem {
+    color: #0d1821;
+    font-size: 1.3rem;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    animation: fadeIn 0.5s ease-out;
+    animation-fill-mode: both;
+  }
+  
+  .userInfoItem::before {
+    content: "⚡";
+    margin-right: 15px;
+    color: #d3a625;
+    font-size: 1.5rem;
+    animation: rotateIcon 2s linear infinite; /* Animación de giro infinita */
+  }
+  
+  .userInfoLabel {
+    font-weight: bold;
+    margin-right: 10px;
+    color: #740001;
+  }
+  
+  .userInfoValue {
+    color: #0d1821;
   }
   
   .uploadContainer {
@@ -151,18 +142,8 @@
     padding: 2.5rem;
     margin-top: 2.5rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    animation: scaleUp 1s ease-in-out; /* Scale up animation */
-  }
-
-  @keyframes scaleUp {
-    from {
-      transform: scale(0.9);
-      opacity: 0;
-    }
-    to {
-      transform: scale(1);
-      opacity: 1;
-    }
+    animation: slideInFromRight 0.8s ease-out 0.5s;
+    animation-fill-mode: both;
   }
   
   .uploadTitle {
@@ -182,16 +163,6 @@
     height: 3px;
     background: #d3a625;
     transform: translateX(-50%);
-    animation: widthExpand 1s ease-in-out;  /* Expand width animation */
-  }
-
-  @keyframes widthExpand {
-    from {
-      width: 0;
-    }
-    to {
-      width: 50px;
-    }
   }
   
   .loadingText,
@@ -200,10 +171,6 @@
     color: #ffd700;
     text-align: center;
     margin-top: 2rem;
-  }
-  
-  .errorText {
-    color: #ff4136;
   }
   
   @media (max-width: 768px) {
@@ -216,7 +183,7 @@
     }
   
     .title {
-      font-size: 2.8rem;
+      font-size: 2.5rem;
     }
   }
   

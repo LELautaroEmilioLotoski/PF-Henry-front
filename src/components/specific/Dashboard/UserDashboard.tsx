@@ -3,7 +3,7 @@ import { useUserContext } from "@/context/UserContext"
 import DashboardSidebar from "@/components/header/Header"
 import { useUser } from "@auth0/nextjs-auth0/client"
 import FileUploadComponent from "@/app/Cloudinary/page"
-import ProfilePage from "../userData/UserData"
+import ProfilePage from "@/components/specific/userData/UserData"
 import styles from "./Dashboard.module.css"
 import { useEffect, useState } from "react"
 
@@ -45,9 +45,6 @@ const UserDashboard = () => {
               Address: <span>{userNormal.address}</span>
             </p>
           </div>
-          <button onClick={handleLogout} className={`${styles.logoutButton} ${isLoaded ? styles.fadeIn : ""}`}>
-            Disappear (Log Out)
-          </button>
         </div>
         <FileUploadComponent userprops={userNormal} />
       </div>

@@ -55,7 +55,7 @@ const Register = () => {
 
       console.log("Registration response:", res)
 
-      if (res.message === "Registro exitoso") {
+      if (res.message === "Successful registration") {
         router.push("/login")
       } else {
         setErrors({
@@ -81,11 +81,11 @@ const Register = () => {
   return (
     <div className={styles.registerContainer}>
       <form onSubmit={handleSubmit} className={styles.registerForm}>
-        <h2 className={styles.formTitle}>Portal Mágico de Hogwarts - Registro</h2>
+        <h2 className={styles.formTitle}>Hogwarts Magical Portal - Registration</h2>
 
         <div className={styles.formGroup}>
           <label htmlFor="name" className={styles.label}>
-            Nombre del Mago 🧙
+            Wizard Name 🧙
           </label>
           <input
             id="name"
@@ -102,7 +102,7 @@ const Register = () => {
 
         <div className={styles.formGroup}>
           <label htmlFor="email" className={styles.label}>
-            Correo de lechuza 🦉
+            Owl Email 🦉
           </label>
           <input
             id="email"
@@ -119,7 +119,7 @@ const Register = () => {
 
         <div className={styles.formGroup}>
           <label htmlFor="password" className={styles.label}>
-            Contraseña mágica 🔮
+            Magical Password 🔮
           </label>
           <div className={styles.passwordField}>
             <input
@@ -141,7 +141,7 @@ const Register = () => {
 
         <div className={styles.formGroup}>
           <label htmlFor="ConfirmPassword" className={styles.label}>
-            Confirmar Contraseña mágica 🔮
+            Confirm Magical Password 🔮
           </label>
           <div className={styles.passwordField}>
             <input
@@ -163,7 +163,7 @@ const Register = () => {
 
         <div className={styles.formGroup}>
           <label htmlFor="address" className={styles.label}>
-            Dirección de la Lechuza 🏠
+            Owl Address 🏠
           </label>
           <input
             id="address"
@@ -179,7 +179,7 @@ const Register = () => {
         </div>
 
         <button type="submit" className={styles.button} disabled={isLoading}>
-          {isLoading ? "Lanzando hechizo..." : "Encantar Registro 🪄"}
+          {isLoading ? "Casting Spell..." : "Enchant Registration 🪄"}
         </button>
       </form>
     </div>
@@ -187,5 +187,6 @@ const Register = () => {
 }
 
 export default Register
+
 
 

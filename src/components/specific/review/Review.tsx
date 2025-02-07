@@ -164,6 +164,7 @@ import {
 import { createReview } from "@/helpers/auth.helper";
 import { IReview } from "@/interfaces/Types";
 import Cookies from "js-cookie";
+import styles from "./Review.module.css"; 
 
 interface User {
   id: string;
@@ -217,9 +218,6 @@ export default function RestaurantReview() {
       console.log("Datos enviados en la reseña:", reviewData);
       
       const response = await createReview(reviewData, token);
-      console.log(reviewData);
-      
-      
       console.log("Respuesta de la API:", response);
       alert("¡Reseña creada exitosamente!");
     } catch (error) {
@@ -236,47 +234,30 @@ export default function RestaurantReview() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br flex items-center justify-center p-4">
-      <Card className="w-full max-w-md shadow-xl">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center">
-            Ayúdanos a mejorar 😁
-          </CardTitle>
+<div className={styles.reviewContainer}>
+      <Card className={styles.card}>
+        <CardHeader className={styles.cardHeader}>
+          <CardTitle className={styles.cardTitle}>Ayúdanos a mejorar 😁</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div>
-            <label className="text-sm font-medium text-gray-700">
-              Tu email
-            </label>
-            <input
-              value={userData?.email || ""}
-              disabled
-              className="w-full px-4 py-2 rounded-lg border border-gray-200 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-            />
+        <CardContent className={styles.cardContent}>
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Tu email</label>
+            <input value={userData?.email || ""} disabled className={styles.inputField} />
           </div>
-          <div>
-            <label className="text-sm font-medium text-gray-700">
-              Calificación
-            </label>
-            <div className="flex items-center space-x-1 mt-1">
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Calificación</label>
+            <div className={styles.starRating}>
               {[1, 2, 3, 4, 5].map((star) => (
                 <Star
                   key={star}
-                  className={`w-8 h-8 cursor-pointer ${
-                    star <= rating
-                      ? "text-yellow-400 fill-yellow-400"
-                      : "text-gray-300"
-                  }`}
+                  className={`${styles.star} ${star <= rating ? styles.starFilled : styles.starEmpty}`}
                   onClick={() => setRating(star)}
                 />
               ))}
             </div>
           </div>
-          <div>
-            <label
-              htmlFor="review"
-              className="text-sm font-medium text-gray-700"
-            >
+          <div className={styles.inputGroup}>
+            <label htmlFor="review" className={styles.label}>
               Tu reseña
             </label>
             <Textarea
@@ -284,13 +265,13 @@ export default function RestaurantReview() {
               placeholder="Comparte tu experiencia..."
               value={dataReview.description}
               onChange={handleChange}
-              className="mt-1"
+              className={styles.textarea}
               rows={4}
             />
           </div>
         </CardContent>
-        <CardFooter>
-          <Button className="w-full" onClick={handleSubmit}>
+        <CardFooter className={styles.cardFooter}>
+          <Button className={styles.button} onClick={handleSubmit}>
             Enviar Reseña
           </Button>
         </CardFooter>
@@ -298,5 +279,6 @@ export default function RestaurantReview() {
     </div>
   );
 }
+
 
 
