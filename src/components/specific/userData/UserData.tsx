@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import DashboardSidebar from "@/components/header/Header";
+import DashboardSidebar from "@/components/specific/Dashboard/header/Header";
 import { signUpWithAuth0, signInWithAuth0 } from "@/helpers/auth.helper";
 import Cookies from "js-cookie";
 import Cloudinary from "../Cloudinary/Cloudinary";

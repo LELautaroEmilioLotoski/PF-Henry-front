@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-import { Poppins } from "next/font/google";
+import { Lora, Poppins } from "next/font/google";
 import Footer from "@/components/layout/Footer/Footer";
 import Navbar from "@/components/layout/Navbar/Navbar";
 import Contexts from "./Contexts";
@@ -10,9 +10,15 @@ const primaryFont = Poppins({
   variable: "--primary-font",
   weight: ["400", "700"],
 });
-const secondaryFont = LucidaBlackletterRegular({
-  src: "../../public/fonts/LucidaBlackletterRegular.ttf", // Ruta a tu archivo .ttf
+const secondaryFont = Lora({
+  subsets: ["latin"],
   variable: "--secondary-font",
+  weight: ["400", "700"],
+});
+
+const ternariFont = LucidaBlackletterRegular({
+  src: "../../public/fonts/LucidaBlackletterRegular.ttf",
+  variable: "--ternari-font",
 });
 
 export default function RootLayout({
@@ -24,7 +30,7 @@ export default function RootLayout({
     <Contexts>
       <html lang="en">
         <body
-          className={`${primaryFont.variable} ${secondaryFont.variable} antialiased flex flex-col min-h-screen`}
+          className={`${primaryFont.variable} ${secondaryFont.variable} ${ternariFont.variable} antialiased flex flex-col min-h-screen`}
         >
           <Navbar />
           <main className="flex-1">{children}</main>

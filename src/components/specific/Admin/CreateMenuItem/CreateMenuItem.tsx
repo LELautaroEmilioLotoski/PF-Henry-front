@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { fetchCategories, postMenuItem } from "@/helpers/admin.helper";
 import { ICategory, IMenuItem, ApiResponse } from "@/interfaces/Types";
+import RoleHeader from "@/components/specific/Admin/AdminHeader/AdminHeader";
 
 function CreateMenuItem() {
   const [categories, setCategories] = useState<ICategory[]>([]);
@@ -56,7 +57,7 @@ function CreateMenuItem() {
     try {
       const response: ApiResponse<IMenuItem> = await postMenuItem(menuItem);
       if (response.data) {
-        alert("Item agregado con éxito");
+        alert("Item added successfully");
         setFormData({
           name: "",
           description: "",
@@ -67,81 +68,98 @@ function CreateMenuItem() {
         });
       }
     } catch (err) {
-      alert("Error al agregar el item");
+      alert("Error adding item");
       console.error(err);
     }
   };
 
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
-      <h2 className="text-xl font-bold mb-4">Agregar Item al Menú</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          name="name"
-          placeholder="Nombre"
-          value={formData.name}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-          required
-        />
-        <input
-          type="text"
-          name="description"
-          placeholder="Descripción"
-          value={formData.description}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-          required
-        />
-        <input
-          type="number"
-          name="price"
-          placeholder="Precio"
-          value={formData.price}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-          required
-        />
-        <input
-          type="number"
-          name="stock"
-          placeholder="Stock"
-          value={formData.stock}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-          required
-        />
-        <input
-          type="text"
-          name="image_url"
-          placeholder="URL de Imagen"
-          value={formData.image_url}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-          required
-        />
-        <select
-          name="category"
-          value={formData.category}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-          required
-        >
-          <option value="">Selecciona una categoría</option>
-          {categories.map((category) => (
-            <option key={category.id} value={category.name}>
-              {category.name}
-            </option>
-          ))}
-        </select>
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white p-2 rounded"
-        >
-          Agregar
-        </button>
-      </form>
+    <div className="flex min-h-screen bg-gray-100">
+      {/* Sidebar */}
+      <div className="w-64 hidden md:block">
+        <RoleHeader />
+      </div>
+
+      {/* Mobile Header */}
+      <div className="md:hidden fixed top-0 left-0 right-0 z-20 bg-white border-b">
+        <RoleHeader />
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 md:ml-64">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-4 md:py-6">
+          <div className="bg-white rounded-lg shadow-sm p-4 md:p-6">
+            <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6">Add Menu Item</h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <input
+                type="text"
+                name="name"
+                placeholder="Name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                required
+              />
+              <input
+                type="text"
+                name="description"
+                placeholder="Description"
+                value={formData.description}
+                onChange={handleChange}
+                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                required
+              />
+              <input
+                type="number"
+                name="price"
+                placeholder="Price"
+                value={formData.price}
+                onChange={handleChange}
+                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                required
+              />
+              <input
+                type="number"
+                name="stock"
+                placeholder="Stock"
+                value={formData.stock}
+                onChange={handleChange}
+                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                required
+              />
+              <input
+                type="text"
+                name="image_url"
+                placeholder="Image URL"
+                value={formData.image_url}
+                onChange={handleChange}
+                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                required
+              />
+              <select
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                required
+              >
+                <option value="">Select a category</option>
+                {categories.map((category) => (
+                  <option key={category.id} value={category.name}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+              <button
+                type="submit"
+                className="w-full bg-amber-500 text-white p-2 rounded-md hover:bg-amber-600 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+              >
+                Add
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

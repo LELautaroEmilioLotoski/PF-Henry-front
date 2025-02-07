@@ -7,10 +7,8 @@ import {
   IReservation,
   IReview,
   IUserDataUpdate,
-  IOrder,
   IOrderResponse,
-  IUser,
-  IReservations,
+  IUser
 } from "@/interfaces/Types";
 import Cookies from "js-cookie";
 

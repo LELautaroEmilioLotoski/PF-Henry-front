@@ -1,7 +1,7 @@
 "use client"
 import React from "react";
 import { useUserContext } from "@/context/UserContext"
-import DashboardSidebar from "@/components/header/Header"
+import DashboardSidebar from "@/components/specific/Dashboard/header/Header"
 import { useUser } from "@auth0/nextjs-auth0/client"
 import ProfilePage from "@/components/specific/userData/UserData"
 import styles from "./Dashboard.module.css"
@@ -10,8 +10,6 @@ import Cloudinary from "../Cloudinary/Cloudinary";
 const UserDashboard = () => {
   const { userNormal, logoutUser } = useUserContext()
   const { user } = useUser()
-  // const [isLoaded, setIsLoaded] = useState(false)
-
 
   const handleLogout = () => {
     logoutUser()

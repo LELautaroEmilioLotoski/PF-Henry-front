@@ -20,7 +20,7 @@ const GetOrders = () => {
   useEffect(() => {
     const storedUser = localStorage.getItem("user")
     if (!storedUser) {
-      setError("No hay usuario en localStorage.")
+      setError("No user in localStorage.")
       setLoading(false)
       return
     }
@@ -28,7 +28,7 @@ const GetOrders = () => {
     const user = JSON.parse(storedUser)
     const email = user?.email
     if (!email) {
-      setError("El usuario no tiene un email registrado.")
+      setError("The user does not have a registered email.")
       setLoading(false)
       return
     }
@@ -38,8 +38,8 @@ const GetOrders = () => {
         setOrders(data?.data || [])
       })
       .catch((err) => {
-        if (err.message !== "El usuario no tiene reservas") {
-          setError(err.message || "Error al obtener órdenes.")
+        if (err.message !== "The user has no orders") {
+          setError(err.message || "Error fetching orders.")
         }
       })
       .finally(() => setLoading(false))
@@ -111,12 +111,12 @@ const GetOrders = () => {
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber)
 
-  if (loading) return <p className="text-center text-gray-500 mt-10">Cargando órdenes...</p>
+  if (loading) return <p className="text-center text-gray-500 mt-10">Loading orders...</p>
   if (error) return <p className="text-center text-red-500 mt-10">{error}</p>
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-4 md:p-6">
-      <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6">Órdenes</h2>
+      <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6">Orders</h2>
       <div className="overflow-x-auto">
         <table className="w-full border-collapse">
           <thead>
@@ -125,7 +125,7 @@ const GetOrders = () => {
                 onClick={() => handleSort("date")}
                 className="px-2 md:px-4 py-2 md:py-3 cursor-pointer text-sm md:text-base text-left font-semibold text-gray-600"
               >
-                Fecha
+                Date
               </th>
               <th
                 onClick={() => handleSort("total")}
@@ -134,16 +134,16 @@ const GetOrders = () => {
                 Total
               </th>
               <th className="px-2 md:px-4 py-2 md:py-3 text-sm md:text-base text-left font-semibold text-gray-600">
-                Método de pago
+                Payment Method
               </th>
               <th className="px-2 md:px-4 py-2 md:py-3 text-sm md:text-base text-left font-semibold text-gray-600">
-                Estado de pago
+                Payment Status
               </th>
               <th className="px-2 md:px-4 py-2 md:py-3 text-sm md:text-base text-left font-semibold text-gray-600">
-                Estado
+                Status
               </th>
               <th className="px-2 md:px-4 py-2 md:py-3 text-sm md:text-base text-left font-semibold text-gray-600">
-                Detalles
+                Details
               </th>
             </tr>
           </thead>
@@ -169,7 +169,7 @@ const GetOrders = () => {
                       onClick={() => handleOpenModal(order.orderDetails)}
                       className="bg-amber-500 text-white py-1 px-2 md:px-3 rounded-lg text-xs md:text-sm font-medium hover:bg-amber-600 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
                     >
-                      Ver detalles
+                      View details
                     </button>
                   </td>
                 </tr>
@@ -177,7 +177,7 @@ const GetOrders = () => {
             ) : (
               <tr>
                 <td colSpan={6} className="px-4 py-8 text-center text-gray-500 text-sm md:text-base">
-                  No hay órdenes disponibles.
+                  No orders available.
                 </td>
               </tr>
             )}
@@ -202,7 +202,7 @@ const GetOrders = () => {
           <div className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
             <div className="p-6 space-y-6">
               <div className="flex items-center justify-between">
-                <h3 className="text-xl font-bold text-gray-800">Detalles de la Orden</h3>
+                <h3 className="text-xl font-bold text-gray-800">Order Details</h3>
                 <button
                   onClick={handleCloseModal}
                   className="text-gray-400 hover:text-gray-600 transition-colors focus:outline-none"
@@ -211,7 +211,7 @@ const GetOrders = () => {
                 </button>
               </div>
               {modalLoading ? (
-                <p className="text-center text-gray-500">Cargando detalles...</p>
+                <p className="text-center text-gray-500">Loading details...</p>
               ) : (
                 <div className="space-y-4">
                   {selectedOrderDetails.map((detail) => {
@@ -235,14 +235,14 @@ const GetOrders = () => {
                             </div>
                             <div className="pt-2 border-t border-gray-100">
                               <p className="text-sm text-gray-600">
-                                <span className="font-semibold">Cantidad:</span> {detail.quantity}
+                                <span className="font-semibold">Quantity:</span> {detail.quantity}
                               </p>
                               <p className="text-sm font-medium text-amber-500">
                                 <span className="font-semibold text-gray-600">Subtotal:</span> ${detail.subtotal}
                               </p>
                               <p className="text-sm text-gray-600">
-                                <span className="font-semibold">Tipo:</span>{" "}
-                                {product.type === "menuItem" ? "Menú" : "Combo"}
+                                <span className="font-semibold">Type:</span>{" "}
+                                {product.type === "menuItem" ? "Menu" : "Combo"}
                               </p>
                             </div>
                           </>

@@ -83,7 +83,6 @@ const Cloudinary = () => {
 
   return (
     <div className={styles.ImageProfile}>
-      <h1 className={styles.title}>Profile Picture</h1>
       <div className={styles.profilePicContainer} onClick={handleImageClick}>
         <input
           type="file"

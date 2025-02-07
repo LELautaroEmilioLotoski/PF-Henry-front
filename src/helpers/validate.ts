@@ -5,25 +5,23 @@ import { ILoginErrors, ILoginProps, IRegisterErrors, IRegisterProps } from "@/in
 // LOGIN
 
 export function validateLoginForm(values: ILoginProps): ILoginErrors {
-    const errors: ILoginErrors = {};
-  
-    // EMAIL
+  const errors: ILoginErrors = {};
 
-    if (!values.email) {
-        errors.email = "The email field is required";
-    } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(values.email)) {
-        errors.email = "Invalid email address";
-    }
-  
-    // PASSWORD
+  // EMAIL
+  if (!values.email) {
+    errors.email = "The email field is required";
+  } else if (!/^[\w.-]+@[\w-]+\.[\w]{2,4}$/.test(values.email)) {
+    errors.email = "Invalid email address";
+  }
 
-    if (!values.password) {
-        errors.password = "The password field is required";
-    } else if (values.password.length < 6) {
-        errors.password = "The password must be at least 6 characters long";
-    }
-  
-    return errors;
+  // PASSWORD
+  if (!values.password) {
+    errors.password = "The password field is required";
+  } else if (values.password.length < 6) {
+    errors.password = "The password must be at least 6 characters long";
+  }
+
+  return errors;
 }
 
 // REGISTER
@@ -60,6 +58,13 @@ export const validateRegisterForm = (values: IRegisterProps): IRegisterErrors =>
     // } else if (!/(?=.*[A-Z])(?=.*\d)/.test(values.password)) {
     //     errors.password = "The password must contain at least one uppercase letter and one number";
     // }
+
+    // CONFIRM PASSWORD
+    if (!values.ConfirmPassword) {
+        errors.ConfirmPassword = "The confirm password field is required";
+    } else if (values.ConfirmPassword !== values.password) {
+        errors.ConfirmPassword = "Passwords do not match";
+    }
 
     // ADDRESS
 

@@ -17,16 +17,16 @@ const GetUserAllReview = () => {
         if (!user) return
 
         const userData = JSON.parse(user)
-        console.log("Usuario:", userData.id)
+        console.log("User:", userData.id)
 
         const response = await getReview(userData.id)
-        console.log("Reseñas obtenidas:", response)
+        console.log("Reviews fetched:", response)
 
         if (response) {
           setReviews(response)
         }
       } catch (err) {
-        console.error("Error al obtener reseñas:", err)
+        console.error("Error fetching reviews:", err)
       }
     }
 
@@ -35,16 +35,16 @@ const GetUserAllReview = () => {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Tus Reseñas</h2>
+      <h2 className={styles.title}>Your Reviews</h2>
 
       {reviews.length === 0 ? (
-        <p className={styles.noReviews}>No tienes reseñas aún.</p>
+        <p className={styles.noReviews}>You don't have any reviews yet.</p>
       ) : (
         <div className={styles.reviewsGrid}>
           {reviews.map((review, index) => (
             <div key={index} className={styles.reviewCard}>
               <div className={styles.ratingContainer}>
-                <h3 className={styles.ratingTitle}>Puntuación</h3>
+                <h3 className={styles.ratingTitle}>Rating</h3>
                 <div className={styles.starContainer}>
                   {[1, 2, 3, 4, 5].map((star) => (
                     <Star
@@ -66,5 +66,3 @@ const GetUserAllReview = () => {
 }
 
 export default GetUserAllReview
-
-

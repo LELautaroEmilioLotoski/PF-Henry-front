@@ -25,6 +25,7 @@ export interface IUser {
   role?: string
   image_url?: string
   created_atts?: string
+  isActive? : boolean
 }
 
 export interface IRegisterProps {

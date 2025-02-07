@@ -120,8 +120,8 @@ const OrderForm: React.FC = () => {
         {!showPayPal && (
           <button
             type="submit"
-            className="w-full bg-amber-500 text-white py-3 px-4 rounded-lg font-medium hover:bg-amber-600"
-          >
+            className="w-full bg-amber-500 text-white py-3 px-4 rounded-lg font-medium hover:bg-amber-600">
+              Confirm Order
           </button>
         )}
       </form>
