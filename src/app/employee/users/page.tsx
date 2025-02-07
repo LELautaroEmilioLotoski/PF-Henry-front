@@ -14,8 +14,8 @@ import React from 'react'
  
 function GetAllUsersPage() {
   return (
-    <GetAllUsers children={''} />
-  )
+    <GetAllUsers />
+  );
 }
- 
-export default GetAllUsersPage
+
+export default GetAllUsersPage;
