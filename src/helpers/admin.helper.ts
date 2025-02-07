@@ -119,4 +119,4 @@ export const desactivateUser = async (email: string, token: string): Promise<any
   const data = await res.json();
   console.log(data);
   return data;
-};
+}
