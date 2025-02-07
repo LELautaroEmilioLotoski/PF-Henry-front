@@ -7,7 +7,8 @@ import GuestsInput from "./GuestInput";
 import Calendar from "./CalendarComponent";
 import type React from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify"; // Importación de Toastify
+import { toast, ToastContainer } from "react-toastify"; // Importación de Toastify
+import "react-toastify/dist/ReactToastify.css";
 
 export default function CreateReservation() {
   const { userNormal } = useUserContext();
@@ -35,8 +36,19 @@ export default function CreateReservation() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!date || !time || guests < 1) {
       toast.error("Please fill in all the details."); // Toastify en lugar de alert
+      return;
+    }
+
+    // Validación: no permitir una fecha menor a la fecha actual.
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Se ignoran las horas para comparar solo la fecha
+    const selectedDate = new Date(date);
+    selectedDate.setHours(0, 0, 0, 0);
+    if (selectedDate < today) {
+      toast.error("The selected date cannot be in the past.");
       return;
     }
 
@@ -49,6 +61,12 @@ export default function CreateReservation() {
 
     try {
       const bookingData = await reservation(userId, userData);
+      if (!bookingData) {
+        console.error("Reservation creation failed: no data returned.");
+        toast.error("Reservation creation failed. Please try again.");
+        setLoading(false);
+        return;
+      }
       console.log(bookingData);
       toast.success("Reservation created successfully."); // Toastify en lugar de alert
       setDate(undefined);
@@ -83,6 +101,19 @@ export default function CreateReservation() {
           {loading ? "Loading..." : "Create reservation"}
         </button>
       </form>
+      {/* Toast Container */}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </div>
   );
 }
