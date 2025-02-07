@@ -18,7 +18,7 @@ const Cart: React.FC<CartProps> = ({ onCreateOrder }) => {
     const token = document.cookie.split('; ').find(row => row.startsWith('token='));
     
     if (!token) {
-      router.push('/login');
+      router.push('/Login');
       return;
     }
 

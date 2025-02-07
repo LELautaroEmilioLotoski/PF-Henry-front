@@ -11,11 +11,12 @@ import {
   IOrderResponse,
   IUser,
   IReservations,
+  IReservations,
 } from "@/interfaces/Types";
 import Cookies from "js-cookie";
 
 const APIURL = process.env.NEXT_PUBLIC_API_URL;
-
+ 
 export const register = async (userData: IRegisterProps): Promise<AuthResponse> => {
   const res = await fetch(`${APIURL}auth/signup`, {
     method: "POST",
@@ -26,10 +27,10 @@ export const register = async (userData: IRegisterProps): Promise<AuthResponse> 
   });
   const data = await res.json();
   console.log(data);
-  
+ 
   return data;
 };
-
+ 
 export const login = async (userData: ILoginProps): Promise<AuthResponse> => {
   const res = await fetch(`${APIURL}auth/signin`, {
     method: "POST",
@@ -46,7 +47,7 @@ export const login = async (userData: ILoginProps): Promise<AuthResponse> => {
   const data: AuthResponse = await res.json();
   return data;
 };
-
+ 
 export const updateAccount = async (
   id: string,
   userData: IUserDataUpdate
@@ -61,7 +62,7 @@ export const updateAccount = async (
   const data: IUserDataUpdate = await res.json();
   return data;
 };
-
+ 
 export const createNewEmployee = async (
   id: string,
   employeeData: IRegisterProps
@@ -76,7 +77,7 @@ export const createNewEmployee = async (
   const data: IRegisterProps = await res.json();
   return data;
 };
-
+ 
 export const reservation = async (id: string, userData: IReservation): Promise<IReservation> => {
   const res = await fetch(`${APIURL}reservations/create/${id}`, {
     method: "POST",
@@ -87,25 +88,25 @@ export const reservation = async (id: string, userData: IReservation): Promise<I
   });
   const data: IReservation = await res.json();
   console.log(data);
-  
+ 
   return data;
 };
-
+ 
 export const getReservations = async (email: string): Promise<IReservation[]> => {
   const url = `${APIURL}users/reservations/${email}`;
   console.log(email);
-  
+ 
   const res = await fetch(url, {
     method: "GET",
     headers: {
       "Content-type": "application/json",
     },
   });
-
+ 
   const data: IReservation[] = await res.json();
   return data;
 };
-
+ 
 export const cancelledReservation = async (id: string): Promise<IReservation> => {
   const res = await fetch(`${APIURL}reservations/cancelled/${id}`, {
     method: "PUT",
@@ -116,7 +117,7 @@ export const cancelledReservation = async (id: string): Promise<IReservation> =>
   const data: IReservation = await res.json();
   return data;
 };
-
+ 
 export const createReview = async (reviewContent: IReview, token: string | null): Promise<IReview> => {
   if (!token) {
     throw new Error("No token provided");
@@ -132,7 +133,7 @@ export const createReview = async (reviewContent: IReview, token: string | null)
   const data: IReview = await res.json();
   return data;
 };
-
+ 
 export const getActiveUsers = async (): Promise<IUser[]> => {
   const res = await fetch(`${APIURL}users`, {
     method: "GET",
@@ -140,18 +141,18 @@ export const getActiveUsers = async (): Promise<IUser[]> => {
       "Content-Type": "application/json",
     },
   });
-
+ 
   if (!res.ok) {
     throw new Error("Error al obtener los usuarios activos");
   }
-
+ 
   const data: { data: IUser[] } = await res.json();
   return data.data;
 };
 
 export const getAllReservations = async (token: string | null): Promise<IReservationTable[]> => {
   if (!token) throw new Error("No token provided");
-
+ 
   const res = await fetch(`${APIURL}reservations`, {
     method: "GET",
     headers: {
@@ -167,7 +168,7 @@ export const getAllReservations = async (token: string | null): Promise<IReserva
 export const getReservationsByEmail = async (email: string, token: string | null): Promise<IReservationTable[]> => {
   //console.log('token en userContext:', token);
   if (!token) throw new Error("No token provided");
-
+ 
   const res = await fetch(`${APIURL}users/reservations/${email}`, {
     method: "GET",
     headers: {
@@ -183,7 +184,7 @@ export const getReservationsByEmail = async (email: string, token: string | null
 
 export const updateReservationStatus = async (id: string, status: string, token: string | null): Promise<IReservation> => {
   if (!token) throw new Error("No token provided");
-
+ 
   const res = await fetch(`${APIURL}reservations/${id}`, {
     method: "PUT",
     headers: {
@@ -192,14 +193,14 @@ export const updateReservationStatus = async (id: string, status: string, token:
     },
     body: JSON.stringify({ status }),
   });
-
+ 
   const data: IReservation = await res.json();
   return data;
 };
-
+ 
 export const cancelReservation = async (id: string, token: string | null): Promise<IReservation> => {
   if (!token) throw new Error("No token provided");
-
+ 
   const res = await fetch(`${APIURL}reservations/cancelled/${id}`, {
     method: "PUT",
     headers: {
@@ -207,14 +208,14 @@ export const cancelReservation = async (id: string, token: string | null): Promi
       Authorization: `Bearer ${token}`,
     },
   });
-
+ 
   const data: IReservation = await res.json();
   return data;
 };
 
 export const getAllOrders = async (token: string | null): Promise<IOrderEmployee[]> => {
   if (!token) throw new Error("No token provided");
-
+ 
   const res = await fetch(`${APIURL}orders/findAllActives`, {
     method: "GET",
     headers: {
@@ -226,10 +227,10 @@ export const getAllOrders = async (token: string | null): Promise<IOrderEmployee
   const data: { orders: IOrderEmployee[] } = await res.json();
   return data.orders;
 };
-
+ 
 export const getOrdersByEmail = async (email: string, token: string | null): Promise<IOrderResponse[]> => {
   if (!token) throw new Error("No token provided");
-
+ 
   const res = await fetch(`${APIURL}users/orders/${email}`, {
     method: "GET",
     headers: {
@@ -237,18 +238,18 @@ export const getOrdersByEmail = async (email: string, token: string | null): Pro
       Authorization: `Bearer ${token}`,
     },
   });
-
+ 
   const data: { data: IOrderResponse[] } = await res.json();
   return data.data;
 };
-
+ 
 export const updateOrderStatus = async (
   orderId: string,
   status: string,
   token: string | null
 ): Promise<IOrderResponse> => {
   if (!token) throw new Error("No token provided");
-
+ 
   const res = await fetch(`${APIURL}orders/${orderId}/status`, {
     method: "PATCH",
     headers: {
@@ -257,11 +258,11 @@ export const updateOrderStatus = async (
     },
     body: JSON.stringify({ status }),
   });
-
+ 
   const data: IOrderResponse = await res.json();
   return data;
 };
-
+ 
 export const getReview = async (id: string): Promise<IReview> => {
   const res = await fetch(`${APIURL}review/user/${id}`, {
     method: "GET",
@@ -272,22 +273,38 @@ export const getReview = async (id: string): Promise<IReview> => {
   const data: IReview = await res.json();
   return data;
 };
-
-export const uploadImage = async (file: File): Promise<{ url: string }> => {
+ 
+// export const uploadImage = async (file: File): Promise<{ url: string }> => {
+//   const formData = new FormData();
+//   formData.append("file", file);
+//   formData.append("upload_preset", "ml_default");
+ 
+//   const response = await fetch("https://api.cloudinary.com/v1_1/demo/image/upload", {
+//     method: "POST",
+//     body: formData,
+//   });
+ 
+//   return response.json();
+// };
+ 
+export const uploadFile = async (file: File, email: string) => {
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("upload_preset", "ml_default");
 
-  const response = await fetch("https://api.cloudinary.com/v1_1/demo/image/upload", {
+  const response = await fetch(`${APIURL}users/${email}/upload`, {
     method: "POST",
     body: formData,
+    headers: {},
   });
+
+  if (!response.ok) {
+    throw new Error("Error al subir el archivo");
+  }
 
   return response.json();
 };
-
-
-
+ 
+ 
 export const registerWorker = async (userData: IRegisterProps): Promise<AuthResponse> => {
   const res = await fetch(`${APIURL}auth/signup/worker`, {
     method: "POST",
@@ -304,7 +321,7 @@ export const registerWorker = async (userData: IRegisterProps): Promise<AuthResp
 
 
 export const signUpWithAuth0 = async (userData: { auth0Id: string; name: string; email: string; isComplete: boolean }) => {
-  const res = await fetch(`${APIURL}signupWithAuth0`, {
+  const res = await fetch(`${APIURL}auth/signupWithAuth0`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(userData),
@@ -312,14 +329,15 @@ export const signUpWithAuth0 = async (userData: { auth0Id: string; name: string;
 
   if (!res.ok) {
     if (res.status === 400) {
-      throw new Error("El usuario ya está registrado.");
+     console.log("el usuario ya esta registrado");
+     
     }
-    throw new Error("Error al registrar usuario.");
+    // throw new Error("Error al registrar usuario.");
   }
 };
 
 export const signInWithAuth0 = async (userData: { auth0Id: string; name: string; email: string }) => {
-  const res = await fetch(`${APIURL}signInWithAuth0`, {
+  const res = await fetch(`${APIURL}auth/signInWithAuth0`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(userData),

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import Cookies from "js-cookie";
 import { getAllReservations, getReservationsByEmail, updateReservationStatus, cancelReservation } from "@/helpers/auth.helper";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -93,11 +94,18 @@ export default function ReservationsPage() {
       <h1 className="text-2xl font-bold mb-4">Gestión de Reservas</h1>
       <div className="flex gap-2 mb-4">
         <Input
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Gestión de Reservas</h1>
+      <div className="flex gap-2 mb-4">
+        <Input
           type="text"
+          placeholder="Buscar por email"
           placeholder="Buscar por email"
           value={email}
           onChange={e => setEmail(e.target.value)}
+          onChange={e => setEmail(e.target.value)}
         />
+        <Button onClick={handleSearch} disabled={!token}>Buscar</Button>
         <Button onClick={handleSearch} disabled={!token}>Buscar</Button>
       </div>
       <table className="w-full border-collapse border border-gray-300 shadow-lg">

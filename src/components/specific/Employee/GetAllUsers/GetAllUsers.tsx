@@ -59,5 +59,5 @@ const GetAllUsers = () => {
     </div>
   );
 };
-
+ 
 export default GetAllUsers;
