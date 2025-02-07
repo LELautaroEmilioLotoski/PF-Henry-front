@@ -9,7 +9,6 @@ import { useUserContext } from "@/context/UserContext";
 const BookingHistorial = () => {
   const { userNormal } = useUserContext();
   const [reservations, setReservations] = useState<IReservations[]>([]);
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
   useEffect(() => {
     const fetchReservations = async () => {
@@ -20,7 +19,13 @@ const BookingHistorial = () => {
 
       try {
         const response = await getReservations(usuario.email);
-        setReservations(response.data || []);
+        const arrayReservation = response.data;
+
+        if (arrayReservation) {
+          setReservations(arrayReservation);
+        } else {
+          setReservations([]);
+        }
       } catch (error) {
         console.error("Error al obtener las reservas:", error);
         setReservations([]);
@@ -30,14 +35,11 @@ const BookingHistorial = () => {
     fetchReservations();
   }, [userNormal]);
 
-  // Cambiar solo el estado de la reserva sin eliminarla
   const cancelReservations = async (id: string) => {
     try {
       await cancelledReservation(id);
       setReservations((prevReservations) =>
-        prevReservations.map((reservation) =>
-          reservation.id === id ? { ...reservation, status: "cancelled" } : reservation
-        )
+        prevReservations.filter((reservation) => reservation.id !== id)
       );
 
       alert("Reserva cancelada con éxito");
@@ -45,20 +47,6 @@ const BookingHistorial = () => {
       console.error("Error al cancelar la reserva:", error);
       alert("No se pudo cancelar la reserva");
     }
-  };
-
-  // Función para ordenar por estado
-  const sortByStatus = () => {
-    const sortedReservations = [...reservations].sort((a, b) => {
-      if (sortOrder === "asc") {
-        return a.status.localeCompare(b.status);
-      } else {
-        return b.status.localeCompare(a.status);
-      }
-    });
-
-    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
-    setReservations(sortedReservations);
   };
 
   return (
@@ -71,12 +59,7 @@ const BookingHistorial = () => {
               <th className="border border-gray-300 px-4 py-2 text-left">Date</th>
               <th className="border border-gray-300 px-4 py-2 text-left">Guests</th>
               <th className="border border-gray-300 px-4 py-2 text-left">Time</th>
-              <th
-                className="border border-gray-300 px-4 py-2 text-left cursor-pointer hover:bg-gray-300 transition"
-                onClick={sortByStatus}
-              >
-                Status ⬍
-              </th>
+              <th className="border border-gray-300 px-4 py-2 text-left">Status</th>
               <th className="border border-gray-300 px-4 py-2 text-left">Actions</th>
             </tr>
           </thead>
@@ -87,11 +70,7 @@ const BookingHistorial = () => {
                 <td className="border border-gray-300 px-4 py-2">{reservation.guest}</td>
                 <td className="border border-gray-300 px-4 py-2">{reservation.time}</td>
                 <td className="border border-gray-300 px-4 py-2 font-semibold capitalize">
-                  <span
-                    className={`${
-                      reservation.status === "confirmed" ? "text-green-500" : "text-red-500"
-                    }`}
-                  >
+                  <span className={`${reservation.status === "confirmed" ? "text-green-500" : "text-red-500"}`}>
                     {reservation.status}
                   </span>
                 </td>
@@ -114,10 +93,7 @@ const BookingHistorial = () => {
       )}
 
       <div className="flex justify-center p-5 m-4">
-        <Link
-          href="/createBooking"
-          className="border px-4 py-2 rounded bg-indigo-600 text-white hover:bg-indigo-700"
-        >
+        <Link href="/createBooking" className="border px-4 py-2 rounded bg-indigo-600 text-white hover:bg-indigo-700">
           Create reservation
         </Link>
       </div>
