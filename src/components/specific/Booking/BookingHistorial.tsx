@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import { cancelledReservation, getReservations } from "@/helpers/auth.helper";
 import { IReservations } from "@/interfaces/Types";
@@ -9,6 +8,7 @@ import { useUserContext } from "@/context/UserContext";
 const BookingHistorial = () => {
   const { userNormal } = useUserContext();
   const [reservations, setReservations] = useState<IReservations[]>([]);
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
   useEffect(() => {
     const fetchReservations = async () => {
@@ -20,7 +20,6 @@ const BookingHistorial = () => {
       try {
         const response = await getReservations(usuario.email);
         const arrayReservation = response.data;
-
         if (arrayReservation) {
           setReservations(arrayReservation);
         } else {
@@ -31,7 +30,6 @@ const BookingHistorial = () => {
         setReservations([]);
       }
     };
-
     fetchReservations();
   }, [userNormal]);
 
@@ -39,9 +37,10 @@ const BookingHistorial = () => {
     try {
       await cancelledReservation(id);
       setReservations((prevReservations) =>
-        prevReservations.filter((reservation) => reservation.id !== id)
+        prevReservations.map((reservation) =>
+          reservation.id === id ? { ...reservation, status: "cancelled" } : reservation
+        )
       );
-
       alert("Reserva cancelada con éxito");
     } catch (error) {
       console.error("Error al cancelar la reserva:", error);
@@ -49,17 +48,31 @@ const BookingHistorial = () => {
     }
   };
 
+  const handleSortByStatus = () => {
+    const sortedReservations = [...reservations].sort((a, b) => {
+      if (sortOrder === 'asc') {
+        return a.status.localeCompare(b.status);
+      } else {
+        return b.status.localeCompare(a.status);
+      }
+    });
+    setReservations(sortedReservations);
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+  };
+
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4 text-center">Reservation History</h1>
+      <h1 className="text-2xl font-bold mb-4 text-center">Reservation history</h1>
       {reservations.length > 0 ? (
         <table className="w-full border-collapse border border-gray-300 shadow-lg">
           <thead>
             <tr className="bg-gray-200">
-              <th className="border border-gray-300 px-4 py-2 text-left">Date</th>
-              <th className="border border-gray-300 px-4 py-2 text-left">Guests</th>
-              <th className="border border-gray-300 px-4 py-2 text-left">Time</th>
-              <th className="border border-gray-300 px-4 py-2 text-left">Status</th>
+              <th className="border border-gray-300 px-4 py-2 text-left">Reservation date</th>
+              <th className="border border-gray-300 px-4 py-2 text-left">Number of people</th>
+              <th className="border border-gray-300 px-4 py-2 text-left">Schedule</th>
+              <th className="border border-gray-300 px-4 py-2 text-left cursor-pointer" onClick={handleSortByStatus}>
+                Reservation status ⬍
+              </th>
               <th className="border border-gray-300 px-4 py-2 text-left">Actions</th>
             </tr>
           </thead>
@@ -69,18 +82,14 @@ const BookingHistorial = () => {
                 <td className="border border-gray-300 px-4 py-2">{reservation.date}</td>
                 <td className="border border-gray-300 px-4 py-2">{reservation.guest}</td>
                 <td className="border border-gray-300 px-4 py-2">{reservation.time}</td>
-                <td className="border border-gray-300 px-4 py-2 font-semibold capitalize">
-                  <span className={`${reservation.status === "confirmed" ? "text-green-500" : "text-red-500"}`}>
-                    {reservation.status}
-                  </span>
-                </td>
-                <td className="border border-gray-300 px-4 py-2 flex gap-2">
+                <td className={`border border-gray-300 px-4 py-2 font-semibold capitalize ${reservation.status === "confirmed" ? "text-green-500" : "text-red-500"}`}>{reservation.status}</td>
+                <td className="border border-gray-300 px-4 py-2">
                   {reservation.status === "confirmed" && (
                     <button
                       onClick={() => cancelReservations(reservation.id)}
                       className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition"
                     >
-                      Cancel
+                      Cancel reservation
                     </button>
                   )}
                 </td>
@@ -91,9 +100,8 @@ const BookingHistorial = () => {
       ) : (
         <p className="text-center text-gray-600">No reservations available</p>
       )}
-
       <div className="flex justify-center p-5 m-4">
-        <Link href="/createBooking" className="border px-4 py-2 rounded bg-indigo-600 text-white hover:bg-indigo-700">
+        <Link href="/createBooking" className="flex justify-center items-center border max-w-25 p-4 rounded">
           Create reservation
         </Link>
       </div>
