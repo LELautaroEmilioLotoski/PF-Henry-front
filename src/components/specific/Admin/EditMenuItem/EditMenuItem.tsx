@@ -4,7 +4,9 @@ import { useState, useEffect } from "react"
 import { fetchMenuItems } from "@/helpers/menu-items.helper"
 import { fetchCategories, patchMenuItem } from "@/helpers/admin.helper"
 import type { ICategory, IMenuItem } from "@/interfaces/Types"
-import RoleHeader from "@/components/specific/Admin/AdminHeader/AdminHeader";
+import RoleHeader from "@/components/specific/Admin/AdminHeader/AdminHeader"
+import { toast, ToastContainer } from "react-toastify" // Importación de Toastify
+import "react-toastify/dist/ReactToastify.css"
 
 const EditMenuItem = ({ menuItemId }: { menuItemId: string }) => {
   const [menuItems, setMenuItems] = useState<IMenuItem[]>([])
@@ -75,10 +77,10 @@ const EditMenuItem = ({ menuItemId }: { menuItemId: string }) => {
     try {
       const { data } = await patchMenuItem(selectedMenuItemId, updatedMenuItem)
       console.log("Updated menu item:", data)
-      alert("Menu item updated successfully!")
+      toast.success("Menu item updated successfully!") // Toastify en lugar de alert
     } catch (error) {
       console.error(error)
-      alert("Error updating menu item.")
+      toast.error("Error updating menu item.") // Toastify en lugar de alert
     }
   }
 
@@ -213,6 +215,19 @@ const EditMenuItem = ({ menuItemId }: { menuItemId: string }) => {
           </div>
         </div>
       </div>
+      {/* Toast Container */}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </div>
   )
 }

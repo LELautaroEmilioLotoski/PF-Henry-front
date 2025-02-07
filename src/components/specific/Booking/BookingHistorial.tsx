@@ -5,6 +5,7 @@ import { IReservations } from "@/interfaces/Types";
 import Link from "next/link";
 import { useUserContext } from "@/context/UserContext";
 import { getReservations } from "@/helpers/user.helper";
+import { toast } from "react-toastify"; // Importación de Toastify
 
 const BookingHistorial = () => {
   const { userNormal } = useUserContext();
@@ -42,10 +43,10 @@ const BookingHistorial = () => {
           reservation.id === id ? { ...reservation, status: "cancelled" } : reservation
         )
       );
-      alert("Reservation successfully cancelled");
+      toast.success("Reservation successfully cancelled"); // Toastify en lugar de alert
     } catch (error) {
       console.error("Error cancelling the reservation:", error);
-      alert("Could not cancel the reservation");
+      toast.error("Could not cancel the reservation"); // Toastify en lugar de alert
     }
   };
 
