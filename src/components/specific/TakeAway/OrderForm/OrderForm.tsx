@@ -90,17 +90,17 @@ const OrderForm: React.FC = () => {
     };
 
     if (!orderData.idUser) {
-      alert("User ID is required to place the order.");
+      toast.error("User ID is required to place the order.");
       return;
     }
 
     try {
       await createOrder(orderData);
       clearCart();
-      alert("Order placed successfully!");
+      toast.success("Order placed successfully!");
       setIsOrderCreated(true);
     } catch {
-      alert("There was an error placing your order.");
+      toast.error("There was an error placing your order.");
     }
   };
 
@@ -120,8 +120,9 @@ const OrderForm: React.FC = () => {
         {!showPayPal && (
           <button
             type="submit"
-            className="w-full bg-amber-500 text-white py-3 px-4 rounded-lg font-medium hover:bg-amber-600">
-              Confirm Order
+            className="w-full bg-amber-500 text-white py-3 px-4 rounded-lg font-medium hover:bg-amber-600"
+          >
+            Confirm Order
           </button>
         )}
       </form>
@@ -194,7 +195,9 @@ const OrderForm: React.FC = () => {
                 toast.error("There was an error placing your order.");
               }
             }}
-            onError={() => toast.error("Payment rejected or error processing.")}
+            onError={() =>
+              toast.error("Payment rejected or error processing.")
+            }
           />
         </PayPalScriptProvider>
       )}

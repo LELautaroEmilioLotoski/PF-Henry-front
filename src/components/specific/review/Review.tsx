@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -16,6 +15,7 @@ import { IReview } from "@/interfaces/Types";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import styles from "./Review.module.css";
+import { toast } from "react-toastify"; // Importación de Toastify
 
 interface User {
   id: string;
@@ -41,14 +41,14 @@ export default function RestaurantReview() {
   useEffect(() => {
     const tokenData = Cookies.get("token");
     console.log("Token saved in localStorage:", tokenData);
-    
+
     if (tokenData) {
       setToken(tokenData);
     }
 
     const userString = localStorage.getItem("user");
     console.log("User saved in localStorage:", userString);
-    
+
     if (userString) {
       setUserData(JSON.parse(userString));
     }
@@ -58,21 +58,23 @@ export default function RestaurantReview() {
     e.preventDefault();
 
     if (!rating || !dataReview.description) {
-      return alert("Complete the required fields.");
+      toast.error("Complete the required fields."); // Reemplazo de alert
+      return;
     }
 
     if (!token) {
-      return alert("Token not found.");
+      toast.error("Token not found."); // Reemplazo de alert
+      return;
     }
 
     try {
-      const reviewData = { ...dataReview, rate: rating };      
-       await createReview(reviewData, token);
-      alert("Review created successfully!");
+      const reviewData = { ...dataReview, rate: rating };
+      await createReview(reviewData);
+      toast.success("Review created successfully!"); // Reemplazo de alert
       router.push("/myReviews");
     } catch (error) {
       console.error("Error creating review:", error);
-      alert("There was a problem submitting your review.");
+      toast.error("There was a problem submitting your review."); // Reemplazo de alert
     }
   };
 
@@ -92,7 +94,11 @@ export default function RestaurantReview() {
         <CardContent className={styles.cardContent}>
           <div className={styles.inputGroup}>
             <label className={styles.label}>Your email</label>
-            <input value={userData?.email || ""} disabled className={styles.inputField} />
+            <input
+              value={userData?.email || ""}
+              disabled
+              className={styles.inputField}
+            />
           </div>
           <div className={styles.inputGroup}>
             <label className={styles.label}>Rating</label>
@@ -100,7 +106,9 @@ export default function RestaurantReview() {
               {[1, 2, 3, 4, 5].map((star) => (
                 <Star
                   key={star}
-                  className={`${styles.star} ${star <= rating ? styles.starFilled : styles.starEmpty}`}
+                  className={`${styles.star} ${
+                    star <= rating ? styles.starFilled : styles.starEmpty
+                  }`}
                   onClick={() => setRating(star)}
                 />
               ))}

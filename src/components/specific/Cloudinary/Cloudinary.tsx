@@ -4,6 +4,7 @@ import styles from "@/components/specific/Cloudinary/Cloudinary.module.css";
 import { CircleUserRoundIcon } from "lucide-react";
 import { uploadFile } from "@/helpers/user.helper";
 import { IUser } from "@/interfaces/Types";
+import { toast } from "react-toastify"; // Importación de Toastify
 
 const Cloudinary = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -56,18 +57,18 @@ const Cloudinary = () => {
 
   const handleFileUpload = async () => {
     if (!file) {
-      alert("Please select a file.");
+      toast.error("Please select a file."); // Toastify en lugar de alert
       return;
     }
     try {
       setUploading(true);
       const response = await uploadFile(file, userData.email);
-      alert("File uploaded successfully.");
+      toast.success("File uploaded successfully."); // Toastify en lugar de alert
       localStorage.setItem(`profileImageUrl_${userData.email}`, response.img);
       setFileUrl(response.img);
     } catch (error) {
-      console.error("Error uploading file:", error); // Use the variable to avoid warning
-      alert("Error uploading the file. Please try again.");
+      console.error("Error uploading file:", error);
+      toast.error("Error uploading the file. Please try again."); // Toastify en lugar de alert
     } finally {
       setUploading(false);
     }
@@ -109,11 +110,7 @@ const Cloudinary = () => {
             <span className={styles.close} onClick={handleCloseModal}>
               &times;
             </span>
-            <img
-              src={fileUrl}
-              alt="Preview"
-              className={styles.modalImage}
-            />
+            <img src={fileUrl} alt="Preview" className={styles.modalImage} />
             <div className="flex p-2 gap-5 justify-center">
               <div className="pt-2">
                 <button

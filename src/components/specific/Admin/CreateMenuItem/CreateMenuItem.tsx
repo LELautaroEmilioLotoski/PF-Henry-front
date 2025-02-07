@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { fetchCategories, postMenuItem } from "@/helpers/admin.helper";
 import { ICategory, IMenuItem, ApiResponse } from "@/interfaces/Types";
 import RoleHeader from "@/components/specific/Admin/AdminHeader/AdminHeader";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function CreateMenuItem() {
   const [categories, setCategories] = useState<ICategory[]>([]);
@@ -57,7 +59,7 @@ function CreateMenuItem() {
     try {
       const response: ApiResponse<IMenuItem> = await postMenuItem(menuItem);
       if (response.data) {
-        alert("Item added successfully");
+        toast.success("Item added successfully");
         setFormData({
           name: "",
           description: "",
@@ -68,7 +70,7 @@ function CreateMenuItem() {
         });
       }
     } catch (err) {
-      alert("Error adding item");
+      toast.error("Error adding item");
       console.error(err);
     }
   };
@@ -89,7 +91,9 @@ function CreateMenuItem() {
       <div className="flex-1 md:ml-64">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-4 md:py-6">
           <div className="bg-white rounded-lg shadow-sm p-4 md:p-6">
-            <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6">Add Menu Item</h2>
+            <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6">
+              Add Menu Item
+            </h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <input
                 type="text"
@@ -160,6 +164,19 @@ function CreateMenuItem() {
           </div>
         </div>
       </div>
+      {/* Toast Container */}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </div>
   );
 }
