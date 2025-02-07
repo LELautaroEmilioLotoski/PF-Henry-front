@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react"
 import Cookies from "js-cookie"
-import { getAllReservations, getReservationsByEmail, updateReservationStatus } from "@/helpers/auth.helper"
 import { ChevronUp, ChevronDown } from "lucide-react"
 import RoleHeader from "../../Admin/AdminHeader/AdminHeader"
+import { getReservationsByEmail } from "@/helpers/user.helper"
+import { getAllReservations, updateReservationStatus } from "@/helpers/reservations.helper"
 
 export interface IUser {
   id: string
