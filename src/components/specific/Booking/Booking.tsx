@@ -7,7 +7,7 @@ import GuestsInput from "./GuestInput";
 import Calendar from "./CalendarComponent";
 import type React from "react";
 import { useRouter } from "next/navigation";
-
+import { toast } from "react-toastify"; // Importación de Toastify
 
 export default function CreateReservation() {
   const { userNormal } = useUserContext();
@@ -15,7 +15,7 @@ export default function CreateReservation() {
   const [time, setTime] = useState("");
   const [guests, setGuests] = useState(1);
   const [loading, setLoading] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
 
   const [token, setToken] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
@@ -36,7 +36,7 @@ export default function CreateReservation() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!date || !time || guests < 1) {
-      alert("Please fill in all the details.");
+      toast.error("Please fill in all the details."); // Toastify en lugar de alert
       return;
     }
 
@@ -50,14 +50,14 @@ export default function CreateReservation() {
     try {
       const bookingData = await reservation(userId, userData);
       console.log(bookingData);
-      alert("Reservation created successfully.");
+      toast.success("Reservation created successfully."); // Toastify en lugar de alert
       setDate(undefined);
       setTime("");
       setGuests(1);
-      router.push("/getBooking")
+      router.push("/getBooking");
     } catch (error) {
       console.error("Error creating reservation:", error);
-      alert("Error creating reservation.");
+      toast.error("Error creating reservation."); // Toastify en lugar de alert
     } finally {
       setLoading(false);
     }
@@ -86,4 +86,3 @@ export default function CreateReservation() {
     </div>
   );
 }
-

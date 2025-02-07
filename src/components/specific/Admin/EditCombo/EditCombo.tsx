@@ -5,6 +5,8 @@ import { fetchCombos, fetchMenuItems } from '@/helpers/menu-items.helper';
 import { fetchComboById, updateCombo } from '@/helpers/admin.helper';
 import { ICombo, IMenuItem } from '@/interfaces/Types';
 import RoleHeader from "@/components/specific/Admin/AdminHeader/AdminHeader";
+import { toast, ToastContainer } from "react-toastify"; // Importación de Toastify
+import "react-toastify/dist/ReactToastify.css";
 
 const EditCombo = () => {
   const [combos, setCombos] = useState<ICombo[]>([]);
@@ -87,9 +89,9 @@ const EditCombo = () => {
         items: itemIds,
       };
       await updateCombo(selectedComboId!, updatedCombo);
-      alert(`Combo updated: ${comboData.name}`);
+      toast.success(`Combo updated: ${comboData.name}`); // Toastify en lugar de alert
     } catch {
-      alert('Error updating combo');
+      toast.error('Error updating combo'); // Toastify en lugar de alert
     }
   };
 
@@ -200,6 +202,19 @@ const EditCombo = () => {
           </div>
         </div>
       </div>
+      {/* Toast Container */}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </div>
   );
 };
