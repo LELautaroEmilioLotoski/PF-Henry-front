@@ -11,7 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { createReview } from "@/helpers/auth.helper";
+import { createReview } from "@/helpers/reviews.helper";
 import { IReview } from "@/interfaces/Types";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";

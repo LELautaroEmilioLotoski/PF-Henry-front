@@ -5,10 +5,11 @@ import Cookies from "js-cookie"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Select, SelectItem } from "@/components/ui/select"
-import { getAllOrders, getOrdersByEmail, updateOrderStatus } from "@/helpers/auth.helper"
+import { getAllOrders, updateOrderStatus } from "@/helpers/orders.helper"
 import type { IUser } from "@/interfaces/Types"
 import { ArrowUpDown } from "lucide-react"
 import RoleHeader from "../../Admin/AdminHeader/AdminHeader"
+import { getOrdersByEmail } from "@/helpers/user.helper"
 
 export interface IOrderEmployee {
   id: string

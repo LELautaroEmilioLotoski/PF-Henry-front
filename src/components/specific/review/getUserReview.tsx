@@ -1,5 +1,5 @@
 "use client"
-import { getReview } from "@/helpers/auth.helper"
+import { getReview } from "@/helpers/reviews.helper"
 import type { IReview } from "@/interfaces/Types"
 import { useEffect, useState } from "react"
 import { Star } from "lucide-react"
