@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import { cancelledReservation, getReservations } from "@/helpers/auth.helper";
 import { IReservations } from "@/interfaces/Types";
@@ -12,27 +13,22 @@ const BookingHistorial = () => {
   useEffect(() => {
     const fetchReservations = async () => {
       const token = localStorage.getItem("user");
-      console.log(token);
-
       if (!token) return;
 
       const usuario = JSON.parse(token);
-      // console.log(usuario);
 
       try {
-        // console.log(usuario.email);
         const response = await getReservations(usuario.email);
         const arrayReservation = response.data;
-        console.log(arrayReservation);
 
-        if (Array.isArray(arrayReservation)) {
+        if (arrayReservation) {
           setReservations(arrayReservation);
         } else {
-          setReservations([]); // Si la API responde con un error, aseguramos que el estado se actualiza correctamente
+          setReservations([]);
         }
       } catch (error) {
         console.error("Error al obtener las reservas:", error);
-        setReservations([]); // En caso de error, se muestra que no hay reservas
+        setReservations([]);
       }
     };
 
@@ -54,53 +50,50 @@ const BookingHistorial = () => {
   };
 
   return (
-    <div>
-      <h1 className="flex justify-center items-center p-5 m-5">
-        Reservation history
-      </h1>
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4 text-center">Reservation History</h1>
       {reservations.length > 0 ? (
-        <div className="flex flex-wrap gap-4 justify-center items-center">
-          {reservations.map((reservation) => (
-            <div
-              key={reservation.id}
-              className="bg-slate-200 w-80 h-60 p-4 rounded shadow-md flex flex-col justify-between"
-            >
-              <p>Reservation date: {reservation.date}</p>
-              <p>Number of people: {reservation.guest}</p>
-              <p>Schedule: {reservation.time}</p>
-              <p>
-                Reservation status:{" "}
-                <span
-                  className={`${
-                    reservation.status === "confirmed"
-                      ? "text-green-500"
-                      : "text-red-500"
-                  }`}
-                >
-                  {reservation.status}
-                </span>
-              </p>
-
-              {reservation.status === "confirmed" && (
-                <button
-                  onClick={() => cancelReservations(reservation.id)}
-                  className="bg-red-500 text-white px-4 py-2 rounded"
-                >
-                  cancel reservation
-                </button>
-              )}
-            </div>
-          ))}
-        </div>
+        <table className="w-full border-collapse border border-gray-300 shadow-lg">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="border border-gray-300 px-4 py-2 text-left">Date</th>
+              <th className="border border-gray-300 px-4 py-2 text-left">Guests</th>
+              <th className="border border-gray-300 px-4 py-2 text-left">Time</th>
+              <th className="border border-gray-300 px-4 py-2 text-left">Status</th>
+              <th className="border border-gray-300 px-4 py-2 text-left">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-300">
+            {reservations.map((reservation) => (
+              <tr key={reservation.id} className="hover:bg-gray-100">
+                <td className="border border-gray-300 px-4 py-2">{reservation.date}</td>
+                <td className="border border-gray-300 px-4 py-2">{reservation.guest}</td>
+                <td className="border border-gray-300 px-4 py-2">{reservation.time}</td>
+                <td className="border border-gray-300 px-4 py-2 font-semibold capitalize">
+                  <span className={`${reservation.status === "confirmed" ? "text-green-500" : "text-red-500"}`}>
+                    {reservation.status}
+                  </span>
+                </td>
+                <td className="border border-gray-300 px-4 py-2 flex gap-2">
+                  {reservation.status === "confirmed" && (
+                    <button
+                      onClick={() => cancelReservations(reservation.id)}
+                      className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition"
+                    >
+                      Cancel
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       ) : (
         <p className="text-center text-gray-600">No reservations available</p>
       )}
 
       <div className="flex justify-center p-5 m-4">
-        <Link
-          href="/createBooking"
-          className="flex justify-center items-center border max-w-25 p-4 rounded"
-        >
+        <Link href="/createBooking" className="border px-4 py-2 rounded bg-indigo-600 text-white hover:bg-indigo-700">
           Create reservation
         </Link>
       </div>

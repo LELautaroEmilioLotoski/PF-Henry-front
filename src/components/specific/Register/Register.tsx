@@ -55,8 +55,8 @@ const Register = () => {
 
       console.log("Registration response:", res)
 
-      if (res.message === "Successful registration") {
-        router.push("/login")
+      if (res.message === "Registro exitoso") {
+        router.push("Login")
       } else {
         setErrors({
           name: res.message,

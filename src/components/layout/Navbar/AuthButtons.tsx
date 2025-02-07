@@ -22,7 +22,7 @@ export default function AuthButtons() {
       ) : (
         <>
           <Link
-            href="/login"
+            href="/Login"
             className="flex items-center px-4 py-2 bg-blue-600/80 backdrop-blur-sm text-white rounded-md hover:bg-blue-700 transition-colors"
           >
             <LogIn className="mr-2 h-4 w-4" />

@@ -1,35 +1,46 @@
-"use client"
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+"use client";
+import { useState, useEffect } from "react";
 import { useUserContext } from "@/context/UserContext";
 import { reservation } from "@/helpers/auth.helper";
-import DateInput from "./DateInput";
 import TimeInput from "./TimeInput";
 import GuestsInput from "./GuestInput";
+import Calendar from "./CalendarComponent";
+import type React from "react";
+import { useRouter } from "next/navigation";
+
 
 export default function CreateReservation() {
   const { userNormal } = useUserContext();
-  const [date, setDate] = useState<Date>();
+  const [date, setDate] = useState<Date | undefined>(undefined);
   const [time, setTime] = useState("");
   const [guests, setGuests] = useState(1);
-  const token = localStorage.getItem("user");
-  if (!token) return;
+  const [loading, setLoading] = useState(false);
+  const router = useRouter()
 
-  const usuario = JSON.parse(token);
-  console.log(usuario.id);
+  const [token, setToken] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
 
-  const userId = userNormal?.id || usuario.id
+  useEffect(() => {
+    const storedToken = localStorage.getItem("user");
+    if (storedToken) {
+      setToken(storedToken);
+      const user = JSON.parse(storedToken);
+      const id = userNormal?.id || user.id;
+      setUserId(id);
+    }
+  }, [userNormal]);
 
-  if (!userId) return null;
+  if (token === null) return <p>Loading...</p>;
+  if (!userId) return <p>User could not be identified.</p>;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!date || !time || guests < 1) {
-      alert("Completa todos los datos por favor.");
+      alert("Please fill in all the details.");
       return;
     }
 
+    setLoading(true);
     const userData = {
       date: date.toISOString().split("T")[0],
       time,
@@ -37,37 +48,42 @@ export default function CreateReservation() {
     };
 
     try {
-      if (userId) {
-        const bookingData = await reservation(userId, userData);
-        console.log(bookingData);
-        
-        alert("Reserva creada correctamente.");
-        setDate(undefined);
-        setTime("");
-        setGuests(1);
-      } else {
-        alert("No se pudo identificar al usuario.");
-      }
+      const bookingData = await reservation(userId, userData);
+      console.log(bookingData);
+      alert("Reservation created successfully.");
+      setDate(undefined);
+      setTime("");
+      setGuests(1);
+      router.push("/getBooking")
     } catch (error) {
-      console.error("Error al crear la reserva:", error);
-      alert("Error al crear la reserva.");
+      console.error("Error creating reservation:", error);
+      alert("Error creating reservation.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="max-w-lg mx-auto p-6 space-y-6 bg-white border rounded-lg shadow-md"
-    >
-      <DateInput date={date} setDate={setDate} />
-      <TimeInput time={time} setTime={setTime} />
-      <GuestsInput guests={guests} setGuests={setGuests} />
-      <Button
-        type="submit"
-        className="w-full px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500"
+    <div className="container mx-auto p-4">
+      <h1 className="flex justify-center text-2xl font-bold mb-4">Reservations Management</h1>
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-lg mx-auto p-6 space-y-6 bg-white border rounded-lg shadow-md"
       >
-        Create reservation
-      </Button>
-    </form>
+        <div className="space-y-2">
+          <Calendar selected={date} onSelect={setDate} />
+        </div>
+        <TimeInput time={time} setTime={setTime} />
+        <GuestsInput guests={guests} setGuests={setGuests} />
+        <button
+          type="submit"
+          className="w-full px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500"
+          disabled={loading}
+        >
+          {loading ? "Loading..." : "Create reservation"}
+        </button>
+      </form>
+    </div>
   );
 }
+

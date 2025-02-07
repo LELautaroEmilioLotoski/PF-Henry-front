@@ -1,34 +1,61 @@
-import { Home, Utensils, FileText, Book, BookOpenText } from "lucide-react"
-import Link from "next/link"
-import styles from "./Header.module.css"
-
+import {
+  Home,
+  Utensils,
+  FileText,
+  Book,
+  BookOpenText,
+} from "lucide-react";
+import Link from "next/link";
+ 
 export default function DashboardSidebar() {
   return (
-    <aside className={styles.sidebar}>
-      <nav className={styles.nav}>
-        <Link href="/Takeaway" className={styles.navLink}>
-          <Home />
-          <span className={styles.navLinkText}>Create Order</span>
+    <aside className="w-64 bg-gray-100 p-4 hidden md:block h-[100%]">
+      <nav className="space-y-2">
+        <Link
+          href="/Takeaway"
+          className="flex align-middle items-center gap-8 p-2 w-full justify-start"
+        >
+          <Home className="mr-2 h-4 w-4" />
+          Create Order
         </Link>
-        <Link href="/getBooking" className={styles.navLink}>
-          <Utensils />
-          <span className={styles.navLinkText}>My Bookings</span>
-        </Link>
-        <Link href="/review" className={styles.navLink}>
-          <FileText />
-          <span className={styles.navLinkText}>Create Review</span>
-        </Link>
-        <Link href="/myReviews" className={styles.navLink}>
-          <BookOpenText />
-          <span className={styles.navLinkText}>My Reviews</span>
-        </Link>
-        <Link href="/orders" className={styles.navLink}>
+        <Link
+          href="/orders"
+          className="flex align-middle items-center gap-8 p-2 w-full justify-start"
+        >
           <Book />
-          <span className={styles.navLinkText}>My Orders</span>
+          My Orders
+        </Link>
+        <Link
+          href="/createBooking"
+          className="flex align-middle items-center gap-8 p-2 w-full justify-start"
+        >
+          <Utensils className="mr-2 h-4 w-4" />
+          Create Reservation
+        </Link>
+        <Link
+          href="/getBooking"
+          className="flex align-middle items-center gap-8 p-2 w-full justify-start"
+        >
+          <Utensils className="mr-2 h-4 w-4" />
+          My Reservations
+        </Link>
+        <Link
+          href="/review"
+          className="flex align-middle items-center gap-8 p-2 w-full justify-start"
+        >
+          <FileText className="mr-2 h-4 w-4" />
+          Write Review
+        </Link>
+        <Link
+          href="/myReviews"
+          className="flex align-middle items-center gap-8 p-2 w-full justify-start"
+        >
+          <BookOpenText />
+          My Reviews
         </Link>
       </nav>
     </aside>
-  )
+  );
 }
 
 
