@@ -1,127 +1,3 @@
-// "use client";
-// import React, { useState, useRef, useEffect } from "react";
-// import styles from "@/components/specific/Cloudinary/Cloudinary.module.css";
-// import { CircleUserRoundIcon } from "lucide-react";
-// import { uploadFile } from "@/helpers/auth.helper";
-// import Cookies from "js-cookie";
-
-// const Cloudinary = () => {
-//   const user = localStorage.getItem("user");
-//   const tokenCookie = Cookies.get("token");
-//   if (!user || !tokenCookie) return null;
-//   const userData = JSON.parse(user);
-//   const [file, setFile] = useState<File | null>(null);
-//   const [uploading, setUploading] = useState(false);
-//   const [fileUrl, setFileUrl] = useState(
-//     userData?.image_url ||
-//       "https://e7.pngegg.com/pngimages/178/595/png-clipart-user-profile-computer-icons-login-user-avatars-monochrome-black-thumbnail.png"
-//   );
-//   const [showModal, setShowModal] = useState(false);
-//   const fileInputRef = useRef<HTMLInputElement>(null);
-
-//   useEffect(() => {
-//     if (userData?.email) {
-//       const storedImageUrl = localStorage.getItem(
-//         `profileImageUrl_${userData?.email}`
-//       );
-//       if (storedImageUrl) {
-//         setFileUrl(storedImageUrl);
-//       }
-//     }
-//   }, [userData?.email]);
-
-//   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     const selectedFile = event.target.files?.[0] || null;
-//     setFile(selectedFile);
-//     if (selectedFile) {
-//       const reader = new FileReader();
-//       reader.onload = (e) => {
-//         setFileUrl(e.target?.result as string);
-//       };
-//       reader.readAsDataURL(selectedFile);
-//     }
-//   };
-
-//   const handleFileUpload = async () => {
-//     if (!file) {
-//       alert("Por favor, selecciona un archivo.");
-//       return;
-//     }
-//     try {
-//       setUploading(true);
-//       const response = await uploadFile(file, userData?.email);
-//       console.log(response);
-      
-//       alert("Archivo subido correctamente.");
-//       localStorage.setItem(
-//         `profileImageUrl_${userData?.email}`,
-//         response.img
-//       );
-//       setFileUrl(response.img);
-//     } catch (error) {
-//       alert("Error al subir el archivo. Por favor, inténtalo de nuevo.");
-//     } finally {
-//       setUploading(false);
-//     }
-//   };
-
-//   const handleImageClick = (event: React.MouseEvent) => {
-//     event.stopPropagation();
-//     setShowModal(true);
-//   };
-
-//   const handleCloseModal = () => setShowModal(false);
-//   const handleOpenFileInput = () => fileInputRef.current?.click();
-
-//   return (
-//     <div className={styles.ImageProfile}>
-//       <h1 className={styles.title}>Imagen de Perfil</h1>
-//       <div className={styles.profilePicContainer} onClick={handleImageClick}>
-//         <input
-//           type="file"
-//           onChange={handleFileChange}
-//           ref={fileInputRef}
-//           className={styles.fileInput}
-//         />
-//         <div className={styles.iconContainer}>
-//           {fileUrl ? (
-//             <img
-//               src={fileUrl}
-//               alt="Imagen subida"
-//               className={styles.profilePic}
-//               onClick={handleImageClick}
-//             />
-//           ) : (
-//             <CircleUserRoundIcon className={styles.icon} />
-//           )}
-//         </div>
-//       </div>
-//       {showModal && (
-//         <div className={styles.modal}>
-//           <div className={styles.modalContent}>
-//             <span className={styles.close} onClick={handleCloseModal}>
-//               &times;
-//             </span>
-//             <img
-//               src={fileUrl}
-//               alt="Vista previa"
-//               className={styles.modalImage}
-//             />
-//             <button onClick={handleOpenFileInput} disabled={uploading}>
-//               Seleccionar otra imagen
-//             </button>
-//             <button onClick={handleFileUpload} disabled={uploading}>
-//               {uploading ? "Subiendo..." : "Subir imagen"}
-//             </button>
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Cloudinary;
-
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import styles from "@/components/specific/Cloudinary/Cloudinary.module.css";
@@ -140,7 +16,7 @@ const Cloudinary = () => {
   const [showModal, setShowModal] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Seteamos isMounted cuando el componente se ha montado (solo en cliente)
+  // Set isMounted when the component has mounted (client-side only)
   useEffect(() => {
     setIsMounted(true);
     const storedUser = localStorage.getItem("user");
@@ -158,12 +34,10 @@ const Cloudinary = () => {
     }
   }, []);
 
-  // Hasta que el componente esté montado, no renderizamos nada
   if (!isMounted) {
     return null;
   }
 
-  // Opcional: si no hay userData, también podrías retornar null
   if (!userData) {
     return null;
   }
@@ -182,18 +56,18 @@ const Cloudinary = () => {
 
   const handleFileUpload = async () => {
     if (!file) {
-      alert("Por favor, selecciona un archivo.");
+      alert("Please select a file.");
       return;
     }
     try {
       setUploading(true);
       const response = await uploadFile(file, userData.email);
-      alert("Archivo subido correctamente.");
+      alert("File uploaded successfully.");
       localStorage.setItem(`profileImageUrl_${userData.email}`, response.img);
       setFileUrl(response.img);
     } catch (error) {
-      console.error("Error al subir el archivo:", error); // Usa la variable para evitar la advertencia
-      alert("Error al subir el archivo. Por favor, inténtalo de nuevo.");
+      console.error("Error uploading file:", error); // Use the variable to avoid warning
+      alert("Error uploading the file. Please try again.");
     } finally {
       setUploading(false);
     }
@@ -209,7 +83,7 @@ const Cloudinary = () => {
 
   return (
     <div className={styles.ImageProfile}>
-      <h1 className={styles.title}>Imagen de Perfil</h1>
+      <h1 className={styles.title}>Profile Picture</h1>
       <div className={styles.profilePicContainer} onClick={handleImageClick}>
         <input
           type="file"
@@ -221,7 +95,7 @@ const Cloudinary = () => {
           {fileUrl ? (
             <img
               src={fileUrl}
-              alt="Imagen subida"
+              alt="Uploaded image"
               className={styles.profilePic}
               onClick={handleImageClick}
             />
@@ -236,13 +110,31 @@ const Cloudinary = () => {
             <span className={styles.close} onClick={handleCloseModal}>
               &times;
             </span>
-            <img src={fileUrl} alt="Vista previa" className={styles.modalImage} />
-            <button onClick={handleOpenFileInput} disabled={uploading}>
-              Seleccionar otra imagen
-            </button>
-            <button onClick={handleFileUpload} disabled={uploading}>
-              {uploading ? "Subiendo..." : "Subir imagen"}
-            </button>
+            <img
+              src={fileUrl}
+              alt="Preview"
+              className={styles.modalImage}
+            />
+            <div className="flex p-2 gap-5 justify-center">
+              <div className="pt-2">
+                <button
+                  className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  onClick={handleOpenFileInput}
+                  disabled={uploading}
+                >
+                  Select another image
+                </button>
+              </div>
+              <div className="pt-2">
+                <button
+                  className="bg-green-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  onClick={handleFileUpload}
+                  disabled={uploading}
+                >
+                  {uploading ? "Uploading..." : "Upload image"}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -251,4 +143,3 @@ const Cloudinary = () => {
 };
 
 export default Cloudinary;
-
