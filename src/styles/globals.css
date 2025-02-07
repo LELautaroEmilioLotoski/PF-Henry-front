@@ -4,8 +4,14 @@
 
 /* Configuración de fuentes */
 body {
-  font-family: var(--secondary-font);
+  font-family: var(--secondary-font), var(--ternari-font);
+
+  .font-ternari {
+    font-family: var(--ternari-font);
+  }
 }
+
+
 
 h1,
 h2,

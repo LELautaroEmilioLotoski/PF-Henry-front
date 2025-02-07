@@ -10,7 +10,7 @@ export default function Navbar() {
         <div className="flex items-center">
           <Link href="/" className="flex items-center space-x-2">
           <div className="h-8 w-8 rounded-lg bg-blue-600/80 backdrop-blur-sm" />
-            <span className="text-xl font-bold">The Three Broomsticks</span>
+            <span className="text-xl font-bold font-ternari">The Three Broomsticks</span>
           </Link>
         </div>
 

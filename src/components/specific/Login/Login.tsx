@@ -1,115 +1,116 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState } from "react"
-import { useUserContext } from "@/context/UserContext"
-import { login } from "@/helpers/auth.helper"
-import { useRouter } from "next/navigation"
-import Cookies from "js-cookie"
-import styles from "./Login.module.css"
-import { Eye, EyeOff } from "lucide-react"
+import type React from "react";
+import { useState } from "react";
+import { useUserContext } from "@/context/UserContext";
+import { login } from "@/helpers/auth.helper";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+import styles from "./Login.module.css";
+import { Eye, EyeOff } from "lucide-react";
+import { validateLoginForm } from "@/helpers/validate";
+
+interface ILoginProps {
+  email: string;
+  password: string;
+}
+
+interface ILoginErrors {
+  email?: string;
+  password?: string;
+}
 
 const Login = () => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
-  const { setUser } = useUserContext()
-  const router = useRouter()
+  const [values, setValues] = useState<ILoginProps>({ email: "", password: "" });
+  const [errors, setErrors] = useState<ILoginErrors>({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [serverError, setServerError] = useState("");
+  const { setUser } = useUserContext();
+  const router = useRouter();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setValues({ ...values, [name]: value });
+
+    setErrors(validateLoginForm({ ...values, [name]: value }));
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login attempt with:", { email, password });
+
+    const validationErrors = validateLoginForm(values);
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length > 0) {
+      return;
+    }
 
     try {
-      const response = await login({ email, password })
+      const response = await login(values);
 
-      console.log("Response from server:", response.data);
-
-      if (response && response.data.token && response.data.user) {
-        const token = response.data.token;
-        const user = response.data.user;
-
+      if (response?.data?.token && response?.data?.user) {
+        const { token, user } = response.data;
         Cookies.set("token", token, { expires: 7 });
-        console.log("Token stored in cookies:", Cookies.get("token"));
-
         setUser(user);
         localStorage.setItem("user", JSON.stringify(user));
-        console.log("User stored in localStorage:", localStorage.getItem("user"));
-
-        console.log("User Role:", user.role);
 
         if (user.role === "worker") {
-          console.log("Redirecting to /employee/dashboard");
           router.push("/employee/dashboard");
         } else if (user.role === "admin") {
-          console.log("Redirecting to /admin/dashboard");
           router.push("/admin/dashboard");
         } else {
-          console.log("Redirecting to /profile");
           router.push("/profile");
         }
       } else {
-        console.log("Login failed: Invalid credentials");
-        setError("Invalid credentials");
+        setServerError("Invalid credentials");
       }
     } catch (error) {
-      console.error("Login Error:", error)
-      setError("Magic error. Fix your wand and try again!")
+      setServerError("Magic error. Fix your wand and try again!");
     }
-  }
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword)
-  }
+  };
 
   return (
     <div className={styles.loginContainer}>
       <form onSubmit={handleLogin} className={styles.loginForm}>
         <h2 className={styles.formTitle}>Hogwarts Magic Portal</h2>
+
+        {/* EMAIL */}
         <div className={styles.formGroup}>
-          <label htmlFor="email" className={styles.label}>
-            Owl Mail 🦉
-          </label>
+          <label htmlFor="email" className={styles.label}>Owl Mail 🦉</label>
           <input
             id="email"
             name="email"
             type="email"
             placeholder="harry.potter@hogwarts.edu"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={values.email}
+            onChange={handleChange}
             className={styles.inputField}
-            required
           />
+          {errors.email && <p className={styles.errorMessage}>{errors.email}</p>}
         </div>
 
         <div className={styles.formGroup}>
-          <label htmlFor="password" className={styles.label}>
-            Magic Password 🔮
-          </label>
+          <label htmlFor="password" className={styles.label}>Magic Password 🔮</label>
           <div className={styles.passwordField}>
             <input
               id="password"
               name="password"
               type={showPassword ? "text" : "password"}
               placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={values.password}
+              onChange={handleChange}
               className={styles.inputField}
-              required
             />
-            <button type="button" onClick={togglePasswordVisibility} className={styles.passwordToggle}>
+            <button type="button" onClick={() => setShowPassword(!showPassword)} className={styles.passwordToggle}>
               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
           </div>
+          {errors.password && <p className={styles.errorMessage}>{errors.password}</p>}
         </div>
-
-        {error && <p className={styles.errorMessage}>{error}</p>}
-
-        <button type="submit" className={styles.button}>
+        {serverError && <p className={styles.errorMessage}>{serverError}</p>}
+        <button type="submit" className={styles.button} disabled={Object.keys(errors).length > 0}>
           Alohomora 🗝️
         </button>
-
         <button
           type="button"
           onClick={() => (window.location.href = "/api/auth/login")}
@@ -119,16 +120,7 @@ const Login = () => {
         </button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default Login
-
-
-
-
-
-
-
-
-
+export default Login;

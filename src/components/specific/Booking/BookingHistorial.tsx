@@ -15,18 +15,18 @@ const BookingHistorial = () => {
       const token = localStorage.getItem("user");
       if (!token) return;
 
-      const usuario = JSON.parse(token);
+      const user = JSON.parse(token);
 
       try {
-        const response = await getReservations(usuario.email);
-        const arrayReservation = response.data;
-        if (arrayReservation) {
-          setReservations(arrayReservation);
+        const response = await getReservations(user.email);
+        const reservationArray = response.data;
+        if (reservationArray) {
+          setReservations(reservationArray);
         } else {
           setReservations([]);
         }
       } catch (error) {
-        console.error("Error al obtener las reservas:", error);
+        console.error("Error fetching reservations:", error);
         setReservations([]);
       }
     };
@@ -41,10 +41,10 @@ const BookingHistorial = () => {
           reservation.id === id ? { ...reservation, status: "cancelled" } : reservation
         )
       );
-      alert("Reserva cancelada con éxito");
+      alert("Reservation successfully cancelled");
     } catch (error) {
-      console.error("Error al cancelar la reserva:", error);
-      alert("No se pudo cancelar la reserva");
+      console.error("Error cancelling the reservation:", error);
+      alert("Could not cancel the reservation");
     }
   };
 
@@ -61,35 +61,54 @@ const BookingHistorial = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4 text-center">Reservation history</h1>
-      {reservations.length > 0 ? (
-        <table className="w-full border-collapse border border-gray-300 shadow-lg">
+    <div className="bg-white rounded-lg shadow-sm p-4 md:p-6">
+      <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6">Reservation History</h2>
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse">
           <thead>
-            <tr className="bg-gray-200">
-              <th className="border border-gray-300 px-4 py-2 text-left">Reservation date</th>
-              <th className="border border-gray-300 px-4 py-2 text-left">Number of people</th>
-              <th className="border border-gray-300 px-4 py-2 text-left">Schedule</th>
-              <th className="border border-gray-300 px-4 py-2 text-left cursor-pointer" onClick={handleSortByStatus}>
-                Reservation status ⬍
+            <tr className="bg-gray-50">
+              <th
+                onClick={handleSortByStatus}
+                className="px-2 md:px-4 py-2 md:py-3 cursor-pointer text-sm md:text-base text-left font-semibold text-gray-600"
+              >
+                Reservation Date
               </th>
-              <th className="border border-gray-300 px-4 py-2 text-left">Actions</th>
+              <th className="px-2 md:px-4 py-2 md:py-3 text-sm md:text-base text-left font-semibold text-gray-600">
+                Number of People
+              </th>
+              <th className="px-2 md:px-4 py-2 md:py-3 text-sm md:text-base text-left font-semibold text-gray-600">
+                Schedule
+              </th>
+              <th className="px-2 md:px-4 py-2 md:py-3 text-sm md:text-base text-left font-semibold text-gray-600">
+                Reservation Status
+              </th>
+              <th className="px-2 md:px-4 py-2 md:py-3 text-sm md:text-base text-left font-semibold text-gray-600">
+                Actions
+              </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-300">
+          <tbody className="divide-y divide-gray-200">
             {reservations.map((reservation) => (
-              <tr key={reservation.id} className="hover:bg-gray-100">
-                <td className="border border-gray-300 px-4 py-2">{reservation.date}</td>
-                <td className="border border-gray-300 px-4 py-2">{reservation.guest}</td>
-                <td className="border border-gray-300 px-4 py-2">{reservation.time}</td>
-                <td className={`border border-gray-300 px-4 py-2 font-semibold capitalize ${reservation.status === "confirmed" ? "text-green-500" : "text-red-500"}`}>{reservation.status}</td>
-                <td className="border border-gray-300 px-4 py-2">
+              <tr key={reservation.id} className="hover:bg-gray-50">
+                <td className="px-2 md:px-4 py-2 md:py-3 text-sm md:text-base text-gray-600">
+                  {reservation.date}
+                </td>
+                <td className="px-2 md:px-4 py-2 md:py-3 text-sm md:text-base text-gray-600">
+                  {reservation.guest}
+                </td>
+                <td className="px-2 md:px-4 py-2 md:py-3 text-sm md:text-base text-gray-600">
+                  {reservation.time}
+                </td>
+                <td className={`px-2 md:px-4 py-2 md:py-3 text-sm md:text-base font-semibold capitalize ${reservation.status === "confirmed" ? "text-green-500" : "text-red-500"}`}>
+                  {reservation.status}
+                </td>
+                <td className="px-2 md:px-4 py-2 md:py-3">
                   {reservation.status === "confirmed" && (
                     <button
                       onClick={() => cancelReservations(reservation.id)}
-                      className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition"
+                      className="bg-red-500 text-white py-1 px-2 md:px-3 rounded-lg text-xs md:text-sm font-medium hover:bg-red-600 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                     >
-                      Cancel reservation
+                      Cancel Reservation
                     </button>
                   )}
                 </td>
@@ -97,12 +116,11 @@ const BookingHistorial = () => {
             ))}
           </tbody>
         </table>
-      ) : (
-        <p className="text-center text-gray-600">No reservations available</p>
-      )}
-      <div className="flex justify-center p-5 m-4">
-        <Link href="/createBooking" className="flex justify-center items-center border max-w-25 p-4 rounded">
-          Create reservation
+      </div>
+
+      <div className="mt-4 flex justify-center space-x-2">
+        <Link href="/createBooking" className="px-3 md:px-4 py-2 bg-gray-200 text-xs md:text-sm rounded-lg hover:bg-gray-300">
+          Create Reservation
         </Link>
       </div>
     </div>

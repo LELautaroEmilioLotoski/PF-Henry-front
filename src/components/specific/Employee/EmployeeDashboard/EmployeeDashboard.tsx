@@ -1,67 +1,65 @@
+"use client"
 
-"use client";
-
-import { useUserContext } from "@/context/UserContext";
-import EmployeeHeader from "@/components/specific/Employee/EmployeeHeader/EmployeeHeader";
-import FileUploadComponent from "@/app/Cloudinary/page";
+import { useUserContext } from "@/context/UserContext"
+import FileUploadComponent from "@/app/Cloudinary/page"
+import RoleHeader from "../../Admin/AdminHeader/AdminHeader"
 
 const EmployeeDashboard = () => {
-  const { userNormal, logoutUser } = useUserContext();
-
-  const handleLogout = () => {
-    logoutUser();
-    window.location.href = "/api/auth/logout";
-  };
+  const { userNormal } = useUserContext()
 
   if (!userNormal) {
-    return <div className="flex justify-center items-center h-screen">Cargando...</div>;
+    return <div className="flex justify-center items-center h-screen">Cargando...</div>
   }
 
   return (
-    <div className="flex bg-gray-100 min-h-screen">
+    <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
-      <EmployeeHeader />
+      <div className="w-64 hidden md:block">
+        <RoleHeader />
+      </div>
 
-      {/* Contenido Principal */}
-      <div className="flex flex-col items-center justify-center w-full p-10">
-        <div className="bg-white shadow-lg rounded-lg w-full max-w-4xl p-6 flex">
-          {/* Foto a la izquierda */}
-          <div className="w-1/3 flex flex-col items-center">
-           <FileUploadComponent userprops={userNormal} />
-          </div> 
+      {/* Mobile Header */}
+      <div className="md:hidden fixed top-0 left-0 right-0 z-20 bg-white border-b">
+        <RoleHeader />
+      </div>
 
-          {/* Datos a la derecha */}
-          <div className="w-2/3 flex flex-col justify-between p-4">
-            <h1 className="text-3xl font-semibold text-gray-800 mb-4">
-              Welcome, {userNormal.name}
-            </h1>
-            <div className="bg-gray-50 rounded-lg p-6 shadow">
-              <h2 className="text-xl font-semibold text-gray-800 mb-4">Personal Data</h2>
-              <p className="text-lg font-medium text-gray-600">
-                <strong>Name:</strong> {userNormal.name}
-              </p>
-              <p className="text-lg font-medium text-gray-600">
-                <strong>Email:</strong> {userNormal.email}
-              </p>
-              <p className="text-lg font-medium text-gray-600">
-                <strong>Address:</strong> {userNormal.address || "No registrada"}
-              </p>
-            </div>
+      {/* Main Content */}
+      <div className="flex-1 md:ml-64">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-4 md:py-6">
+          <div className="bg-white rounded-lg shadow-sm p-4 md:p-6">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 md:mb-6">Welcome, {userNormal.name}</h1>
 
-            {/* Botón de Cerrar Sesión abajo */}
-            <div className="mt-auto flex justify-end">
-              <button
-                onClick={handleLogout}
-                className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300"
-              >
-                Logout
-              </button>
+            <div className="flex flex-col md:flex-row gap-6">
+              {/* Photo on the left */}
+              <div className="w-full md:w-1/3">
+                <div className="bg-gray-50 rounded-lg p-4 shadow">
+                  <FileUploadComponent userprops={userNormal} />
+                </div>
+              </div>
+
+              {/* Data on the right */}
+              <div className="w-full md:w-2/3">
+                <div className="bg-gray-50 rounded-lg p-6 shadow">
+                  <h2 className="text-xl font-semibold text-gray-800 mb-4">Personal Data</h2>
+                  <div className="space-y-3">
+                    <p className="text-base md:text-lg text-gray-600">
+                      <span className="font-medium">Name:</span> {userNormal.name}
+                    </p>
+                    <p className="text-base md:text-lg text-gray-600">
+                      <span className="font-medium">Email:</span> {userNormal.email}
+                    </p>
+                    <p className="text-base md:text-lg text-gray-600">
+                      <span className="font-medium">Address:</span> {userNormal.address || "No registrada"}
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default EmployeeDashboard;
+export default EmployeeDashboard

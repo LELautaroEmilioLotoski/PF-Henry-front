@@ -15,7 +15,7 @@ import { createReview } from "@/helpers/auth.helper";
 import { IReview } from "@/interfaces/Types";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
-import styles from "./Review.module.css"; 
+import styles from "./Review.module.css";
 
 interface User {
   id: string;
@@ -40,14 +40,14 @@ export default function RestaurantReview() {
 
   useEffect(() => {
     const tokenData = Cookies.get("token");
-    console.log("Token guardado en localStorage:", tokenData);
+    console.log("Token saved in localStorage:", tokenData);
     
     if (tokenData) {
       setToken(tokenData);
     }
 
     const userString = localStorage.getItem("user");
-    console.log("Usuario guardado en localStorage:", userString);
+    console.log("User saved in localStorage:", userString);
     
     if (userString) {
       setUserData(JSON.parse(userString));
@@ -58,21 +58,21 @@ export default function RestaurantReview() {
     e.preventDefault();
 
     if (!rating || !dataReview.description) {
-      return alert("Completa los campos correspondientes.");
+      return alert("Complete the required fields.");
     }
 
     if (!token) {
-      return alert("No se encontró el token.");
+      return alert("Token not found.");
     }
 
     try {
       const reviewData = { ...dataReview, rate: rating };      
        await createReview(reviewData, token);
-      alert("¡Reseña creada exitosamente!");
-      router.push("/myReviews")
+      alert("Review created successfully!");
+      router.push("/myReviews");
     } catch (error) {
-      console.error("Error al crear la reseña:", error);
-      alert("Hubo un problema al enviar tu reseña.");
+      console.error("Error creating review:", error);
+      alert("There was a problem submitting your review.");
     }
   };
 
@@ -84,18 +84,18 @@ export default function RestaurantReview() {
   };
 
   return (
-<div className={styles.reviewContainer}>
+    <div className={styles.reviewContainer}>
       <Card className={styles.card}>
         <CardHeader className={styles.cardHeader}>
-          <CardTitle className={styles.cardTitle}>Ayúdanos a mejorar 😁</CardTitle>
+          <CardTitle className={styles.cardTitle}>Help us improve 😁</CardTitle>
         </CardHeader>
         <CardContent className={styles.cardContent}>
           <div className={styles.inputGroup}>
-            <label className={styles.label}>Tu email</label>
+            <label className={styles.label}>Your email</label>
             <input value={userData?.email || ""} disabled className={styles.inputField} />
           </div>
           <div className={styles.inputGroup}>
-            <label className={styles.label}>Calificación</label>
+            <label className={styles.label}>Rating</label>
             <div className={styles.starRating}>
               {[1, 2, 3, 4, 5].map((star) => (
                 <Star
@@ -108,11 +108,11 @@ export default function RestaurantReview() {
           </div>
           <div className={styles.inputGroup}>
             <label htmlFor="review" className={styles.label}>
-              Tu reseña
+              Your review
             </label>
             <Textarea
               id="review"
-              placeholder="Comparte tu experiencia..."
+              placeholder="Share your experience..."
               value={dataReview.description}
               onChange={handleChange}
               className={styles.textarea}
@@ -122,13 +122,10 @@ export default function RestaurantReview() {
         </CardContent>
         <CardFooter className={styles.cardFooter}>
           <Button className={styles.button} onClick={handleSubmit}>
-            Enviar Reseña
+            Submit Review
           </Button>
         </CardFooter>
       </Card>
     </div>
   );
 }
-
-
-
