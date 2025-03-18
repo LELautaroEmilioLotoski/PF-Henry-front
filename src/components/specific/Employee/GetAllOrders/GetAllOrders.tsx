@@ -122,7 +122,7 @@ export default function OrdersPage() {
 
       {/* Main Content */}
       <div className="flex-1 md:ml-64">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-4 md:py-6">
+        <div className="max-w-3xl mx-auto px-2 sm:px-3 md:px-8 py-2 md:py-4">
           <div className="bg-white rounded-lg shadow-sm p-4 md:p-6">
             <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6">Order Management</h2>
 

@@ -179,7 +179,7 @@ const Register = () => {
         </div>
 
         <button type="submit" className={styles.button} disabled={isLoading}>
-          {isLoading ? "Casting Spell..." : "Enchant Registration 🪄"}
+          {isLoading ? "Casting Spell..." : " Register "}
         </button>
       </form>
     </div>

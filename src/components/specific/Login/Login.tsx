@@ -109,14 +109,14 @@ const Login = () => {
         </div>
         {serverError && <p className={styles.errorMessage}>{serverError}</p>}
         <button type="submit" className={styles.button} disabled={Object.keys(errors).length > 0}>
-          Alohomora 🗝️
+          Alohomora 🗝️ (Login)
         </button>
         <button
           type="button"
           onClick={() => (window.location.href = "/api/auth/login")}
           className={`${styles.button} ${styles.auth0Button}`}
         >
-          Accio Auth0 🪄
+          Login with Google
         </button>
       </form>
     </div>

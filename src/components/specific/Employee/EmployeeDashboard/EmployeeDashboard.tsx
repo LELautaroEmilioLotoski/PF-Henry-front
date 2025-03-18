@@ -3,6 +3,7 @@
 import { useUserContext } from "@/context/UserContext"
 import FileUploadComponent from "@/app/Cloudinary/page"
 import RoleHeader from "../../Admin/AdminHeader/AdminHeader"
+import Cloudinary from "../../Cloudinary/Cloudinary"
 
 const EmployeeDashboard = () => {
   const { userNormal } = useUserContext()
@@ -32,9 +33,9 @@ const EmployeeDashboard = () => {
             <div className="flex flex-col md:flex-row gap-6">
               {/* Photo on the left */}
               <div className="w-full md:w-1/3">
-                <div className="bg-gray-50 rounded-lg p-4 shadow">
-                  <FileUploadComponent userprops={userNormal} />
-                </div>
+               
+                  <Cloudinary />
+                
               </div>
 
               {/* Data on the right */}
