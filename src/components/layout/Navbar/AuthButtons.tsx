@@ -23,14 +23,14 @@ export default function AuthButtons() {
         <>
           <Link
             href="/Login"
-            className="flex items-center px-4 py-2 bg-blue-600/80 backdrop-blur-sm text-white rounded-md hover:bg-blue-700 transition-colors"
+            className="flex items-center px-4 py-2 bg-black backdrop-blur-sm text-white rounded-md hover:bg-[#2A1B0A] transition-colors"
           >
             <LogIn className="mr-2 h-4 w-4" />
             Login
           </Link>
           <Link
             href="/register"
-            className="flex items-center px-4 py-2 bg-blue-600/80 backdrop-blur-sm text-white rounded-md hover:bg-blue-700 transition-colors"
+            className="flex items-center px-4 py-2 bg-black backdrop-blur-sm text-white rounded-md hover:bg-[#2A1B0A] transition-colors"
           >
             <UserPlus className="mr-2 h-4 w-4" />
             Register
